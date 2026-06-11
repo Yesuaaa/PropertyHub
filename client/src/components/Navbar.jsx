@@ -36,6 +36,8 @@ export default function Navbar() {
 
   const mobileMenuBg = scrolled ? 'bg-green-600' : 'bg-green-600';
 
+  const resolveLink = (to) => (user ? to : '/login');
+
   return (
     <nav className={`fixed top-0 left-0 right-0 z-50 transition-colors duration-300 ${scrolled || menuOpen ? 'bg-green-600' : 'bg-transparent'}`}>
       <div className="max-w-[1400px] mx-auto flex items-center justify-between px-6 sm:px-8 py-0 h-20">
@@ -52,8 +54,8 @@ export default function Navbar() {
           </Link>
           <div className="hidden lg:flex items-center gap-1">
             <NavLink to="/" scrolled={scrolled}>Home</NavLink>
-            <NavLink to="/new" scrolled={scrolled}>Submit A Ticket</NavLink>
-            <NavLink to="/dashboard" scrolled={scrolled}>My Tickets</NavLink>
+            <NavLink to={resolveLink('/new')} scrolled={scrolled}>Submit A Ticket</NavLink>
+            <NavLink to={resolveLink('/dashboard')} scrolled={scrolled}>My Tickets</NavLink>
             {user?.role === 'admin' && <NavLink to="/admin" scrolled={scrolled}>Admin</NavLink>}
           </div>
         </div>
@@ -93,8 +95,8 @@ export default function Navbar() {
       <div className={`lg:hidden fixed inset-0 top-20 ${mobileMenuBg} transition-all duration-300 ${menuOpen ? 'opacity-100 pointer-events-auto' : 'opacity-0 pointer-events-none'}`}>
         <div className="flex flex-col items-center justify-start gap-2 pt-12">
           <MobileNavLink to="/" scrolled={scrolled} onClick={closeMenu}>Home</MobileNavLink>
-          <MobileNavLink to="/new" scrolled={scrolled} onClick={closeMenu}>Submit A Ticket</MobileNavLink>
-          <MobileNavLink to="/dashboard" scrolled={scrolled} onClick={closeMenu}>My Tickets</MobileNavLink>
+          <MobileNavLink to={resolveLink('/new')} scrolled={scrolled} onClick={closeMenu}>Submit A Ticket</MobileNavLink>
+          <MobileNavLink to={resolveLink('/dashboard')} scrolled={scrolled} onClick={closeMenu}>My Tickets</MobileNavLink>
           {user?.role === 'admin' && <MobileNavLink to="/admin" scrolled={scrolled} onClick={closeMenu}>Admin</MobileNavLink>}
           <div className={`w-24 h-px ${scrolled ? 'bg-white/20' : 'bg-green-700/20'} my-4`} />
           {user && (
