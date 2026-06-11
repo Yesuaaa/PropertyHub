@@ -1,7 +1,6 @@
-# PostCSS plugins — required by TailwindCSS for processing utility classes
-module.exports = {
+export default {
   plugins: {
     tailwindcss: {},
     autoprefixer: {},
   },
-}
+};
