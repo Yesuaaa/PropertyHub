@@ -22,7 +22,7 @@ export default function NewTicket() {
         { type, category, description, priority },
         { headers: { Authorization: `Bearer ${localStorage.getItem('token')}` } }
       );
-      navigate('/my-tickets');
+      navigate('/dashboard');
     } catch (err) {
       setError(err.response?.data?.message || 'Failed to create ticket');
     }

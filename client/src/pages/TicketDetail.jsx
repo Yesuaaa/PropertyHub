@@ -34,7 +34,7 @@ export default function TicketDetail() {
 
   return (
     <div className="max-w-2xl mx-auto mt-10">
-      <Link to="/my-tickets" className="text-indigo-600 hover:underline text-sm">
+      <Link to="/dashboard" className="text-indigo-600 hover:underline text-sm">
         &larr; Back to tickets
       </Link>
       <div className="bg-white p-6 rounded-lg shadow-md mt-4">
