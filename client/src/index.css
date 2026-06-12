@@ -9,6 +9,6 @@
 
 body {
   font-family: var(--font-body);
-  background-image: radial-gradient(circle, rgba(34, 90, 50, 0.5) 1px, transparent 1px);
+  background-image: radial-gradient(circle, rgba(34, 90, 50, 0.25) 1px, transparent 1px);
   background-size: 40px 40px;
 }
