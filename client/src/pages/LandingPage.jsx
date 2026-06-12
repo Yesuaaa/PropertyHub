@@ -1,326 +1,174 @@
-import { useEffect, useRef, useState, useCallback } from 'react';
 import { Link } from 'react-router-dom';
-
-const FEATURES = [
-  {
-    title: 'Submit Tickets',
-    description: 'Easily submit complaints, feedback, suggestions, or bug reports with categorized priority levels.',
-    icon: (
-      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" className="w-8 h-8">
-        <path d="M3 3h18v2H3V3zm0 4h18v2H3V7zm0 4h12v2H3v-2zm0 4h18v2H3v-2zm0 4h12v2H3v-2z" />
-      </svg>
-    ),
-  },
-  {
-    title: 'Track Progress',
-    description: 'Monitor your ticket status in real-time from submission to resolution with full transparency.',
-    icon: (
-      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" className="w-8 h-8">
-        <path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm-2 15l-5-5 1.41-1.41L10 14.17l7.59-7.59L19 8l-9 9z" />
-      </svg>
-    ),
-  },
-  {
-    title: 'Admin Dashboard',
-    description: 'Powerful admin tools to manage, prioritize, and resolve all incoming tickets efficiently.',
-    icon: (
-      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" className="w-8 h-8">
-        <path d="M3 13h8V3H3v10zm0 8h8v-6H3v6zm10 0h8V11h-8v10zm0-18v6h8V3h-8z" />
-      </svg>
-    ),
-  },
-];
-
-const STEPS = [
-  { step: '01', title: 'Register', description: 'Create your account in seconds.' },
-  { step: '02', title: 'Submit', description: 'Describe your issue with type and priority.' },
-  { step: '03', title: 'Track', description: 'Follow your ticket status in real-time.' },
-  { step: '04', title: 'Resolved', description: 'Get notified when your issue is handled.' },
-];
 
 export default function LandingPage() {
   return (
-    <div className="pt-20">
+    <div className="pt-16">
       <Hero />
-      <Footer />
+      <Features />
+    </div>
+  );
+}
+
+function SectionLabel({ children }) {
+  return (
+    <div className="flex items-center gap-3 mb-6">
+      <span className="w-2 h-2 bg-[#e05a30] rounded-none" />
+      <span className="text-[10px] font-mono font-semibold tracking-[0.25em] uppercase text-[#8fa3b0]">{children}</span>
     </div>
   );
 }
 
 function Hero() {
   return (
-    <section className="relative overflow-hidden">
-      <div className="min-h-screen flex items-center py-16 lg:py-0">
-        <div className="max-w-[1400px] mx-auto px-5 sm:px-6 md:px-12 w-full grid grid-cols-1 lg:grid-cols-2 gap-8 items-center">
-          <div className="relative z-10">
-            <h1 className="text-4xl sm:text-5xl md:text-6xl lg:text-7xl font-black text-gray-900 uppercase leading-[0.95] tracking-tight">
-              Got an
-              <br />
-              <span className="text-green-600">Issue?</span>
-              <br />
-              Tell Us.
-            </h1>
-            <p className="mt-4 sm:mt-6 text-base sm:text-lg md:text-xl text-gray-500 max-w-md leading-relaxed">
-              Submit complaints, feedback, and suggestions. We listen, track, and resolve every issue you raise.
-            </p>
-            <div className="mt-6 sm:mt-10 flex flex-wrap gap-4 items-center">
-              <Link
-                to="/register"
-                className="group relative inline-flex items-center gap-3 bg-green-600 text-white font-bold uppercase tracking-wider text-sm px-6 sm:px-8 py-3 sm:py-4 rounded-lg hover:bg-green-700 transition-all duration-300 hover:shadow-[0_0_30px_rgba(22,163,74,0.4)] active:scale-95"
-              >
-                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" className="w-5 h-5">
-                  <path d="M3 17.25V21h3.75L17.81 9.94l-3.75-3.75L3 17.25zM20.71 7.04a1 1 0 000-1.41l-2.34-2.34a1 1 0 00-1.41 0l-1.83 1.83 3.75 3.75 1.83-1.83z" />
-                </svg>
-                Submit Ticket
-              </Link>
-              <Link
-                to="/login"
-                className="text-gray-600 font-medium text-sm px-6 py-4 hover:text-green-700 transition-colors underline underline-offset-4 decoration-gray-300 hover:decoration-green-600"
-              >
-                Already have an account?
-              </Link>
-            </div>
-          </div>
-          <div className="hidden lg:flex justify-center lg:justify-end">
-            <RobotHead />
+    <section className="relative min-h-[90vh] flex items-center border-b border-[#8fa3b0]/20">
+      <div className="max-w-[1400px] mx-auto px-6 sm:px-10 md:px-16 w-full py-20 lg:py-0 grid grid-cols-1 lg:grid-cols-12 gap-12 items-center">
+        <div className="lg:col-span-7 space-y-8">
+          <SectionLabel>Property Management Portal</SectionLabel>
+
+          <h1 className="text-[3rem] sm:text-[4rem] md:text-[5rem] lg:text-[6rem] font-bold text-[#1a1a1a] leading-[0.92] tracking-[-0.03em]">
+            Report it.
+            <br />
+            <span className="text-[#8fa3b0]">Track it.</span>
+            <br />
+            Resolve it.
+          </h1>
+
+          <p className="text-base text-[#5a6d78] max-w-md leading-relaxed">
+            Maintenance issues, noise complaints, lease disputes &mdash; submitted and tracked in one place. Built for tenants, owners, and property managers.
+          </p>
+
+          <div className="flex flex-wrap gap-4 items-center pt-2">
+            <Link
+              to="/register"
+              className="inline-flex items-center gap-2 text-xs font-semibold tracking-[0.1em] uppercase text-[#1a1a1a] border-2 border-[#1a1a1a] px-8 py-3.5 hover:bg-[#1a1a1a] hover:text-[#f5f3ef] transition-all duration-200"
+            >
+              Submit a Request
+              <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 16 16" fill="currentColor" className="w-3.5 h-3.5">
+                <path fillRule="evenodd" d="M1 8a.75.75 0 01.75-.75h10.638L9.23 5.29a.75.75 0 111.04-1.08l5.5 5.25a.75.75 0 010 1.08l-5.5 5.25a.75.75 0 11-1.04-1.08l3.158-2.96H1.75A.75.75 0 011 8z" clipRule="evenodd" />
+              </svg>
+            </Link>
+            <Link
+              to="/login"
+              className="text-xs font-medium text-[#8fa3b0] hover:text-[#1a1a1a] transition-colors tracking-wider uppercase underline underline-offset-4 decoration-[#8fa3b0]/30 hover:decoration-[#1a1a1a]"
+            >
+              Already have an account?
+            </Link>
           </div>
         </div>
+
+        <div className="lg:col-span-5 hidden lg:block">
+          <HeroVisual />
+        </div>
       </div>
-      <div className="absolute bottom-0 left-0 right-0 h-32 bg-gradient-to-t from-gray-50 to-transparent" />
     </section>
   );
 }
 
-function RobotHead() {
-  const containerRef = useRef(null);
-  const [mouse, setMouse] = useState({ x: 0.5, y: 0.5 });
-  const [mounted, setMounted] = useState(false);
-
-  const handleMouseMove = useCallback((e) => {
-    if (!containerRef.current) return;
-    const rect = containerRef.current.getBoundingClientRect();
-    setMouse({
-      x: (e.clientX - rect.left) / rect.width,
-      y: (e.clientY - rect.top) / rect.height,
-    });
-  }, []);
-
-  useEffect(() => {
-    setMounted(true);
-    window.addEventListener('mousemove', handleMouseMove);
-    return () => window.removeEventListener('mousemove', handleMouseMove);
-  }, [handleMouseMove]);
-
-  const eyeOffsetX = (mouse.x - 0.5) * 6;
-  const eyeOffsetY = (mouse.y - 0.5) * 4;
-  const headTilt = (mouse.x - 0.5) * 3;
-
+function HeroVisual() {
   return (
-    <div ref={containerRef} className="w-full max-w-md lg:max-w-lg aspect-square relative">
-      <svg
-        viewBox="0 0 400 400"
-        className={`w-full h-full transition-transform duration-100 ease-out ${mounted ? 'opacity-100' : 'opacity-0 translate-y-8'}`}
-        style={{ transform: `rotate(${headTilt}deg)` }}
-      >
-        <defs>
-          <linearGradient id="bmoBody" x1="0%" y1="0%" x2="100%" y2="100%">
-            <stop offset="0%" stopColor="#3dd6c8" />
-            <stop offset="50%" stopColor="#22b8a9" />
-            <stop offset="100%" stopColor="#1a9e91" />
-          </linearGradient>
-          <linearGradient id="bmoBodySide" x1="0%" y1="0%" x2="0%" y2="100%">
-            <stop offset="0%" stopColor="#2cc4b5" />
-            <stop offset="100%" stopColor="#17968a" />
-          </linearGradient>
-          <linearGradient id="screenGrad" x1="0%" y1="0%" x2="0%" y2="100%">
-            <stop offset="0%" stopColor="#1a3a4a" />
-            <stop offset="100%" stopColor="#0d1f2d" />
-          </linearGradient>
-          <linearGradient id="legGrad" x1="0%" y1="0%" x2="0%" y2="100%">
-            <stop offset="0%" stopColor="#22b8a9" />
-            <stop offset="100%" stopColor="#17968a" />
-          </linearGradient>
-          <radialGradient id="eyeGlow" cx="50%" cy="50%" r="50%">
-            <stop offset="0%" stopColor="#4ade80" />
-            <stop offset="50%" stopColor="#22c55e" />
-            <stop offset="100%" stopColor="#16a34a" />
-          </radialGradient>
-          <filter id="neonGlow">
-            <feGaussianBlur stdDeviation="4" result="blur" />
-            <feMerge>
-              <feMergeNode in="blur" />
-              <feMergeNode in="blur" />
-              <feMergeNode in="SourceGraphic" />
-            </feMerge>
-          </filter>
-          <filter id="softGlow">
-            <feGaussianBlur stdDeviation="2" result="blur" />
-            <feMerge>
-              <feMergeNode in="blur" />
-              <feMergeNode in="SourceGraphic" />
-            </feMerge>
-          </filter>
-          <filter id="bigGlow">
-            <feGaussianBlur stdDeviation="12" result="blur" />
-            <feMerge>
-              <feMergeNode in="blur" />
-              <feMergeNode in="SourceGraphic" />
-            </feMerge>
-          </filter>
-          <filter id="bmoShadow">
-            <feDropShadow dx="0" dy="6" stdDeviation="8" floodColor="#000" floodOpacity="0.15" />
-          </filter>
-          <filter id="screenGlow">
-            <feDropShadow dx="0" dy="0" stdDeviation="6" floodColor="#22c55e" floodOpacity="0.3" />
-          </filter>
-          <clipPath id="screenClip">
-            <rect x="130" y="100" width="140" height="100" rx="8" />
-          </clipPath>
-        </defs>
+    <div className="w-full">
+      <div className="border-2 border-[#1a1a1a] bg-[#f5f3ef] p-6">
+        <div className="flex items-center justify-between mb-6 pb-4 border-b border-[#8fa3b0]/20">
+          <span className="text-[10px] font-mono font-semibold tracking-[0.25em] uppercase text-[#8fa3b0]">Recent Requests</span>
+          <span className="text-[10px] font-mono tracking-[0.15em] text-[#5a6d78]">03</span>
+        </div>
 
-        <g filter="url(#bmoShadow)">
-          <g style={{ transform: `rotate(${(mouse.x - 0.5) * 4}deg)`, transformOrigin: '200px 75px' }}>
-            <line x1="200" y1="95" x2="200" y2="65" stroke="#22b8a9" strokeWidth="6" strokeLinecap="round" />
-            <circle cx="200" cy="58" r="9" fill="#22c55e" filter="url(#neonGlow)">
-              <animate attributeName="r" values="9;11;9" dur="2s" repeatCount="indefinite" />
-            </circle>
-            <circle cx="200" cy="58" r="4" fill="#bbf7d0" />
-          </g>
+        <div className="space-y-0 divide-y divide-[#8fa3b0]/15">
+          <VisualCard
+            number="01"
+            title="Maintenance Request"
+            desc="Plumbing issue in Unit 4B"
+            status="In Progress"
+          />
+          <VisualCard
+            number="02"
+            title="Security Report"
+            desc="Broken gate camera &mdash; Lot C"
+            status="Open"
+          />
+          <VisualCard
+            number="03"
+            title="Lease Dispute"
+            desc="Parking allocation conflict"
+            status="Resolved"
+          />
+        </div>
+      </div>
 
-          <rect x="130" y="75" width="140" height="210" rx="20" fill="url(#bmoBody)" />
-          <rect x="130" y="75" width="140" height="210" rx="20" fill="none" stroke="#4dd8cb" strokeWidth="1.5" opacity="0.4" />
-
-          <rect x="130" y="95" width="140" height="100" rx="8" fill="url(#screenGrad)" filter="url(#screenGlow)" />
-
-          <circle cx="143" cy="108" r="2.5" fill="#1a9e91" />
-          <circle cx="200" cy="108" r="2.5" fill="#22c55e" filter="url(#softGlow)">
-            <animate attributeName="opacity" values="0.5;1;0.5" dur="2s" repeatCount="indefinite" />
-          </circle>
-          <circle cx="257" cy="108" r="2.5" fill="#1a9e91" />
-
-          <g clipPath="url(#screenClip)">
-            <circle cx={178 + eyeOffsetX} cy={145 + eyeOffsetY} r="8" fill="url(#eyeGlow)" filter="url(#neonGlow)">
-              <animate attributeName="opacity" values="0.85;1;0.85" dur="3s" repeatCount="indefinite" />
-            </circle>
-            <circle cx={178 + eyeOffsetX} cy={145 + eyeOffsetY} r="4" fill="#fff" opacity="0.9">
-              <animate attributeName="opacity" values="0.7;1;0.7" dur="2s" repeatCount="indefinite" />
-            </circle>
-
-            <circle cx={222 + eyeOffsetX} cy={145 + eyeOffsetY} r="8" fill="url(#eyeGlow)" filter="url(#neonGlow)">
-              <animate attributeName="opacity" values="0.85;1;0.85" dur="3s" repeatCount="indefinite" />
-            </circle>
-            <circle cx={222 + eyeOffsetX} cy={145 + eyeOffsetY} r="4" fill="#fff" opacity="0.9">
-              <animate attributeName="opacity" values="0.7;1;0.7" dur="2s" repeatCount="indefinite" />
-            </circle>
-
-            <path
-              d="M 185 172 Q 200 180 215 172"
-              stroke="#22c55e"
-              strokeWidth="2.5"
-              fill="none"
-              strokeLinecap="round"
-              filter="url(#softGlow)"
-            />
-          </g>
-
-          <rect x="148" y="215" width="30" height="30" rx="4" fill="#17968a" opacity="0.6" />
-          <rect x="155" y="222" width="16" height="16" rx="2" fill="#1a9e91" />
-          <rect x="148" y="215" width="30" height="30" rx="4" fill="none" stroke="#17968a" strokeWidth="1" />
-
-          <rect x="143" y="220" width="8" height="20" rx="2" fill="#17968a" opacity="0.7" />
-          <rect x="175" y="228" width="20" height="8" rx="2" fill="#17968a" opacity="0.7" />
-
-          <circle cx="233" cy="225" r="8" fill="#ef4444" opacity="0.8">
-            <animate attributeName="opacity" values="0.6;0.9;0.6" dur="3s" repeatCount="indefinite" />
-          </circle>
-          <circle cx="233" cy="225" r="8" fill="none" stroke="#dc2626" strokeWidth="1" />
-          <circle cx="253" cy="240" r="6" fill="#f97316" opacity="0.7" />
-          <circle cx="253" cy="240" r="6" fill="none" stroke="#ea580c" strokeWidth="1" />
-
-          <rect x="148" y="258" width="104" height="6" rx="3" fill="#17968a" opacity="0.4" />
-
-          <rect x="115" y="130" width="18" height="55" rx="8" fill="url(#bmoBodySide)" />
-          <rect x="267" y="130" width="18" height="55" rx="8" fill="url(#bmoBodySide)" />
-
-          <rect x="112" y="160" width="8" height="22" rx="4" fill="#22b8a9" />
-          <rect x="280" y="160" width="8" height="22" rx="4" fill="#22b8a9" />
-        </g>
-
-        <rect x="162" y="285" width="20" height="35" rx="6" fill="url(#legGrad)" />
-        <rect x="218" y="285" width="20" height="35" rx="6" fill="url(#legGrad)" />
-
-        <ellipse cx="200" cy="370" rx="60" ry="8" fill="#22c55e" opacity="0.08" />
-        <ellipse cx="200" cy="360" rx="40" ry="5" fill="#22c55e" opacity="0.06" />
-
-        <g className="hidden lg:block">
-          <circle cx="50" cy="170" r="3" fill="#22c55e" filter="url(#bigGlow)">
-            <animate attributeName="opacity" values="0;0.8;0" dur="5s" repeatCount="indefinite" begin="0s" />
-          </circle>
-          <circle cx="350" cy="200" r="2.5" fill="#22c55e" filter="url(#bigGlow)">
-            <animate attributeName="opacity" values="0;0.6;0" dur="4s" repeatCount="indefinite" begin="1s" />
-          </circle>
-          <circle cx="60" cy="280" r="2" fill="#4ade80" filter="url(#bigGlow)">
-            <animate attributeName="opacity" values="0;0.7;0" dur="6s" repeatCount="indefinite" begin="2s" />
-          </circle>
-          <circle cx="340" cy="110" r="2" fill="#4ade80" filter="url(#bigGlow)">
-            <animate attributeName="opacity" values="0;0.5;0" dur="4.5s" repeatCount="indefinite" begin="0.5s" />
-          </circle>
-        </g>
-      </svg>
+      <div className="mt-4 grid grid-cols-2 gap-4">
+        <div className="border-2 border-[#8fa3b0]/20 bg-[#f5f3ef] p-5">
+          <span className="text-3xl font-bold text-[#1a1a1a] font-mono">24h</span>
+          <p className="text-[10px] font-mono tracking-[0.2em] uppercase text-[#8fa3b0] mt-1">Avg. Response</p>
+        </div>
+        <div className="border-2 border-[#8fa3b0]/20 bg-[#f5f3ef] p-5">
+          <span className="text-3xl font-bold text-[#1a1a1a] font-mono">98%</span>
+          <p className="text-[10px] font-mono tracking-[0.2em] uppercase text-[#8fa3b0] mt-1">Resolution Rate</p>
+        </div>
+      </div>
     </div>
   );
 }
 
-function Footer() {
+function VisualCard({ number, title, desc, status }) {
   return (
-    <footer className="bg-gray-900 text-gray-400">
-      <div className="max-w-[1400px] mx-auto px-6 md:px-12 py-12 grid grid-cols-1 md:grid-cols-3 gap-10">
-        <div>
-          <span className="font-bold text-white text-lg uppercase tracking-wider block mb-3">
-            Complaint System
-          </span>
-          <p className="text-sm leading-relaxed max-w-xs">
-            Submit, track, and resolve complaints and feedback efficiently. We ensure every voice is heard.
-          </p>
-        </div>
-        <div>
-          <h3 className="text-white font-semibold uppercase tracking-wider text-sm mb-4">Quick Links</h3>
-          <ul className="space-y-2 text-sm">
-            <li>
-              <Link to="/" className="hover:text-green-400 transition-colors">Home</Link>
-            </li>
-            <li>
-              <Link to="/new" className="hover:text-green-400 transition-colors">Submit A Ticket</Link>
-            </li>
-            <li>
-              <Link to="/dashboard" className="hover:text-green-400 transition-colors">My Tickets</Link>
-            </li>
-            <li>
-              <Link to="/login" className="hover:text-green-400 transition-colors">Login</Link>
-            </li>
-            <li>
-              <Link to="/register" className="hover:text-green-400 transition-colors">Register</Link>
-            </li>
-          </ul>
-        </div>
-        <div>
-          <h3 className="text-white font-semibold uppercase tracking-wider text-sm mb-4">Contact</h3>
-          <ul className="space-y-2 text-sm">
-            <li>support@complaintsystem.com</li>
-            <li>+1 (555) 123-4567</li>
-            <li>123 Support Street, Web City</li>
-          </ul>
-        </div>
+    <div className="flex items-start gap-4 py-4 first:pt-0 last:pb-0">
+      <span className="text-[10px] font-mono font-bold text-[#8fa3b0] mt-0.5">{number}</span>
+      <div className="flex-1 min-w-0">
+        <div className="text-sm font-semibold text-[#1a1a1a] tracking-wide">{title}</div>
+        <div className="text-xs text-[#5a6d78] mt-0.5">{desc}</div>
       </div>
-      <div className="border-t border-gray-800">
-        <div className="max-w-[1400px] mx-auto px-6 md:px-12 py-6 flex flex-col md:flex-row items-center justify-between gap-4 text-xs text-gray-500">
-          <span>&copy; {new Date().getFullYear()} Complaint System. All rights reserved.</span>
-          <div className="flex gap-6">
-            <span className="hover:text-gray-300 cursor-pointer transition-colors">Privacy Policy</span>
-            <span className="hover:text-gray-300 cursor-pointer transition-colors">Terms of Service</span>
-          </div>
-        </div>
-      </div>
-    </footer>
+      <span className="text-[10px] font-mono font-semibold tracking-[0.15em] uppercase text-[#8fa3b0] mt-0.5">{status}</span>
+    </div>
   );
 }
+
+function Features() {
+  const features = [
+    {
+      number: '01',
+      title: 'Submit Requests',
+      description: 'Report maintenance issues, noise complaints, lease disputes, and safety concerns with categorized priority levels.',
+    },
+    {
+      number: '02',
+      title: 'Track Maintenance',
+      description: 'Monitor your maintenance and complaint status in real-time from submission to resolution with full transparency.',
+    },
+    {
+      number: '03',
+      title: 'Property Admin',
+      description: 'Powerful property management tools to manage, prioritize, and resolve all incoming maintenance and tenant requests efficiently.',
+    },
+  ];
+
+  return (
+    <section className="relative bg-[#0a0a0a] border-b border-[#6b8390]/40 overflow-hidden">
+      <div className="absolute inset-0 opacity-[0.07] pointer-events-none" style={{
+        backgroundImage: `repeating-linear-gradient(
+          -45deg,
+          transparent,
+          transparent 12px,
+          #aeaeae 14px,
+          #aeaeae 15px
+        )`
+      }} />
+      <div className="relative max-w-[1400px] mx-auto px-6 sm:px-10 md:px-16 py-24">
+        <div className="flex items-center gap-3 mb-6">
+          <span className="w-2 h-2 bg-[#e05a30]" />
+          <span className="text-[10px] font-mono font-semibold tracking-[0.25em] uppercase text-[#f5f3ef]">How It Works</span>
+        </div>
+
+        <div className="grid grid-cols-1 md:grid-cols-3 gap-0 divide-y md:divide-y-0 md:divide-x divide-[#6b8390]/40">
+          {features.map((f) => (
+            <div key={f.number} className="p-8 first:pl-0 md:first:pl-8 last:pr-0 md:last:pr-8">
+              <span className="text-[10px] font-mono font-bold tracking-[0.25em] text-[#f5f3ef]/60">{f.number}</span>
+              <h3 className="text-xl font-bold text-[#f5f3ef] mt-3 mb-3 tracking-tight">{f.title}</h3>
+              <p className="text-sm text-[#f5f3ef]/75 leading-relaxed">{f.description}</p>
+            </div>
+          ))}
+        </div>
+      </div>
+    </section>
+  );
+}
+

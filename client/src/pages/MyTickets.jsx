@@ -25,65 +25,61 @@ export default function MyTickets() {
   };
 
   if (loading) {
-    return <p className="text-center mt-10 text-gray-500">Loading...</p>;
+    return <p className="text-center pt-24 text-[10px] font-mono tracking-[0.2em] uppercase text-[#8fa3b0]">Loading...</p>;
   }
 
   return (
-    <div className="max-w-4xl mx-auto mt-10">
-      <div className="flex justify-between items-center mb-6">
-        <h2 className="text-2xl font-bold text-gray-800">My Tickets</h2>
+    <div className="max-w-5xl mx-auto pt-24 pb-16 px-4">
+      <div className="flex items-center gap-3 mb-2">
+        <span className="w-2 h-2 bg-[#e05a30]" />
+        <span className="text-[10px] font-mono font-semibold tracking-[0.25em] uppercase text-[#8fa3b0]">Dashboard</span>
+      </div>
+
+      <div className="flex justify-between items-end mb-8">
+        <h2 className="text-3xl font-bold text-[#1a1a1a] tracking-tight">My Requests</h2>
         <Link
           to="/new"
-          className="bg-indigo-600 text-white px-4 py-2 rounded hover:bg-indigo-700 text-sm"
+          className="text-xs font-semibold tracking-[0.1em] uppercase text-[#1a1a1a] border-2 border-[#1a1a1a] px-6 py-2.5 hover:bg-[#1a1a1a] hover:text-[#f5f3ef] transition-all duration-200"
         >
-          New Ticket
+          New Request
         </Link>
       </div>
+
       {tickets.length === 0 ? (
-        <p className="text-gray-500">No tickets found.</p>
+        <div className="border-2 border-[#8fa3b0]/20 p-12 text-center">
+          <p className="text-sm text-[#5a6d78]">No requests found.</p>
+        </div>
       ) : (
-        <div className="bg-white rounded-lg shadow-md overflow-hidden">
+        <div className="border-2 border-[#1a1a1a] overflow-hidden">
           <table className="w-full text-left">
-            <thead className="bg-gray-100">
-              <tr>
-                <th className="px-4 py-3 text-sm font-semibold text-gray-600">ID</th>
-                <th className="px-4 py-3 text-sm font-semibold text-gray-600">Type</th>
-                <th className="px-4 py-3 text-sm font-semibold text-gray-600">Category</th>
-                <th className="px-4 py-3 text-sm font-semibold text-gray-600">Priority</th>
-                <th className="px-4 py-3 text-sm font-semibold text-gray-600">Status</th>
-                <th className="px-4 py-3 text-sm font-semibold text-gray-600">Date</th>
-                <th className="px-4 py-3 text-sm font-semibold text-gray-600">Action</th>
+            <thead>
+              <tr className="border-b-2 border-[#1a1a1a]">
+                <th className="px-5 py-3 text-[10px] font-mono font-semibold tracking-[0.2em] uppercase text-[#8fa3b0]">ID</th>
+                <th className="px-5 py-3 text-[10px] font-mono font-semibold tracking-[0.2em] uppercase text-[#8fa3b0]">Type</th>
+                <th className="px-5 py-3 text-[10px] font-mono font-semibold tracking-[0.2em] uppercase text-[#8fa3b0]">Category</th>
+                <th className="px-5 py-3 text-[10px] font-mono font-semibold tracking-[0.2em] uppercase text-[#8fa3b0]">Priority</th>
+                <th className="px-5 py-3 text-[10px] font-mono font-semibold tracking-[0.2em] uppercase text-[#8fa3b0]">Status</th>
+                <th className="px-5 py-3 text-[10px] font-mono font-semibold tracking-[0.2em] uppercase text-[#8fa3b0]">Date</th>
+                <th className="px-5 py-3 text-[10px] font-mono font-semibold tracking-[0.2em] uppercase text-[#8fa3b0]"></th>
               </tr>
             </thead>
-            <tbody className="divide-y divide-gray-200">
+            <tbody className="divide-y divide-[#8fa3b0]/15">
               {tickets.map((ticket) => (
-                <tr key={ticket.id} className="hover:bg-gray-50">
-                  <td className="px-4 py-3 text-sm">#{ticket.id}</td>
-                  <td className="px-4 py-3 text-sm">{ticket.type}</td>
-                  <td className="px-4 py-3 text-sm">{ticket.category}</td>
-                  <td className="px-4 py-3 text-sm">{ticket.priority}</td>
-                  <td className="px-4 py-3 text-sm">
-                    <span
-                      className={`px-2 py-1 rounded text-xs font-medium ${
-                        ticket.status === 'Open'
-                          ? 'bg-green-100 text-green-700'
-                          : ticket.status === 'In Progress'
-                          ? 'bg-yellow-100 text-yellow-700'
-                          : ticket.status === 'Resolved'
-                          ? 'bg-blue-100 text-blue-700'
-                          : 'bg-gray-100 text-gray-700'
-                      }`}
-                    >
-                      {ticket.status}
-                    </span>
+                <tr key={ticket.id} className="hover:bg-[#8fa3b0]/5 transition-colors">
+                  <td className="px-5 py-4 text-sm font-mono text-[#8fa3b0]">#{ticket.id}</td>
+                  <td className="px-5 py-4 text-sm text-[#1a1a1a] font-medium">{ticket.type}</td>
+                  <td className="px-5 py-4 text-sm text-[#5a6d78]">{ticket.category}</td>
+                  <td className="px-5 py-4 text-sm text-[#5a6d78]">{ticket.priority}</td>
+                  <td className="px-5 py-4 text-sm">
+                    <span className="text-[10px] font-mono font-semibold tracking-[0.15em] uppercase text-[#5a6d78]">{ticket.status}</span>
                   </td>
-                  <td className="px-4 py-3 text-sm">
+                  <td className="px-5 py-4 text-xs text-[#8fa3b0] font-mono">
                     {new Date(ticket.created_at).toLocaleDateString()}
                   </td>
-                  <td className="px-4 py-3 text-sm">
+                  <td className="px-5 py-4">
                     <Link
                       to={`/tickets/${ticket.id}`}
-                      className="text-indigo-600 hover:underline"
+                      className="text-xs font-semibold tracking-[0.1em] uppercase text-[#1a1a1a] underline underline-offset-4 decoration-[#8fa3b0]/30 hover:decoration-[#1a1a1a] transition-colors"
                     >
                       View
                     </Link>

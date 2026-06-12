@@ -2,8 +2,8 @@ import { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import axios from 'axios';
 
-const TYPES = ['Complaint', 'Feedback', 'Suggestion', 'Bug Report'];
-const CATEGORIES = ['General', 'Technical', 'Billing', 'Support', 'Other'];
+const TYPES = ['Maintenance Request', 'Noise Complaint', 'Lease Dispute', 'General Feedback', 'Safety Concern'];
+const CATEGORIES = ['Plumbing', 'Electrical', 'HVAC', 'Structural', 'Pest Control', 'Common Areas', 'Parking', 'Lease & Billing', 'Security & Safety'];
 const PRIORITIES = ['Low', 'Medium', 'High', 'Critical'];
 
 export default function NewTicket() {
@@ -24,72 +24,68 @@ export default function NewTicket() {
       );
       navigate('/dashboard');
     } catch (err) {
-      setError(err.response?.data?.message || 'Failed to create ticket');
+      setError(err.response?.data?.message || 'Failed to create request');
     }
   };
 
+  const selectClass = "w-full border-2 border-[#8fa3b0]/25 bg-transparent text-[#1a1a1a] px-4 py-3 text-sm focus:outline-none focus:border-[#1a1a1a] transition-colors duration-200 appearance-none cursor-pointer";
+  const inputClass = "w-full border-2 border-[#8fa3b0]/25 bg-transparent text-[#1a1a1a] px-4 py-3 text-sm focus:outline-none focus:border-[#1a1a1a] transition-colors duration-200";
+
   return (
-    <div className="max-w-xl mx-auto mt-10">
-      <h2 className="text-2xl font-bold mb-6 text-gray-800">
-        Submit New Ticket
-      </h2>
-      {error && <p className="text-red-500 text-sm mb-4">{error}</p>}
-      <form onSubmit={handleSubmit} className="bg-white p-6 rounded-lg shadow-md">
-        <div className="mb-4">
-          <label className="block text-gray-700 text-sm mb-1">Type</label>
-          <select
-            value={type}
-            onChange={(e) => setType(e.target.value)}
-            required
-            className="w-full border border-gray-300 rounded px-3 py-2 focus:outline-none focus:border-indigo-500"
-          >
+    <div className="max-w-xl mx-auto pt-24 pb-16 px-4">
+      <div className="flex items-center gap-3 mb-2">
+        <span className="w-2 h-2 bg-[#e05a30]" />
+        <span className="text-[10px] font-mono font-semibold tracking-[0.25em] uppercase text-[#8fa3b0]">New Request</span>
+      </div>
+      <h2 className="text-3xl font-bold text-[#1a1a1a] mb-8 tracking-tight">Submit a Request</h2>
+
+      {error && (
+        <div className="border-2 border-[#e05a30]/30 bg-[#e05a30]/5 px-4 py-3 mb-6">
+          <span className="text-[10px] font-mono font-semibold tracking-[0.2em] uppercase text-[#e05a30]">Error</span>
+          <p className="text-sm text-[#1a1a1a] mt-0.5">{error}</p>
+        </div>
+      )}
+
+      <form onSubmit={handleSubmit} className="border-2 border-[#1a1a1a] bg-[#f5f3ef] p-8 space-y-6">
+        <div>
+          <label className="block text-[10px] font-mono font-semibold tracking-[0.2em] uppercase text-[#8fa3b0] mb-2">Type</label>
+          <select value={type} onChange={(e) => setType(e.target.value)} required className={selectClass}>
             <option value="">Select type</option>
-            {TYPES.map((t) => (
-              <option key={t} value={t}>{t}</option>
-            ))}
+            {TYPES.map((t) => (<option key={t} value={t}>{t}</option>))}
           </select>
         </div>
-        <div className="mb-4">
-          <label className="block text-gray-700 text-sm mb-1">Category</label>
-          <select
-            value={category}
-            onChange={(e) => setCategory(e.target.value)}
-            required
-            className="w-full border border-gray-300 rounded px-3 py-2 focus:outline-none focus:border-indigo-500"
-          >
+
+        <div>
+          <label className="block text-[10px] font-mono font-semibold tracking-[0.2em] uppercase text-[#8fa3b0] mb-2">Category</label>
+          <select value={category} onChange={(e) => setCategory(e.target.value)} required className={selectClass}>
             <option value="">Select category</option>
-            {CATEGORIES.map((c) => (
-              <option key={c} value={c}>{c}</option>
-            ))}
+            {CATEGORIES.map((c) => (<option key={c} value={c}>{c}</option>))}
           </select>
         </div>
-        <div className="mb-4">
-          <label className="block text-gray-700 text-sm mb-1">Priority</label>
-          <select
-            value={priority}
-            onChange={(e) => setPriority(e.target.value)}
-            className="w-full border border-gray-300 rounded px-3 py-2 focus:outline-none focus:border-indigo-500"
-          >
-            {PRIORITIES.map((p) => (
-              <option key={p} value={p}>{p}</option>
-            ))}
+
+        <div>
+          <label className="block text-[10px] font-mono font-semibold tracking-[0.2em] uppercase text-[#8fa3b0] mb-2">Priority</label>
+          <select value={priority} onChange={(e) => setPriority(e.target.value)} className={selectClass}>
+            {PRIORITIES.map((p) => (<option key={p} value={p}>{p}</option>))}
           </select>
         </div>
-        <div className="mb-6">
-          <label className="block text-gray-700 text-sm mb-1">Description</label>
+
+        <div>
+          <label className="block text-[10px] font-mono font-semibold tracking-[0.2em] uppercase text-[#8fa3b0] mb-2">Description</label>
           <textarea
             value={description}
             onChange={(e) => setDescription(e.target.value)}
             required
-            rows={5}
-            className="w-full border border-gray-300 rounded px-3 py-2 focus:outline-none focus:border-indigo-500"
+            rows={6}
+            className={inputClass}
           />
         </div>
+
         <button
           type="submit"
-          className="bg-indigo-600 text-white px-6 py-2 rounded hover:bg-indigo-700 cursor-pointer"
+          className="w-full text-[#f5f3ef] py-3 text-xs font-semibold tracking-[0.15em] uppercase bg-[#1a1a1a] border-2 border-[#1a1a1a] hover:bg-transparent hover:text-[#1a1a1a] transition-all duration-200 cursor-pointer"
         >
-          Submit
+          Submit Request
         </button>
       </form>
     </div>

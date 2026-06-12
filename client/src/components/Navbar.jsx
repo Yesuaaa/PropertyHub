@@ -28,84 +28,81 @@ export default function Navbar() {
     navigate('/login');
   };
 
-  const textColor = scrolled ? 'text-white' : 'text-green-700';
-  const borderColor = scrolled ? 'border-white/40' : 'border-green-700/40';
-  const hoverBg = scrolled ? 'hover:bg-white/10' : 'hover:bg-green-700/10';
-
   const closeMenu = () => setMenuOpen(false);
-
-  const mobileMenuBg = scrolled ? 'bg-green-600' : 'bg-green-600';
-
   const resolveLink = (to) => (user ? to : '/login');
 
   return (
-    <nav className={`fixed top-0 left-0 right-0 z-50 transition-colors duration-300 ${scrolled || menuOpen ? 'bg-green-600' : 'bg-transparent'}`}>
-      <div className="max-w-[1400px] mx-auto flex items-center justify-between px-6 sm:px-8 py-0 h-20">
+    <nav className={`fixed top-0 left-0 right-0 z-50 transition-colors duration-300 ${scrolled || menuOpen ? 'bg-[#f5f3ef]/95 backdrop-blur-sm border-b border-[#8fa3b0]/20' : 'bg-[#f5f3ef]'}`}>
+      <div className="max-w-[1400px] mx-auto flex items-center justify-between px-6 sm:px-10 py-0 h-16">
         <div className="flex items-center gap-10">
-          <Link to="/" className={`flex items-center gap-2 no-underline ${textColor}`}>
-            <svg
-              xmlns="http://www.w3.org/2000/svg"
-              viewBox="0 0 24 24"
-              fill="currentColor"
-              className="w-8 h-8"
-            >
-              <path d="M20 2H4c-1.1 0-2 .9-2 2v18l4-4h14c1.1 0 2-.9 2-2V4c0-1.1-.9-2-2-2zm0 14H5.17L4 17.17V4h16v12z" />
-            </svg>
+          <Link to="/" className="flex items-center gap-3 no-underline">
+            <div className="w-7 h-7 border-2 border-[#1a1a1a] flex items-center justify-center">
+              <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 16 16" fill="currentColor" className="w-3.5 h-3.5 text-[#1a1a1a]">
+                <path fillRule="evenodd" d="M8 1.75a.75.75 0 01.75.75v5.25h4.25a.75.75 0 010 1.5H8.75V13a.75.75 0 01-1.5 0V9H3.25a.75.75 0 010-1.5H7.25V2.5A.75.75 0 018 1.75z" clipRule="evenodd" />
+              </svg>
+            </div>
+            <span className="text-[#1a1a1a] font-bold text-sm tracking-[0.08em] uppercase">
+              PropertyHub
+            </span>
           </Link>
-          <div className="hidden lg:flex items-center gap-1">
-            <NavLink to="/" scrolled={scrolled}>Home</NavLink>
-            <NavLink to={resolveLink('/new')} scrolled={scrolled}>Submit A Ticket</NavLink>
-            <NavLink to={resolveLink('/dashboard')} scrolled={scrolled}>My Tickets</NavLink>
-            {user?.role === 'admin' && <NavLink to="/admin" scrolled={scrolled}>Admin</NavLink>}
+          <div className="hidden lg:flex items-center gap-8">
+            <NavLink to="/">Home</NavLink>
+            <NavLink to={resolveLink('/new')}>Submit Request</NavLink>
+            <NavLink to={resolveLink('/dashboard')}>My Requests</NavLink>
+            {user?.role === 'admin' && <NavLink to="/admin">Admin</NavLink>}
           </div>
         </div>
         <div className="flex items-center gap-4">
           {user && (
-            <span className={`hidden sm:inline text-sm font-medium ${scrolled ? 'text-green-200' : 'text-green-500'}`}>
-              {user.name}
-            </span>
+            <span className="hidden sm:inline text-xs font-mono text-[#8fa3b0] tracking-wider uppercase">{user.name}</span>
           )}
           {user ? (
             <button
               onClick={handleLogout}
-              className={`hidden sm:block text-sm font-bold uppercase tracking-wider ${textColor} border ${borderColor} px-5 py-2 ${hoverBg} transition-colors cursor-pointer bg-transparent`}
+              className="hidden sm:block text-xs font-semibold tracking-[0.1em] uppercase text-[#1a1a1a] border border-[#1a1a1a] px-5 py-2 hover:bg-[#1a1a1a] hover:text-[#f5f3ef] transition-all duration-200 cursor-pointer bg-transparent"
             >
               Logout
             </button>
           ) : (
-            <Link
-              to="/login"
-              className={`hidden sm:inline-flex text-sm font-bold uppercase tracking-wider ${textColor} border ${borderColor} px-5 py-2 ${hoverBg} transition-colors`}
-            >
-              Login
-            </Link>
+            <div className="hidden sm:flex items-center gap-3">
+              <Link
+                to="/login"
+                className="text-xs font-medium text-[#5a6d78] hover:text-[#1a1a1a] transition-colors tracking-wider uppercase"
+              >
+                Sign in
+              </Link>
+              <Link
+                to="/register"
+                className="text-xs font-semibold tracking-[0.1em] uppercase text-[#1a1a1a] border border-[#1a1a1a] px-5 py-2 hover:bg-[#1a1a1a] hover:text-[#f5f3ef] transition-all duration-200"
+              >
+                Get Started
+              </Link>
+            </div>
           )}
           <button
             onClick={() => setMenuOpen(!menuOpen)}
-            className={`lg:hidden flex flex-col justify-center items-center w-10 h-10 gap-1.5 cursor-pointer bg-transparent border-none ${textColor}`}
+            className="lg:hidden flex flex-col justify-center items-center w-8 h-8 gap-[5px] cursor-pointer bg-transparent border-none"
             aria-label="Toggle menu"
           >
-            <span className={`block w-6 h-0.5 ${scrolled || menuOpen ? 'bg-white' : 'bg-green-700'} transition-all duration-300 ${menuOpen ? 'rotate-45 translate-y-2' : ''}`} />
-            <span className={`block w-6 h-0.5 ${scrolled || menuOpen ? 'bg-white' : 'bg-green-700'} transition-all duration-300 ${menuOpen ? 'opacity-0' : ''}`} />
-            <span className={`block w-6 h-0.5 ${scrolled || menuOpen ? 'bg-white' : 'bg-green-700'} transition-all duration-300 ${menuOpen ? '-rotate-45 -translate-y-2' : ''}`} />
+            <span className={`block w-5 h-[1.5px] bg-[#1a1a1a] transition-all duration-300 ${menuOpen ? 'rotate-45 translate-y-[6.5px]' : ''}`} />
+            <span className={`block w-5 h-[1.5px] bg-[#1a1a1a] transition-all duration-300 ${menuOpen ? 'opacity-0' : ''}`} />
+            <span className={`block w-5 h-[1.5px] bg-[#1a1a1a] transition-all duration-300 ${menuOpen ? '-rotate-45 -translate-y-[6.5px]' : ''}`} />
           </button>
         </div>
       </div>
 
-      <div className={`lg:hidden fixed inset-0 top-20 ${mobileMenuBg} transition-all duration-300 ${menuOpen ? 'opacity-100 pointer-events-auto' : 'opacity-0 pointer-events-none'}`}>
+      <div className={`lg:hidden fixed inset-0 top-16 bg-[#f5f3ef] transition-all duration-300 ${menuOpen ? 'opacity-100 pointer-events-auto' : 'opacity-0 pointer-events-none'}`}>
         <div className="flex flex-col items-center justify-start gap-2 pt-12">
-          <MobileNavLink to="/" scrolled={scrolled} onClick={closeMenu}>Home</MobileNavLink>
-          <MobileNavLink to={resolveLink('/new')} scrolled={scrolled} onClick={closeMenu}>Submit A Ticket</MobileNavLink>
-          <MobileNavLink to={resolveLink('/dashboard')} scrolled={scrolled} onClick={closeMenu}>My Tickets</MobileNavLink>
-          {user?.role === 'admin' && <MobileNavLink to="/admin" scrolled={scrolled} onClick={closeMenu}>Admin</MobileNavLink>}
-          <div className={`w-24 h-px ${scrolled ? 'bg-white/20' : 'bg-green-700/20'} my-4`} />
-          {user && (
-            <span className="text-sm text-green-200 font-medium mb-2">{user.name}</span>
-          )}
+          <MobileNavLink to="/" onClick={closeMenu}>Home</MobileNavLink>
+          <MobileNavLink to={resolveLink('/new')} onClick={closeMenu}>Submit Request</MobileNavLink>
+          <MobileNavLink to={resolveLink('/dashboard')} onClick={closeMenu}>My Requests</MobileNavLink>
+          {user?.role === 'admin' && <MobileNavLink to="/admin" onClick={closeMenu}>Admin</MobileNavLink>}
+          <div className="w-12 h-px bg-[#8fa3b0]/40 my-6" />
+          {user && <span className="text-xs font-mono text-[#8fa3b0] tracking-wider uppercase mb-3">{user.name}</span>}
           {user ? (
             <button
               onClick={() => { handleLogout(); closeMenu(); }}
-              className="text-sm font-bold uppercase tracking-wider text-white border border-white/40 px-8 py-3 hover:bg-white/10 transition-colors cursor-pointer bg-transparent"
+              className="text-xs font-semibold tracking-[0.1em] uppercase text-[#1a1a1a] border border-[#1a1a1a] px-10 py-3 hover:bg-[#1a1a1a] hover:text-[#f5f3ef] transition-all duration-200 cursor-pointer bg-transparent"
             >
               Logout
             </button>
@@ -113,9 +110,9 @@ export default function Navbar() {
             <Link
               to="/login"
               onClick={closeMenu}
-              className="text-sm font-bold uppercase tracking-wider text-white border border-white/40 px-8 py-3 hover:bg-white/10 transition-colors"
+              className="text-xs font-semibold tracking-[0.1em] uppercase text-[#1a1a1a] border border-[#1a1a1a] px-10 py-3 hover:bg-[#1a1a1a] hover:text-[#f5f3ef] transition-all duration-200"
             >
-              Login
+              Sign In
             </Link>
           )}
         </div>
@@ -124,27 +121,23 @@ export default function Navbar() {
   );
 }
 
-function NavLink({ to, children, scrolled }) {
-  const textColor = scrolled ? 'text-white/80' : 'text-green-700/80';
-  const hoverColor = scrolled ? 'hover:text-white' : 'hover:text-green-700';
-  const indicatorColor = scrolled ? 'after:bg-white' : 'after:bg-green-700';
-
+function NavLink({ to, children }) {
   return (
     <Link
       to={to}
-      className={`relative text-sm font-medium ${textColor} px-4 py-5 ${hoverColor} transition-colors after:absolute after:bottom-0 after:left-0 after:right-0 after:h-0.5 ${indicatorColor} after:scale-x-0 hover:after:scale-x-100 after:transition-transform after:origin-center`}
+      className="relative text-xs font-semibold tracking-[0.1em] uppercase text-[#5a6d78] hover:text-[#1a1a1a] transition-colors duration-200 after:absolute after:bottom-0 after:left-0 after:right-0 after:h-[1.5px] after:bg-[#e05a30] after:scale-x-0 hover:after:scale-x-100 after:transition-transform after:duration-200 after:origin-left"
     >
       {children}
     </Link>
   );
 }
 
-function MobileNavLink({ to, children, scrolled, onClick }) {
+function MobileNavLink({ to, children, onClick }) {
   return (
     <Link
       to={to}
       onClick={onClick}
-      className="text-white text-lg font-semibold px-8 py-3 hover:bg-white/10 transition-colors rounded-lg"
+      className="text-[#1a1a1a] text-base font-semibold tracking-[0.05em] uppercase px-10 py-3 hover:text-[#5a6d78] transition-colors duration-200"
     >
       {children}
     </Link>
