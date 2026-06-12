@@ -1,32 +1,33 @@
 import { Link } from 'react-router-dom';
 
 export default function Footer() {
+  const user = JSON.parse(localStorage.getItem('user') || 'null');
   const columns = [
     {
-      title: 'Product',
+      title: 'Quick Actions',
       links: [
-        { label: 'Submit a Request', to: '/new' },
-        { label: 'My Requests', to: '/dashboard' },
-        { label: 'Admin Panel', to: '/admin' },
-        { label: 'Register', to: '/register' },
+        { label: 'Submit a Complaint', to: '/new' },
+        { label: 'Track My Requests', to: '/dashboard' },
+        ...(user?.role === 'admin' ? [{ label: 'Admin Dashboard', to: '/admin' }] : []),
+        { label: 'Create Account', to: '/register' },
       ],
     },
     {
-      title: 'Resources',
+      title: 'Request Types',
       links: [
-        { label: 'Documentation', to: '/' },
-        { label: 'API Reference', to: '/' },
-        { label: 'Guidelines', to: '/' },
-        { label: 'Status Page', to: '/' },
+        { label: 'Maintenance', to: '/new' },
+        { label: 'Noise Complaints', to: '/new' },
+        { label: 'Safety Concerns', to: '/new' },
+        { label: 'Lease Disputes', to: '/new' },
       ],
     },
     {
-      title: 'Company',
+      title: 'Support',
       links: [
-        { label: 'About Us', to: '/' },
-        { label: 'Careers', to: '/' },
+        { label: 'Filing Guidelines', to: '/' },
         { label: 'Privacy Policy', to: '/' },
         { label: 'Terms of Service', to: '/' },
+        { label: 'Contact Us', to: '/' },
       ],
     },
   ];
@@ -45,7 +46,7 @@ export default function Footer() {
               <span className="text-white font-bold text-sm tracking-[0.08em] uppercase">PropertyHub</span>
             </Link>
             <p className="text-sm leading-relaxed text-[#c8d5dd] max-w-sm">
-              Submit, track, and resolve property complaints and maintenance requests efficiently. Every tenant's voice heard, every issue resolved.
+              Report it. Track it. Resolve it. Maintenance issues, noise complaints, lease disputes &mdash; submitted and tracked in one place.
             </p>
           </div>
 
