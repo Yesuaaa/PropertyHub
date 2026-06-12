@@ -49,7 +49,6 @@ export default function Navbar() {
             <NavLink to="/">Home</NavLink>
             <NavLink to={resolveLink('/new')}>Submit Request</NavLink>
             <NavLink to={resolveLink('/dashboard')}>My Requests</NavLink>
-            {user?.role === 'admin' && <NavLink to="/admin">Admin</NavLink>}
           </div>
         </div>
         <div className="flex items-center gap-4">
@@ -96,7 +95,6 @@ export default function Navbar() {
           <MobileNavLink to="/" onClick={closeMenu}>Home</MobileNavLink>
           <MobileNavLink to={resolveLink('/new')} onClick={closeMenu}>Submit Request</MobileNavLink>
           <MobileNavLink to={resolveLink('/dashboard')} onClick={closeMenu}>My Requests</MobileNavLink>
-          {user?.role === 'admin' && <MobileNavLink to="/admin" onClick={closeMenu}>Admin</MobileNavLink>}
           <div className="w-12 h-px bg-[#8fa3b0]/40 my-6" />
           {user && <span className="text-xs font-mono text-[#8fa3b0] tracking-wider uppercase mb-3">{user.name}</span>}
           {user ? (

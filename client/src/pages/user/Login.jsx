@@ -114,6 +114,15 @@ export default function Login() {
                 Create one
               </Link>
             </p>
+
+            <div className="pt-4 border-t-2 border-[#8fa3b0]/15">
+              <p className="text-sm text-center text-[#5a6d78]">
+                Admin or staff?{' '}
+                <Link to="/admin/login" className="font-semibold text-[#e05a30] hover:text-[#c44a25] transition-colors tracking-wider uppercase text-xs">
+                  Sign in here
+                </Link>
+              </p>
+            </div>
           </form>
         </div>
       </div>
