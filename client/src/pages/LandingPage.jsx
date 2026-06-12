@@ -5,7 +5,6 @@ export default function LandingPage() {
     <div className="pt-16">
       <Hero />
       <Features />
-      <Footer />
     </div>
   );
 }
@@ -173,84 +172,3 @@ function Features() {
   );
 }
 
-function Footer() {
-  const columns = [
-    {
-      title: 'Product',
-      links: [
-        { label: 'Submit a Request', to: '/new' },
-        { label: 'My Requests', to: '/dashboard' },
-        { label: 'Admin Panel', to: '/admin' },
-        { label: 'Register', to: '/register' },
-      ],
-    },
-    {
-      title: 'Resources',
-      links: [
-        { label: 'Documentation', to: '/' },
-        { label: 'API Reference', to: '/' },
-        { label: 'Guidelines', to: '/' },
-        { label: 'Status Page', to: '/' },
-      ],
-    },
-    {
-      title: 'Company',
-      links: [
-        { label: 'About Us', to: '/' },
-        { label: 'Careers', to: '/' },
-        { label: 'Privacy Policy', to: '/' },
-        { label: 'Terms of Service', to: '/' },
-      ],
-    },
-  ];
-
-  return (
-    <footer className="border-t border-[#8fa3b0]/20">
-      <div className="max-w-[1400px] mx-auto px-6 sm:px-10 md:px-16">
-        <div className="py-16 grid grid-cols-1 md:grid-cols-2 lg:grid-cols-5 gap-12 lg:gap-8">
-          <div className="lg:col-span-2 space-y-6">
-            <Link to="/" className="inline-flex items-center gap-3 no-underline">
-              <div className="w-7 h-7 border-2 border-[#1a1a1a] flex items-center justify-center">
-                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 16 16" fill="currentColor" className="w-3.5 h-3.5 text-[#1a1a1a]">
-                  <path fillRule="evenodd" d="M8 1.75a.75.75 0 01.75.75v5.25h4.25a.75.75 0 010 1.5H8.75V13a.75.75 0 01-1.5 0V9H3.25a.75.75 0 010-1.5H7.25V2.5A.75.75 0 018 1.75z" clipRule="evenodd" />
-                </svg>
-              </div>
-              <span className="text-[#1a1a1a] font-bold text-sm tracking-[0.08em] uppercase">PropertyHub</span>
-            </Link>
-            <p className="text-sm leading-relaxed text-[#5a6d78] max-w-sm">
-              Submit, track, and resolve property complaints and maintenance requests efficiently. Every tenant's voice heard, every issue resolved.
-            </p>
-          </div>
-
-          {columns.map((col) => (
-            <div key={col.title}>
-              <div className="flex items-center gap-2 mb-5">
-                <span className="w-1.5 h-1.5 bg-[#e05a30]" />
-                <span className="text-[10px] font-mono font-semibold tracking-[0.25em] uppercase text-[#8fa3b0]">{col.title}</span>
-              </div>
-              <ul className="space-y-3">
-                {col.links.map((link) => (
-                  <li key={link.label}>
-                    <Link to={link.to} className="text-sm text-[#5a6d78] hover:text-[#1a1a1a] transition-colors duration-200">
-                      {link.label}
-                    </Link>
-                  </li>
-                ))}
-              </ul>
-            </div>
-          ))}
-        </div>
-
-        <div className="py-6 border-t border-[#8fa3b0]/20 flex flex-col md:flex-row items-center justify-between gap-4">
-          <span className="text-[10px] font-mono tracking-[0.15em] text-[#8fa3b0]">
-            &copy; {new Date().getFullYear()} PROPERTYHUB &mdash; ALL RIGHTS RESERVED
-          </span>
-          <div className="flex gap-6">
-            <span className="text-[10px] font-mono tracking-[0.15em] text-[#8fa3b0] hover:text-[#1a1a1a] cursor-pointer transition-colors">Privacy Policy</span>
-            <span className="text-[10px] font-mono tracking-[0.15em] text-[#8fa3b0] hover:text-[#1a1a1a] cursor-pointer transition-colors">Terms of Service</span>
-          </div>
-        </div>
-      </div>
-    </footer>
-  );
-}
