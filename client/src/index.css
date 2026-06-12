@@ -33,3 +33,21 @@ select:-webkit-autofill {
   -webkit-box-shadow: 0 0 0px 1000px var(--off-white) inset;
   -webkit-text-fill-color: var(--ink);
 }
+
+::-webkit-scrollbar {
+  width: 12px;
+  height: 4px;
+  background: transparent;
+}
+
+::-webkit-scrollbar-track {
+  background: transparent;
+}
+
+::-webkit-scrollbar-thumb {
+  background: #000000;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: #000000;
+}

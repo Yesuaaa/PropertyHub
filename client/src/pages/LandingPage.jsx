@@ -5,7 +5,6 @@ export default function LandingPage() {
     <div className="pt-16">
       <Hero />
       <Features />
-      <Steps />
       <Footer />
     </div>
   );
@@ -144,43 +143,28 @@ function Features() {
   ];
 
   return (
-    <section className="border-b border-[#8fa3b0]/20">
-      <div className="max-w-[1400px] mx-auto px-6 sm:px-10 md:px-16 py-24">
-        <SectionLabel>How It Works</SectionLabel>
+    <section className="relative bg-[#0a0a0a] border-b border-[#6b8390]/40 overflow-hidden">
+      <div className="absolute inset-0 opacity-[0.07] pointer-events-none" style={{
+        backgroundImage: `repeating-linear-gradient(
+          -45deg,
+          transparent,
+          transparent 12px,
+          #aeaeae 14px,
+          #aeaeae 15px
+        )`
+      }} />
+      <div className="relative max-w-[1400px] mx-auto px-6 sm:px-10 md:px-16 py-24">
+        <div className="flex items-center gap-3 mb-6">
+          <span className="w-2 h-2 bg-[#e05a30]" />
+          <span className="text-[10px] font-mono font-semibold tracking-[0.25em] uppercase text-[#f5f3ef]">How It Works</span>
+        </div>
 
-        <div className="grid grid-cols-1 md:grid-cols-3 gap-0 divide-y md:divide-y-0 md:divide-x divide-[#8fa3b0]/20">
+        <div className="grid grid-cols-1 md:grid-cols-3 gap-0 divide-y md:divide-y-0 md:divide-x divide-[#6b8390]/40">
           {features.map((f) => (
             <div key={f.number} className="p-8 first:pl-0 md:first:pl-8 last:pr-0 md:last:pr-8">
-              <span className="text-[10px] font-mono font-bold tracking-[0.25em] text-[#8fa3b0]">{f.number}</span>
-              <h3 className="text-xl font-bold text-[#1a1a1a] mt-3 mb-3 tracking-tight">{f.title}</h3>
-              <p className="text-sm text-[#5a6d78] leading-relaxed">{f.description}</p>
-            </div>
-          ))}
-        </div>
-      </div>
-    </section>
-  );
-}
-
-function Steps() {
-  const steps = [
-    { step: '01', title: 'Register', description: 'Create your tenant or owner account.' },
-    { step: '02', title: 'Submit', description: 'Describe your property issue with type and priority.' },
-    { step: '03', title: 'Track', description: 'Follow your maintenance request status in real-time.' },
-    { step: '04', title: 'Resolved', description: 'Get notified when your property issue is handled.' },
-  ];
-
-  return (
-    <section>
-      <div className="max-w-[1400px] mx-auto px-6 sm:px-10 md:px-16 py-24">
-        <SectionLabel>Getting Started</SectionLabel>
-
-        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-0 divide-y sm:divide-y-0 sm:divide-x divide-[#8fa3b0]/20">
-          {steps.map((s) => (
-            <div key={s.step} className="p-8 first:pl-0 last:pr-0">
-              <span className="text-5xl font-bold font-mono text-[#8fa3b0]/20 leading-none">{s.step}</span>
-              <h3 className="text-lg font-bold text-[#1a1a1a] mt-4 mb-2 tracking-tight">{s.title}</h3>
-              <p className="text-sm text-[#5a6d78]">{s.description}</p>
+              <span className="text-[10px] font-mono font-bold tracking-[0.25em] text-[#f5f3ef]/60">{f.number}</span>
+              <h3 className="text-xl font-bold text-[#f5f3ef] mt-3 mb-3 tracking-tight">{f.title}</h3>
+              <p className="text-sm text-[#f5f3ef]/75 leading-relaxed">{f.description}</p>
             </div>
           ))}
         </div>
