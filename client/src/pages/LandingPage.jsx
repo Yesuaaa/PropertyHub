@@ -49,7 +49,7 @@ export default function LandingPage() {
 
 function Hero() {
   return (
-    <section className="relative bg-[#f0fdf4] overflow-hidden">
+    <section className="relative overflow-hidden">
       <div className="min-h-screen flex items-center py-16 lg:py-0">
         <div className="max-w-[1400px] mx-auto px-5 sm:px-6 md:px-12 w-full grid grid-cols-1 lg:grid-cols-2 gap-8 items-center">
           <div className="relative z-10">
@@ -86,7 +86,7 @@ function Hero() {
           </div>
         </div>
       </div>
-      <div className="absolute bottom-0 left-0 right-0 h-32 bg-gradient-to-t from-white to-transparent" />
+      <div className="absolute bottom-0 left-0 right-0 h-32 bg-gradient-to-t from-gray-50 to-transparent" />
     </section>
   );
 }
