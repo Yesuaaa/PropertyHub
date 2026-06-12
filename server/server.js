@@ -16,6 +16,11 @@ const authRoutes = require('./routes/authRoutes');
 // Use routes
 
 
+//health check endpoint
+app.get('/api/health', (req, res) => {
+  res.json({ status: 'ok', timestamp: new Date().toISOString() });
+});
+
 // Start the server
 const PORT = process.env.PORT || 5000;
 app.listen(PORT, () => {
