@@ -39,48 +39,55 @@ export default function AdminDashboard() {
   };
 
   if (loading) {
-    return <p className="text-center mt-10 text-gray-500">Loading...</p>;
+    return <p className="text-center pt-24 text-[10px] font-mono tracking-[0.2em] uppercase text-[#8fa3b0]">Loading...</p>;
   }
 
   return (
-    <div className="max-w-6xl mx-auto mt-10">
-      <h2 className="text-2xl font-bold mb-6 text-gray-800">Admin Dashboard</h2>
+    <div className="max-w-6xl mx-auto pt-24 pb-16 px-4">
+      <div className="flex items-center gap-3 mb-2">
+        <span className="w-2 h-2 bg-[#e05a30]" />
+        <span className="text-[10px] font-mono font-semibold tracking-[0.25em] uppercase text-[#8fa3b0]">Administration</span>
+      </div>
+      <h2 className="text-3xl font-bold text-[#1a1a1a] mb-8 tracking-tight">Property Management Dashboard</h2>
+
       {tickets.length === 0 ? (
-        <p className="text-gray-500">No tickets found.</p>
+        <div className="border-2 border-[#8fa3b0]/20 p-12 text-center">
+          <p className="text-sm text-[#5a6d78]">No requests found.</p>
+        </div>
       ) : (
-        <div className="bg-white rounded-lg shadow-md overflow-x-auto">
+        <div className="border-2 border-[#1a1a1a] overflow-x-auto">
           <table className="w-full text-left">
-            <thead className="bg-gray-100">
-              <tr>
-                <th className="px-4 py-3 text-sm font-semibold text-gray-600">ID</th>
-                <th className="px-4 py-3 text-sm font-semibold text-gray-600">User</th>
-                <th className="px-4 py-3 text-sm font-semibold text-gray-600">Type</th>
-                <th className="px-4 py-3 text-sm font-semibold text-gray-600">Category</th>
-                <th className="px-4 py-3 text-sm font-semibold text-gray-600">Priority</th>
-                <th className="px-4 py-3 text-sm font-semibold text-gray-600">Status</th>
-                <th className="px-4 py-3 text-sm font-semibold text-gray-600">Date</th>
+            <thead>
+              <tr className="border-b-2 border-[#1a1a1a]">
+                <th className="px-5 py-3 text-[10px] font-mono font-semibold tracking-[0.2em] uppercase text-[#8fa3b0]">ID</th>
+                <th className="px-5 py-3 text-[10px] font-mono font-semibold tracking-[0.2em] uppercase text-[#8fa3b0]">User</th>
+                <th className="px-5 py-3 text-[10px] font-mono font-semibold tracking-[0.2em] uppercase text-[#8fa3b0]">Type</th>
+                <th className="px-5 py-3 text-[10px] font-mono font-semibold tracking-[0.2em] uppercase text-[#8fa3b0]">Category</th>
+                <th className="px-5 py-3 text-[10px] font-mono font-semibold tracking-[0.2em] uppercase text-[#8fa3b0]">Priority</th>
+                <th className="px-5 py-3 text-[10px] font-mono font-semibold tracking-[0.2em] uppercase text-[#8fa3b0]">Status</th>
+                <th className="px-5 py-3 text-[10px] font-mono font-semibold tracking-[0.2em] uppercase text-[#8fa3b0]">Date</th>
               </tr>
             </thead>
-            <tbody className="divide-y divide-gray-200">
+            <tbody className="divide-y divide-[#8fa3b0]/15">
               {tickets.map((ticket) => (
-                <tr key={ticket.id} className="hover:bg-gray-50">
-                  <td className="px-4 py-3 text-sm">#{ticket.id}</td>
-                  <td className="px-4 py-3 text-sm">{ticket.user_name}</td>
-                  <td className="px-4 py-3 text-sm">{ticket.type}</td>
-                  <td className="px-4 py-3 text-sm">{ticket.category}</td>
-                  <td className="px-4 py-3 text-sm">{ticket.priority}</td>
-                  <td className="px-4 py-3 text-sm">
+                <tr key={ticket.id} className="hover:bg-[#8fa3b0]/5 transition-colors">
+                  <td className="px-5 py-4 text-sm font-mono text-[#8fa3b0]">#{ticket.id}</td>
+                  <td className="px-5 py-4 text-sm text-[#1a1a1a] font-medium">{ticket.user_name}</td>
+                  <td className="px-5 py-4 text-sm text-[#5a6d78]">{ticket.type}</td>
+                  <td className="px-5 py-4 text-sm text-[#5a6d78]">{ticket.category}</td>
+                  <td className="px-5 py-4 text-sm text-[#5a6d78]">{ticket.priority}</td>
+                  <td className="px-5 py-4">
                     <select
                       value={ticket.status}
                       onChange={(e) => handleStatusChange(ticket.id, e.target.value)}
-                      className="border border-gray-300 rounded px-2 py-1 text-sm focus:outline-none focus:border-indigo-500 cursor-pointer"
+                      className="border-2 border-[#8fa3b0]/25 bg-transparent text-sm text-[#1a1a1a] px-3 py-1.5 focus:outline-none focus:border-[#1a1a1a] cursor-pointer appearance-none font-mono text-xs tracking-wider uppercase"
                     >
                       {STATUSES.map((s) => (
                         <option key={s} value={s}>{s}</option>
                       ))}
                     </select>
                   </td>
-                  <td className="px-4 py-3 text-sm">
+                  <td className="px-5 py-4 text-xs text-[#8fa3b0] font-mono">
                     {new Date(ticket.created_at).toLocaleDateString()}
                   </td>
                 </tr>

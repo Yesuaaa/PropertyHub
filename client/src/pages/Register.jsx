@@ -48,127 +48,114 @@ export default function Register() {
       setLoading(false);
     }
   };
- 
+
+  const inputClass = "w-full border-2 border-[#8fa3b0]/25 bg-transparent text-[#1a1a1a] px-4 py-3 text-sm focus:outline-none focus:border-[#1a1a1a] transition-colors duration-200 placeholder:text-[#8fa3b0]/50";
+
   return (
-    <div className="min-h-screen flex items-center justify-center bg-gray-50 py-12 px-4">
-      <div className="max-w-6xl w-full">
-        <div className="grid grid-cols-1 md:grid-cols-5 gap-0 rounded-lg overflow-hidden shadow-lg">
-          <div className="md:col-span-2 text-left p-8 flex flex-col justify-start" style={{ backgroundColor: '#0d3b12' }}>
-            <h1 className="text-2xl font-bold text-white mb-4">FeedbackHub</h1>
-            <h5 className="text-l font-bold text-white mb-4">Hey! Let's get your account set up. It only takes a minute!</h5>
-            <div className="space-y-2 text-white text-sm opacity-90">
-              <p>✓ Track all your tickets in one place</p>
-              <p>✓ Get notified when agents reply</p>
-              <p>✓ Review your complaint history</p>
-              <p>✓ Rate and close resolved history</p>
-              <p>✓ Free for all users</p>
+    <div className="min-h-screen flex items-center justify-center py-12 px-4">
+      <div className="max-w-xl w-full">
+        <div className="border-2 border-[#1a1a1a] bg-[#f5f3ef] p-10">
+          <div className="flex items-center gap-3 mb-2">
+            <span className="w-2 h-2 bg-[#e05a30]" />
+            <span className="text-[10px] font-mono font-semibold tracking-[0.25em] uppercase text-[#8fa3b0]">Create Account</span>
+          </div>
+          <h2 className="text-2xl font-bold text-[#1a1a1a] mb-1 tracking-tight">Get started</h2>
+          <p className="text-sm text-[#5a6d78] mb-8">Already have an account?{' '}
+            <Link to="/login" className="font-semibold text-[#1a1a1a] hover:text-[#5a6d78] transition-colors tracking-wider uppercase text-xs">Sign in</Link>
+          </p>
+
+          {error && (
+            <div className="border-2 border-[#e05a30]/30 bg-[#e05a30]/5 px-4 py-3 mb-6">
+              <span className="text-[10px] font-mono font-semibold tracking-[0.2em] uppercase text-[#e05a30]">Error</span>
+              <p className="text-sm text-[#1a1a1a] mt-0.5">{error}</p>
             </div>
-          </div>
-          
-          <div className="md:col-span-3 bg-white p-8">
-            <h2 className="text-2xl font-bold mb-2 text-left text-gray-900">Create your Account</h2>
-            <p className="text-sm text-gray-600 mb-6 text-left">Already have an account?{''} 
-              <Link to="/login" className="text-medium hover:underline" style={{ color: '#0d3b12' }}> Sign in</Link>
-            </p>
-            {error && (
-              <div className="bg-red-50 border border-red-400 text-red-700 px-4 py-3 rounded mb-4 text-sm">{error}</div>
-            )}
+          )}
 
-            <form onSubmit={handleSubmit} className="space-y-4"> 
-              <div className="flex gap-4">
-                <div className="flex-1">
-
-                  <label className="block text-gray-700 text-sm mb-1">First Name</label>
-                  <input
-                    type="text"
-                    value={firstName} 
-                    onChange={(e) => setFirstName(e.target.value)}
-                    required
-                    className="w-full border border-gray-300 rounded px-3 py-2 focus:outline-none focus:border-green-500"
-                    onFocus={(e) => (e.target.style.borderColor = '#0d3b12')}
-                    onBlur={(e) => (e.target.style.borderColor = '#d1d5db')}
-                  />  
-                </div>
-                <div className="flex-1"> 
-                  <label className="block text-gray-700 text-sm mb-1">Last Name</label>
-                  <input
-                    type="text"
-                    value={lastName}
-                    onChange={(e) => setLastName(e.target.value)}
-                    required
-                    className="w-full border border-gray-300 rounded px-3 py-2 focus:outline-none focus:border-green-500"
-                    onFocus={(e) => (e.target.style.borderColor = '#0d3b12')}
-                    onBlur={(e) => (e.target.style.borderColor = '#d1d5db')}
-                  />
-                </div>
+          <form onSubmit={handleSubmit} className="space-y-5">
+            <div className="grid grid-cols-2 gap-4">
+              <div>
+                <label className="block text-[10px] font-mono font-semibold tracking-[0.2em] uppercase text-[#8fa3b0] mb-2">First Name</label>
+                <input
+                  type="text"
+                  value={firstName}
+                  onChange={(e) => setFirstName(e.target.value)}
+                  required
+                  className={inputClass}
+                />
               </div>
+              <div>
+                <label className="block text-[10px] font-mono font-semibold tracking-[0.2em] uppercase text-[#8fa3b0] mb-2">Last Name</label>
+                <input
+                  type="text"
+                  value={lastName}
+                  onChange={(e) => setLastName(e.target.value)}
+                  required
+                  className={inputClass}
+                />
+              </div>
+            </div>
 
-                <div>
-                  <label className="block text-gray-700 text-sm mb-1">Email address</label>
-                  <input
-                    type="email"
-                    value={email}
-                    onChange={(e) => setEmail(e.target.value)}
-                    required
-                    placeholder="user@feedbackhub.com"
-                    className="w-full border border-gray-300 rounded px-3 py-2 focus:outline-none focus:border-green-500"
-                    onFocus={(e) => (e.target.style.borderColor = '#0d3b12')}
-                    onBlur={(e) => (e.target.style.borderColor = '#d1d5db')}
-                  />
-                </div>
+            <div>
+              <label className="block text-[10px] font-mono font-semibold tracking-[0.2em] uppercase text-[#8fa3b0] mb-2">Email</label>
+              <input
+                type="email"
+                value={email}
+                onChange={(e) => setEmail(e.target.value)}
+                required
+                placeholder="user@propertyhub.com"
+                className={inputClass}
+              />
+            </div>
 
-                <div className="flex gap-4"> 
-                  <div className="flex-1">
-                    <label className="block text-gray-700 text-sm mb-1">Password</label>
-                    <input
-                      type="password"
-                      value={password}
-                      onChange={(e) => setPassword(e.target.value)}
-                      required
-                      className="w-full border border-gray-300 rounded px-3 py-2 focus:outline-none focus:border-green-500"
-                      onFocus={(e) => (e.target.style.borderColor = '#0d3b12')}
-                      onBlur={(e) => (e.target.style.borderColor = '#d1d5db')}
-                    />
-                  </div>
-                  <div className="flex-1">
-                    <label className="block text-gray-700 text-sm mb-1">Confirm Password</label>
-                    <input
-                      type="password"
-                      value={confirmPassword}
-                      onChange={(e) => setConfirmPassword(e.target.value)}
-                      required
-                      className="w-full border border-gray-300 rounded px-3 py-2 focus:outline-none focus:border-green-500"
-                      onFocus={(e) => (e.target.style.borderColor = '#0d3b12')}
-                      onBlur={(e) => (e.target.style.borderColor = '#d1d5db')}
-                    />
-                  </div>  
-                </div>
+            <div className="grid grid-cols-2 gap-4">
+              <div>
+                <label className="block text-[10px] font-mono font-semibold tracking-[0.2em] uppercase text-[#8fa3b0] mb-2">Password</label>
+                <input
+                  type="password"
+                  value={password}
+                  onChange={(e) => setPassword(e.target.value)}
+                  required
+                  className={inputClass}
+                />
+              </div>
+              <div>
+                <label className="block text-[10px] font-mono font-semibold tracking-[0.2em] uppercase text-[#8fa3b0] mb-2">Confirm</label>
+                <input
+                  type="password"
+                  value={confirmPassword}
+                  onChange={(e) => setConfirmPassword(e.target.value)}
+                  required
+                  className={inputClass}
+                />
+              </div>
+            </div>
 
-                <div className="flex items-start">
-                  <input 
-                    type="checkbox"
-                    checked={agreeTerms}
-                    onChange={(e) => setAgreeTerms(e.target.checked)}
-                    className="mt-1 mr-2"
-                    style={{ accentColor: '#0d3b12'}}
-                  />
-                  <label className="text-sm text-gray-600">
-                    I agree to the Terms of Service and Privacy Policy
-                  </label>
-                </div>
+            <div className="flex items-start gap-3 pt-1">
+              <input
+                type="checkbox"
+                checked={agreeTerms}
+                onChange={(e) => setAgreeTerms(e.target.checked)}
+                className="mt-0.5 w-4 h-4 border-2 border-[#8fa3b0]/40 cursor-pointer"
+                style={{ accentColor: '#1a1a1a' }}
+              />
+              <label className="text-xs text-[#5a6d78] leading-relaxed">
+                I agree to the{' '}
+                <span className="font-semibold text-[#1a1a1a] cursor-pointer">Terms of Service</span>
+                {' '}and{' '}
+                <span className="font-semibold text-[#1a1a1a] cursor-pointer">Privacy Policy</span>
+              </label>
+            </div>
 
-                <button
-                  type="submit"
-                  disabled={loading}
-                  className="w-full text-white py-2 rounded-md hover:opacity-90 transition-opcaity font-medium mt-6"
-                  style={{ backgroundColor: '#0d3b12'}}
-                >
-                  {loading ? 'Creating account...' : 'Create account'}
-                </button>
-            </form>
-          </div>
+            <button
+              type="submit"
+              disabled={loading}
+              className="w-full text-[#f5f3ef] py-3 text-xs font-semibold tracking-[0.15em] uppercase bg-[#1a1a1a] border-2 border-[#1a1a1a] hover:bg-transparent hover:text-[#1a1a1a] transition-all duration-200 mt-2 cursor-pointer"
+            >
+              {loading ? 'Creating account...' : 'Create Account'}
+            </button>
+          </form>
         </div>
       </div>
-    </div> 
+    </div>
   );
 };

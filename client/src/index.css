@@ -5,10 +5,31 @@
 :root {
   --font-heading: 'Inter', 'Helvetica Neue', Arial, sans-serif;
   --font-body: 'Inter', 'Helvetica Neue', Arial, sans-serif;
+  --font-mono: 'JetBrains Mono', 'SF Mono', 'Fira Code', monospace;
+  --off-white: #f5f3ef;
+  --steel: #8fa3b0;
+  --steel-light: #c2cdd4;
+  --steel-dark: #5a6d78;
+  --ink: #1a1a1a;
+  --coral: #e05a30;
 }
 
 body {
   font-family: var(--font-body);
-  background-image: radial-gradient(circle, rgba(34, 90, 50, 0.25) 1px, transparent 1px);
-  background-size: 40px 40px;
+  background-color: var(--off-white);
+  color: var(--ink);
+}
+
+::selection {
+  background-color: var(--steel);
+  color: var(--off-white);
+}
+
+input:-webkit-autofill,
+input:-webkit-autofill:hover,
+input:-webkit-autofill:focus,
+textarea:-webkit-autofill,
+select:-webkit-autofill {
+  -webkit-box-shadow: 0 0 0px 1000px var(--off-white) inset;
+  -webkit-text-fill-color: var(--ink);
 }
