@@ -1,49 +1,61 @@
 import { Routes, Route, Navigate } from 'react-router-dom';
-import Login from './pages/Login';
-import Register from './pages/Register';
+import UserLayout from './layouts/UserLayout';
+import AdminLayout from './layouts/AdminLayout';
 import LandingPage from './pages/LandingPage';
-import MyTickets from './pages/MyTickets';
-import NewTicket from './pages/NewTicket';
-import TicketDetail from './pages/TicketDetail';
-import AdminDashboard from './pages/AdminDashboard';
+import Login from './pages/user/Login';
+import Register from './pages/user/Register';
+import MyTickets from './pages/user/MyTickets';
+import NewTicket from './pages/user/NewTicket';
+import TicketDetail from './pages/user/TicketDetail';
+import AdminLogin from './pages/admin/AdminLogin';
+import AdminDashboard from './pages/admin/AdminDashboard';
 import PrivateRoute from './components/PrivateRoute';
 
 export default function AppRouter() {
   return (
     <Routes>
-      <Route path="/" element={<LandingPage />} />
-      <Route path="/login" element={<Login />} />
-      <Route path="/register" element={<Register />} />
+      <Route path="/" element={<UserLayout><LandingPage /></UserLayout>} />
+      <Route path="/login" element={<UserLayout><Login /></UserLayout>} />
+      <Route path="/register" element={<UserLayout><Register /></UserLayout>} />
+      <Route path="/admin/login" element={<AdminLayout><AdminLogin /></AdminLayout>} />
       <Route
         path="/dashboard"
         element={
-          <PrivateRoute>
-            <MyTickets />
-          </PrivateRoute>
+          <UserLayout>
+            <PrivateRoute>
+              <MyTickets />
+            </PrivateRoute>
+          </UserLayout>
         }
       />
       <Route
         path="/new"
         element={
-          <PrivateRoute>
-            <NewTicket />
-          </PrivateRoute>
+          <UserLayout>
+            <PrivateRoute>
+              <NewTicket />
+            </PrivateRoute>
+          </UserLayout>
         }
       />
       <Route
         path="/tickets/:id"
         element={
-          <PrivateRoute>
-            <TicketDetail />
-          </PrivateRoute>
+          <UserLayout>
+            <PrivateRoute>
+              <TicketDetail />
+            </PrivateRoute>
+          </UserLayout>
         }
       />
       <Route
         path="/admin"
         element={
-          <PrivateRoute adminOnly>
-            <AdminDashboard />
-          </PrivateRoute>
+          <AdminLayout>
+            <PrivateRoute adminOnly>
+              <AdminDashboard />
+            </PrivateRoute>
+          </AdminLayout>
         }
       />
       <Route path="*" element={<Navigate to="/" />} />

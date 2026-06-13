@@ -1,14 +1,12 @@
 import { Link } from 'react-router-dom';
 
 export default function Footer() {
-  const user = JSON.parse(localStorage.getItem('user') || 'null');
   const columns = [
     {
       title: 'Quick Actions',
       links: [
         { label: 'Submit a Complaint', to: '/new' },
         { label: 'Track My Requests', to: '/dashboard' },
-        ...(user?.role === 'admin' ? [{ label: 'Admin Dashboard', to: '/admin' }] : []),
         { label: 'Create Account', to: '/register' },
       ],
     },
