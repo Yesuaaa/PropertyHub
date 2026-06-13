@@ -1,37 +1,90 @@
 import dotenv from 'dotenv';
+dotenv.config(); // ✅ must be first — loads .env before anything else reads it
+
 import express from 'express';
 import cors from 'cors';
 import helmet from 'helmet';
-import authRoutes from './routes/authRoutes.js';   // only import routes
-
-dotenv.config();
+import cookieParser from 'cookie-parser';     // ✅ added
+import pool from './config/db.js';            // ✅ added — was used but never imported
+import authRoutes from './routes/authRoutes.js';
 
 const app = express();
 
-app.use(cors());
+// ─── Security Middleware ──────────────────────────────────────────────────────
 app.use(helmet());
-app.use(express.json());
+app.use(cors({
+    origin: process.env.FRONTEND_URL,         // ✅ restrict to your frontend only
+    methods: ['GET', 'POST', 'PUT', 'PATCH', 'DELETE'],
+    credentials: true                         // ✅ required for HTTP-only cookies
+}));
 
-// Mount authentication routes
+// ─── Parsing Middleware ───────────────────────────────────────────────────────
+app.use(express.json({ limit: '10kb' }));     // ✅ request size limit
+app.use(cookieParser());                      // ✅ enables req.cookies
+
+// ─── Routes ───────────────────────────────────────────────────────────────────
 app.use('/api/auth', authRoutes);
 
-// Health check endpoint
+// Health check — safe to leave in production
 app.get('/api/health', (req, res) => {
-  res.json({ status: 'ok', timestamp: new Date().toISOString() });
+    res.json({
+        success: true,
+        status: 'ok',
+        timestamp: new Date().toISOString()
+    });
 });
 
-// Add this before app.listen
-app.get('/api/db-test', async (req, res) => {
-  try {
-    const [rows] = await pool.query('SELECT 1 + 1 AS result');
-    res.json({ success: true, message: 'Database connected', result: rows[0].result });
-  } catch (error) {
-    res.status(500).json({ success: false, message: error.message });
-  }
+// DB test — development only                 // ✅ gated behind env check
+if (process.env.NODE_ENV !== 'production') {
+    app.get('/api/db-test', async (req, res) => {
+        try {
+            const [rows] = await pool.query('SELECT 1 + 1 AS result');
+            res.json({
+                success: true,
+                message: 'Database connected',
+                result: rows[0].result
+            });
+        } catch (error) {
+            res.status(500).json({ success: false, message: error.message });
+        }
+    });
+}
+
+// ─── 404 Handler ─────────────────────────────────────────────────────────────
+// Must be after all routes                   // ✅ added
+app.use((req, res) => {
+    res.status(404).json({
+        success: false,
+        message: `Route ${req.method} ${req.originalUrl} not found`
+    });
 });
 
+// ─── Global Error Handler ────────────────────────────────────────────────────
+// Must be after 404, must have 4 params      // ✅ added
+app.use((err, req, res, next) => {
+    console.error(`[${new Date().toISOString()}] ${err.stack}`);
+
+    const statusCode = err.statusCode || 500;
+    const message = err.isOperational
+        ? err.message
+        : 'Something went wrong. Please try again.';
+
+    res.status(statusCode).json({
+        success: false,
+        message
+    });
+});
+
+// ─── Start Server ─────────────────────────────────────────────────────────────
 const PORT = process.env.PORT || 5000;
-app.listen(PORT, () => {
-  console.log(`Server is running on port ${PORT}`);
-});
 
+app.listen(PORT, () => {
+    console.log(`Server running on port ${PORT} in ${process.env.NODE_ENV} mode`);
+}).on('error', (err) => {                     // ✅ handle startup errors
+    if (err.code === 'EADDRINUSE') {
+        console.error(`Port ${PORT} is already in use`);
+    } else {
+        console.error('Server error:', err.message);
+    }
+    process.exit(1);
+});
