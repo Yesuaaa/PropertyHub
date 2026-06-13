@@ -1,21 +1,13 @@
-import axios from 'axios';
+import api from './api';
 
-const api = axios.create({
-  baseURL: import.meta.env.VITE_API_URL,
-  withCredentials: true,
-  headers: {
-    'Content-Type': 'application/json',
-  },
-});
+export const loginUser = (email, password) =>
+  api.post('/auth/login', { email, password });
 
-api.interceptors.response.use(
-  (response) => response,
-  (error) => {
-    if (error.response?.status === 401) {
-      window.dispatchEvent(new CustomEvent('auth:expired'));
-    }
-    return Promise.reject(error);
-  }
-);
+export const registerUser = (data) =>
+  api.post('/auth/register', data);
 
-export default api;
+export const logoutUser = () =>
+  api.post('/auth/logout');
+
+export const getMe = () =>
+  api.get('/auth/me');

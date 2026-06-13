@@ -1,4 +1,4 @@
-import api from './api';
+import api from './axiosInstance.js';
 
 export const loginUser = (email, password) =>
   api.post('/auth/login', { email, password });
@@ -11,3 +11,4 @@ export const logoutUser = () =>
 
 export const getMe = () =>
   api.get('/auth/me');
+
