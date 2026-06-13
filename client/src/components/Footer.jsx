@@ -23,8 +23,8 @@ export default function Footer() {
       title: 'Support',
       links: [
         { label: 'Filing Guidelines', to: '/' },
-        { label: 'Privacy Policy', to: '/' },
-        { label: 'Terms of Service', to: '/' },
+        { label: 'Privacy Policy', to: '/privacy' },
+        { label: 'Terms of Service', to: '/terms' },
         { label: 'Contact Us', to: '/' },
       ],
     },
@@ -72,8 +72,8 @@ export default function Footer() {
             &copy; {new Date().getFullYear()} PROPERTYHUB &mdash; ALL RIGHTS RESERVED
           </span>
           <div className="flex gap-6">
-            <span className="text-[10px] font-mono tracking-[0.15em] text-[#d0dbe3] hover:text-white cursor-pointer transition-colors">Privacy Policy</span>
-            <span className="text-[10px] font-mono tracking-[0.15em] text-[#d0dbe3] hover:text-white cursor-pointer transition-colors">Terms of Service</span>
+            <Link to="/" className="text-[10px] font-mono tracking-[0.15em] text-[#d0dbe3] hover:text-white transition-colors">Privacy Policy</Link>
+            <Link to="/terms" className="text-[10px] font-mono tracking-[0.15em] text-[#d0dbe3] hover:text-white transition-colors">Terms of Service</Link>
           </div>
         </div>
       </div>
