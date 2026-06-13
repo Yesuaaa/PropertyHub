@@ -4,12 +4,21 @@ import pool from '../config/db.js';
 const JWT_SECRET = process.env.JWT_SECRET;
 
 // ─── authenticate ─────────────────────────────────────────────────────────────
-// Reads the JWT from the HTTP-only cookie, verifies it, checks the blocklist,
-// then attaches the decoded payload to req.user for downstream middleware/controllers.
+// Reads JWT from Authorization header (Bearer) OR HTTP‑only cookie.
+// Verifies token, checks blocklist, user existence/active status.
+// Attaches decoded payload to req.user.
 // ─────────────────────────────────────────────────────────────────────────────
 export const authenticate = async (req, res, next) => {
     try {
-        const token = req.cookies?.token;
+        // 1. Extract token – prefer Authorization header, fallback to cookie
+        let token = null;
+        const authHeader = req.headers.authorization;
+        if (authHeader && authHeader.startsWith('Bearer ')) {
+            token = authHeader.split(' ')[1];
+        }
+        if (!token && req.cookies?.token) {
+            token = req.cookies.token;
+        }
 
         if (!token) {
             return res.status(401).json({
@@ -18,42 +27,42 @@ export const authenticate = async (req, res, next) => {
             });
         }
 
-        // 1. Verify signature and expiry
+        // 2. Verify JWT signature and expiry
         const decoded = jwt.verify(token, JWT_SECRET);
 
-        // 2. Check blocklist — catches logged-out tokens that haven't expired yet
+        // 3. Check token blocklist (logout)
         const [blocked] = await pool.query(
             'SELECT id FROM token_blocklist WHERE token = ? LIMIT 1',
             [token]
         );
-
         if (blocked.length > 0) {
             return res.status(401).json({
                 success: false,
                 message: 'Token has been invalidated. Please log in again.'
             });
         }
-        
-        // Optional: Check if user still exists and is active — adds DB hit but improves security
+
+        // 4. Verify user still exists and is active
         const [rows] = await pool.query(
             'SELECT user_id, role, is_active FROM users WHERE user_id = ? LIMIT 1',
             [decoded.userId]
         );
-
         if (rows.length === 0 || !rows[0].is_active) {
             return res.status(403).json({
                 success: false,
                 message: 'Account not found or deactivated.'
             });
         }
-        // 3. Attach user info — userId matches user_id from the users table
+
+        // 5. Attach user info for downstream use
         req.user = {
             userId: decoded.userId,
-            role:   decoded.role
+            role: decoded.role
         };
 
         next();
     } catch (err) {
+        // Handle JWT specific errors
         if (err.name === 'TokenExpiredError') {
             return res.status(401).json({
                 success: false,
@@ -66,12 +75,12 @@ export const authenticate = async (req, res, next) => {
                 message: 'Invalid token.'
             });
         }
-        next(err); // unexpected error — forward to errorHandler
+        next(err); // Unexpected error → errorHandler
     }
 };
 
 // ─── authorize ────────────────────────────────────────────────────────────────
-// Call after authenticate. Pass the roles that are allowed to access the route.
+// Role‑based access control – call after authenticate.
 // Usage: router.get('/admin', authenticate, authorize('admin'), handler)
 //        router.get('/staff', authenticate, authorize('admin', 'staff'), handler)
 // ─────────────────────────────────────────────────────────────────────────────
@@ -83,14 +92,12 @@ export const authorize = (...allowedRoles) => {
                 message: 'Not authenticated.'
             });
         }
-
         if (!allowedRoles.includes(req.user.role)) {
             return res.status(403).json({
                 success: false,
                 message: 'You do not have permission to perform this action.'
             });
         }
-
         next();
     };
 };

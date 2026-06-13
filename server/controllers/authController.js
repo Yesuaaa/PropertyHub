@@ -128,22 +128,23 @@ export const loginUser = asyncHandler(async (req, res) => {
     // 6. Send token as HTTP-only cookie — JS cannot read it (XSS protection)
     res.cookie('token', token, {
         httpOnly: true,
-        secure: process.env.NODE_ENV === 'production', // HTTPS only in prod
-        sameSite: 'strict',                             // CSRF protection
+        secure: false,          // must be false FOR LOCAL HOST (no HTTPS)
+        sameSite: 'lax',                             // CSRF protection
         maxAge: TOKEN_EXPIRY_MS
     });
  
-    // 7. Return user info only — token is in the cookie, not the body
+    // 7. Return token AND user info
     return res.status(200).json({
         success: true,
         message: 'Login successful',
+        token,                               // add this line
         user: {
             firstName: user.first_name,
             lastName: user.last_name,
             email: user.email,
             role: user.role
-        }
-    });
+    }
+});
 });
  
 // LOGOUT USER

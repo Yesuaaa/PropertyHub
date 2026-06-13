@@ -5,12 +5,15 @@ import express from 'express';
 import cors from 'cors';
 import helmet from 'helmet';
 import cookieParser from 'cookie-parser';     
-import pool from './config/db.js';            
+import pool from './config/db.js';          
+
+// route imports
 import authRoutes from './routes/authRoutes.js';
+import ticketRoutes from './routes/ticketRoutes.js';
 
 const app = express();
 
-// ─── Security Middleware ──────────────────────────────────────────────────────
+// Security Middleware
 app.use(helmet());
 app.use(cors({
     origin: process.env.FRONTEND_URL,         // ✅ restrict to your frontend only
@@ -18,12 +21,13 @@ app.use(cors({
     credentials: true                         // ✅ required for HTTP-only cookies
 }));
 
-// ─── Parsing Middleware ───────────────────────────────────────────────────────
+// Parsing Middleware — must be before routes
 app.use(express.json({ limit: '10kb' }));     // ✅ request size limit
 app.use(cookieParser());                      // ✅ enables req.cookies
 
-// ─── Routes ───────────────────────────────────────────────────────────────────
+// use routes
 app.use('/api/auth', authRoutes);
+app.use('/api/tickets', ticketRoutes);
 
 // Health check — safe to leave in production
 app.get('/api/health', (req, res) => {
@@ -50,7 +54,7 @@ if (process.env.NODE_ENV !== 'production') {
     });
 }
 
-// ─── 404 Handler ─────────────────────────────────────────────────────────────
+// 404 handler — must be after all other routes
 // Must be after all routes                   // ✅ added
 app.use((req, res) => {
     res.status(404).json({
@@ -59,7 +63,7 @@ app.use((req, res) => {
     });
 });
 
-// ─── Global Error Handler ────────────────────────────────────────────────────
+// Global error handler
 // Must be after 404, must have 4 params      // ✅ added
 app.use((err, req, res, next) => {
     console.error(`[${new Date().toISOString()}] ${err.stack}`);
@@ -75,9 +79,10 @@ app.use((err, req, res, next) => {
     });
 });
 
-// ─── Start Server ─────────────────────────────────────────────────────────────
+// Server Start
 const PORT = process.env.PORT || 5000;
 
+// ✅ added error handling for server startup (e.g. port in use)
 app.listen(PORT, () => {
     console.log(`Server running on port ${PORT} in ${process.env.NODE_ENV} mode`);
 }).on('error', (err) => {                     // ✅ handle startup errors

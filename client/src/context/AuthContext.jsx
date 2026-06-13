@@ -43,10 +43,16 @@ export function AuthProvider({ children }) {
 
   const login = async (email, password) => {
     const { data } = await loginUser(email, password);
+    // ✅ Save token to localStorage
+    if (data.token) {
+        localStorage.setItem('token', data.token);
+    }
+    // Save user data
     setUser(data.user);
     localStorage.setItem('user', JSON.stringify(data.user));
+    console.log('Stored token:', localStorage.getItem('token')); // should now show the token
     return data.user;
-  };
+};
 
   const register = async (userData) => {
     await registerUser(userData);
