@@ -1,17 +1,21 @@
 import { Navigate } from 'react-router-dom';
+import { useAuth } from '../hooks/useAuth';
 
 export default function PrivateRoute({ children, adminOnly }) {
-  const token = localStorage.getItem('token');
-  const user = JSON.parse(localStorage.getItem('user') || 'null');
+  const { user, loading } = useAuth();
 
-  if (!token) {
+  if (loading) {
+    return null;
+  }
+
+  if (!user) {
     if (adminOnly) {
       return <Navigate to="/admin/login" />;
     }
     return <Navigate to="/login" />;
   }
 
-  if (adminOnly && user?.role !== 'admin' && user?.role !== 'staff') {
+  if (adminOnly && user.role !== 'admin' && user.role !== 'staff') {
     return <Navigate to="/" />;
   }
 

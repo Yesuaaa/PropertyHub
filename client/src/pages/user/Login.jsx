@@ -1,13 +1,13 @@
 import { useState } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
-import axios from 'axios';
+import { useAuth } from '../../hooks/useAuth';
 
 export default function Login() {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
-  const [rememberMe, setRememberMe] = useState('');
   const [error, setError] = useState('');
   const [loading, setLoading] = useState(false);
+  const { login } = useAuth();
   const navigate = useNavigate();
 
   const handleSubmit = async (e) => {
@@ -16,19 +16,7 @@ export default function Login() {
     setError('');
 
     try {
-      const { data } = await axios.post(
-        `${import.meta.env.VITE_API_URL}/auth/login`,
-        { email, password }
-      );
-
-      if (rememberMe) {
-        localStorage.setItem('token', data.token);
-        localStorage.setItem('user', JSON.stringfy(data.user));
-      } else {
-        sessionStorage.setItem('token', data.token);
-        sessionStrorage.setItem('user', JSON.stringify(data.user));
-      }
-
+      await login(email, password);
       navigate('/dashboard');
     } catch (err) {
       setError(err.response?.data?.message || 'Login failed');
@@ -81,17 +69,7 @@ export default function Login() {
               />
             </div>
 
-            <div className="flex items-center justify-between">
-              <label className="flex items-center cursor-pointer gap-2">
-                <input
-                  type="checkbox"
-                  checked={rememberMe}
-                  onChange={(e) => setRememberMe(e.target.checked)}
-                  className="w-4 h-4 border-2 border-[#8fa3b0]/40 cursor-pointer"
-                  style={{ accentColor: '#1a1a1a' }}
-                />
-                <span className="text-xs text-[#5a6d78]">Remember me</span>
-              </label>
+            <div className="flex items-center justify-end">
               <Link
                 to="/forgot-password"
                 className="text-xs font-medium text-[#8fa3b0] hover:text-[#1a1a1a] transition-colors tracking-wider uppercase"

@@ -1,6 +1,6 @@
 import { useState } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
-import axios from 'axios';
+import { useAuth } from '../../hooks/useAuth';
 
 export default function Register() {
   const [firstName, setFirstName] = useState('');
@@ -11,6 +11,7 @@ export default function Register() {
   const [agreeTerms, setAgreeTerms] = useState(false);
   const [error, setError] = useState('');
   const [loading, setLoading] = useState(false);
+  const { register } = useAuth();
   const navigate = useNavigate();
 
   const handleSubmit = async (e) => {
@@ -34,12 +35,11 @@ export default function Register() {
     setLoading(true);
 
     try {
-      await axios.post(`${import.meta.env.VITE_API_URL}/auth/register`, {
-        firstName,
-        lastName,
+      await register({
+        first_name: firstName,
+        last_name: lastName,
         email,
         password,
-        confirmPassword
       });
       navigate('/login');
     } catch (err) {

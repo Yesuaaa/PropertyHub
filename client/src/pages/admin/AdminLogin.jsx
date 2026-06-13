@@ -1,12 +1,13 @@
 import { useState } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
-import axios from 'axios';
+import { useAuth } from '../../hooks/useAuth';
 
 export default function AdminLogin() {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [error, setError] = useState('');
   const [loading, setLoading] = useState(false);
+  const { login } = useAuth();
   const navigate = useNavigate();
 
   const handleSubmit = async (e) => {
@@ -15,21 +16,15 @@ export default function AdminLogin() {
     setError('');
 
     try {
-      const { data } = await axios.post(
-        `${import.meta.env.VITE_API_URL}/auth/login`,
-        { email, password }
-      );
+      const user = await login(email, password);
 
-      if (data.user?.role !== 'admin' && data.user?.role !== 'staff') {
+      if (user.role !== 'admin' && user.role !== 'staff') {
         setError('Access denied. Admin or staff credentials required.');
         setLoading(false);
         return;
       }
 
-      localStorage.setItem('token', data.token);
-      localStorage.setItem('user', JSON.stringify(data.user));
-
-      navigate(data.user.role === 'admin' ? '/admin' : '/admin');
+      navigate('/admin');
     } catch (err) {
       setError(err.response?.data?.message || 'Login failed');
     } finally {
