@@ -7,6 +7,8 @@ import Register from './pages/user/Register';
 import MyTickets from './pages/user/MyTickets';
 import NewTicket from './pages/user/NewTicket';
 import TicketDetail from './pages/user/TicketDetail';
+import TermsOfService from './pages/TermsOfService';
+import PrivacyPolicy from './pages/PrivacyPolicy';
 import AdminLogin from './pages/admin/AdminLogin';
 import AdminDashboard from './pages/admin/AdminDashboard';
 import PrivateRoute from './components/PrivateRoute';
@@ -17,6 +19,8 @@ export default function AppRouter() {
       <Route path="/" element={<UserLayout><LandingPage /></UserLayout>} />
       <Route path="/login" element={<UserLayout><Login /></UserLayout>} />
       <Route path="/register" element={<UserLayout><Register /></UserLayout>} />
+      <Route path="/terms" element={<UserLayout><TermsOfService /></UserLayout>} />
+      <Route path="/privacy" element={<UserLayout><PrivacyPolicy /></UserLayout>} />
       <Route path="/admin/login" element={<AdminLayout><AdminLogin /></AdminLayout>} />
       <Route
         path="/dashboard"

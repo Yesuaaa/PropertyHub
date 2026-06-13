@@ -140,9 +140,9 @@ export default function Register() {
               />
               <label className="text-xs text-[#5a6d78] leading-relaxed">
                 I agree to the{' '}
-                <span className="font-semibold text-[#1a1a1a] cursor-pointer">Terms of Service</span>
+                <Link to="/terms" className="font-semibold text-[#1a1a1a] hover:underline">Terms of Service</Link>
                 {' '}and{' '}
-                <span className="font-semibold text-[#1a1a1a] cursor-pointer">Privacy Policy</span>
+                <Link to="/privacy" className="font-semibold text-[#1a1a1a] hover:underline">Privacy Policy</Link>
               </label>
             </div>
 
