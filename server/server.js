@@ -4,8 +4,8 @@ dotenv.config(); // ✅ must be first — loads .env before anything else reads 
 import express from 'express';
 import cors from 'cors';
 import helmet from 'helmet';
-import cookieParser from 'cookie-parser';     // ✅ added
-import pool from './config/db.js';            // ✅ added — was used but never imported
+import cookieParser from 'cookie-parser';     
+import pool from './config/db.js';            
 import authRoutes from './routes/authRoutes.js';
 
 const app = express();

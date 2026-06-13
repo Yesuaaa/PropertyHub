@@ -1,10 +1,11 @@
 import { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
-import axios from 'axios';
+import api from '../../services/axiosInstance';
 
 export default function MyTickets() {
   const [tickets, setTickets] = useState([]);
   const [loading, setLoading] = useState(true);
+  const [error, setError] = useState(null);
 
   useEffect(() => {
     fetchTickets();
@@ -12,13 +13,11 @@ export default function MyTickets() {
 
   const fetchTickets = async () => {
     try {
-      const { data } = await axios.get(
-        `${import.meta.env.VITE_API_URL}/tickets`,
-        { headers: { Authorization: `Bearer ${localStorage.getItem('token')}` } }
-      );
-      setTickets(data);
+      const { data } = await api.get('/tickets');
+      setTickets(Array.isArray(data) ? data : []);
     } catch (err) {
       console.error(err);
+      setError(err.response?.data?.message || 'Failed to load tickets');
     } finally {
       setLoading(false);
     }
@@ -26,6 +25,10 @@ export default function MyTickets() {
 
   if (loading) {
     return <p className="text-center pt-24 text-[10px] font-mono tracking-[0.2em] uppercase text-[#8fa3b0]">Loading...</p>;
+  }
+
+  if (error) {
+    return <p className="text-center pt-24 text-red-600">{error}</p>;
   }
 
   return (
@@ -64,7 +67,7 @@ export default function MyTickets() {
               </tr>
             </thead>
             <tbody className="divide-y divide-[#8fa3b0]/15">
-              {tickets.map((ticket) => (
+              {Array.isArray(tickets) && tickets.map((ticket) => (
                 <tr key={ticket.id} className="hover:bg-[#8fa3b0]/5 transition-colors">
                   <td className="px-5 py-4 text-sm font-mono text-[#8fa3b0]">#{ticket.id}</td>
                   <td className="px-5 py-4 text-sm text-[#1a1a1a] font-medium">{ticket.type}</td>
@@ -84,10 +87,10 @@ export default function MyTickets() {
                       View
                     </Link>
                   </td>
-                </tr>
+                 </tr>
               ))}
             </tbody>
-          </table>
+           </table>
         </div>
       )}
     </div>
