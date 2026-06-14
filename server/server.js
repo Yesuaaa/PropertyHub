@@ -10,6 +10,7 @@ import pool from './config/db.js';
 // route imports
 import authRoutes from './routes/authRoutes.js';
 import ticketRoutes from './routes/ticketRoutes.js';
+import adminRoutes from './routes/adminRoutes.js';
 
 const app = express();
 
@@ -28,6 +29,7 @@ app.use(cookieParser());                      // ✅ enables req.cookies
 // use routes
 app.use('/api/auth', authRoutes);
 app.use('/api/tickets', ticketRoutes);
+app.use('/api/admin', adminRoutes);
 
 // Health check — safe to leave in production
 app.get('/api/health', (req, res) => {

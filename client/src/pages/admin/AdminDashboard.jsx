@@ -7,6 +7,14 @@ export default function AdminDashboard() {
   const [tickets, setTickets] = useState([]);
   const [loading, setLoading] = useState(true);
 
+  // Map database status (lowercase) to display status (capitalized)
+  const statusDisplay = {
+    'open': 'Open',
+    'in_progress': 'In Progress',
+    'resolved': 'Resolved',
+    'closed': 'Closed'
+  };
+
   useEffect(() => {
     fetchTickets();
   }, []);
@@ -17,7 +25,8 @@ export default function AdminDashboard() {
         `${import.meta.env.VITE_API_URL}/admin/tickets`,
         { headers: { Authorization: `Bearer ${localStorage.getItem('token')}` } }
       );
-      setTickets(data);
+      // Create a new array reference to force re‑render
+      setTickets([...data]);
     } catch (err) {
       console.error(err);
     } finally {
@@ -32,7 +41,8 @@ export default function AdminDashboard() {
         { status },
         { headers: { Authorization: `Bearer ${localStorage.getItem('token')}` } }
       );
-      fetchTickets();
+      // Refresh the list after update
+      await fetchTickets();
     } catch (err) {
       console.error(err);
     }
@@ -66,7 +76,7 @@ export default function AdminDashboard() {
                 <th className="px-5 py-3 text-[10px] font-mono font-semibold tracking-[0.2em] uppercase text-[#8fa3b0]">Priority</th>
                 <th className="px-5 py-3 text-[10px] font-mono font-semibold tracking-[0.2em] uppercase text-[#8fa3b0]">Status</th>
                 <th className="px-5 py-3 text-[10px] font-mono font-semibold tracking-[0.2em] uppercase text-[#8fa3b0]">Date</th>
-              </tr>
+               </tr>
             </thead>
             <tbody className="divide-y divide-[#8fa3b0]/15">
               {tickets.map((ticket) => (
@@ -78,7 +88,8 @@ export default function AdminDashboard() {
                   <td className="px-5 py-4 text-sm text-[#5a6d78]">{ticket.priority}</td>
                   <td className="px-5 py-4">
                     <select
-                      value={ticket.status}
+                      // Map the stored lowercase status to display value
+                      value={statusDisplay[ticket.status] || ticket.status}
                       onChange={(e) => handleStatusChange(ticket.id, e.target.value)}
                       className="border-2 border-[#8fa3b0]/25 bg-transparent text-sm text-[#1a1a1a] px-3 py-1.5 focus:outline-none focus:border-[#1a1a1a] cursor-pointer appearance-none font-mono text-xs tracking-wider uppercase"
                     >
@@ -90,10 +101,10 @@ export default function AdminDashboard() {
                   <td className="px-5 py-4 text-xs text-[#8fa3b0] font-mono">
                     {new Date(ticket.created_at).toLocaleDateString()}
                   </td>
-                </tr>
+                 </tr>
               ))}
             </tbody>
-          </table>
+           </table>
         </div>
       )}
     </div>
