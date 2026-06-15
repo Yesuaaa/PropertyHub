@@ -11,6 +11,7 @@ import TermsOfService from './pages/TermsOfService';
 import PrivacyPolicy from './pages/PrivacyPolicy';
 import AdminLogin from './pages/admin/AdminLogin';
 import AdminDashboard from './pages/admin/AdminDashboard';
+import AdminTicketDetail from './pages/admin/AdminTicketDetail';
 import PrivateRoute from './components/PrivateRoute';
 
 export default function AppRouter() {
@@ -58,6 +59,16 @@ export default function AppRouter() {
           <AdminLayout>
             <PrivateRoute adminOnly>
               <AdminDashboard />
+            </PrivateRoute>
+          </AdminLayout>
+        }
+      />
+      <Route
+        path="/admin/tickets/:id"
+        element={
+          <AdminLayout>
+            <PrivateRoute adminOnly>
+              <AdminTicketDetail />
             </PrivateRoute>
           </AdminLayout>
         }

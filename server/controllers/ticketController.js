@@ -129,3 +129,76 @@ export const deleteTicket = asyncHandler(async (req, res) => {
     await pool.query(`DELETE FROM tickets WHERE id = ?`, [id]);
     res.json({ message: 'Ticket deleted' });
 });
+
+export const getTicketReplies = asyncHandler(async (req, res) => {
+    const { id } = req.params;
+    const userId = req.user.userId;
+    const role = req.user.role;
+
+    const [ticket] = await pool.query('SELECT id, status FROM tickets WHERE id = ?', [id]);
+    if (ticket.length === 0) {
+        return res.status(404).json({ success: false, message: 'Ticket not found' });
+    }
+
+    if (role !== 'admin') {
+        const [owner] = await pool.query('SELECT user_id FROM tickets WHERE id = ?', [id]);
+        if (owner[0].user_id !== userId) {
+            return res.status(403).json({ success: false, message: 'Not authorized' });
+        }
+    }
+
+    const [rows] = await pool.query(
+        `SELECT r.id, r.message, r.created_at,
+                r.user_id,
+                CONCAT(u.first_name, ' ', u.last_name) AS author_name,
+                u.role AS author_role
+         FROM ticket_replies r
+         JOIN users u ON r.user_id = u.user_id
+         WHERE r.ticket_id = ?
+         ORDER BY r.created_at ASC`,
+        [id]
+    );
+
+    res.json({ replies: rows, status: ticket[0].status });
+});
+
+export const createTicketReply = asyncHandler(async (req, res) => {
+    const { id } = req.params;
+    const { message } = req.body;
+    const userId = req.user.userId;
+    const role = req.user.role;
+
+    if (!message || !message.trim()) {
+        return res.status(400).json({ success: false, message: 'Message is required' });
+    }
+
+    const [ticket] = await pool.query('SELECT id, status, user_id FROM tickets WHERE id = ?', [id]);
+    if (ticket.length === 0) {
+        return res.status(404).json({ success: false, message: 'Ticket not found' });
+    }
+
+    if (role !== 'admin' && ticket[0].user_id !== userId) {
+        return res.status(403).json({ success: false, message: 'Not authorized' });
+    }
+
+    if (ticket[0].status === 'resolved' || ticket[0].status === 'closed') {
+        return res.status(400).json({ success: false, message: 'Cannot reply to a resolved or closed ticket' });
+    }
+
+    const [result] = await pool.query(
+        'INSERT INTO ticket_replies (ticket_id, user_id, message) VALUES (?, ?, ?)',
+        [id, userId, message.trim()]
+    );
+
+    const [newReply] = await pool.query(
+        `SELECT r.id, r.message, r.created_at, r.user_id,
+                CONCAT(u.first_name, ' ', u.last_name) AS author_name,
+                u.role AS author_role
+         FROM ticket_replies r
+         JOIN users u ON r.user_id = u.user_id
+         WHERE r.id = ?`,
+        [result.insertId]
+    );
+
+    res.status(201).json({ reply: newReply[0] });
+});

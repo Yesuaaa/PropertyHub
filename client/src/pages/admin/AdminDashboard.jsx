@@ -1,4 +1,5 @@
 import { useState, useEffect } from 'react';
+import { Link } from 'react-router-dom';
 import axios from 'axios';
 
 const STATUSES = ['Open', 'In Progress', 'Resolved', 'Closed'];
@@ -76,6 +77,7 @@ export default function AdminDashboard() {
                 <th className="px-5 py-3 text-[10px] font-mono font-semibold tracking-[0.2em] uppercase text-[#8fa3b0]">Priority</th>
                 <th className="px-5 py-3 text-[10px] font-mono font-semibold tracking-[0.2em] uppercase text-[#8fa3b0]">Status</th>
                 <th className="px-5 py-3 text-[10px] font-mono font-semibold tracking-[0.2em] uppercase text-[#8fa3b0]">Date</th>
+                <th className="px-5 py-3 text-[10px] font-mono font-semibold tracking-[0.2em] uppercase text-[#8fa3b0]"></th>
                </tr>
             </thead>
             <tbody className="divide-y divide-[#8fa3b0]/15">
@@ -100,6 +102,14 @@ export default function AdminDashboard() {
                   </td>
                   <td className="px-5 py-4 text-xs text-[#8fa3b0] font-mono">
                     {new Date(ticket.created_at).toLocaleDateString()}
+                  </td>
+                  <td className="px-5 py-4">
+                    <Link
+                      to={`/admin/tickets/${ticket.id}`}
+                      className="text-xs font-semibold tracking-[0.1em] uppercase text-[#1a1a1a] underline underline-offset-4 decoration-[#8fa3b0]/30 hover:decoration-[#1a1a1a] transition-colors"
+                    >
+                      View
+                    </Link>
                   </td>
                  </tr>
               ))}
