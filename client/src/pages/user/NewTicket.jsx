@@ -2,8 +2,19 @@ import { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import axios from 'axios';
 
-const TYPES = ['Maintenance Request', 'Noise Complaint', 'Lease Dispute', 'General Feedback', 'Safety Concern'];
-const CATEGORIES = ['Plumbing', 'Electrical', 'HVAC', 'Structural', 'Pest Control', 'Common Areas', 'Parking', 'Lease & Billing', 'Security & Safety'];
+const TYPE_CATEGORIES = {
+  'Maintenance Request': ['Plumbing', 'Electrical', 'HVAC', 'Structural', 'Pest Control', 'Common Areas', 'Parking'],
+  'Noise Complaint': ['Common Areas', 'Parking', 'Security & Safety'],
+  'Lease Dispute': ['Lease & Billing'],
+  'Billing / Payment Concern': ['Lease & Billing'],
+  'Safety Concern': ['Electrical', 'Structural', 'Common Areas', 'Parking', 'Security & Safety'],
+  'Cleanliness / Sanitation': ['Pest Control', 'Common Areas', 'Parking'],
+  'Parking Concern': ['Parking', 'Security & Safety'],
+  'Amenity / Facility Concern': ['Electrical', 'HVAC', 'Structural', 'Common Areas', 'Security & Safety'],
+  'Neighbor Complaint': ['Common Areas', 'Parking', 'Security & Safety'],
+  'General Feedback': ['Common Areas', 'Parking', 'Lease & Billing', 'Security & Safety'],
+  'Behavior': ['Common Areas', 'Parking', 'Security & Safety']
+};
 const PRIORITIES = ['Low', 'Medium', 'High', 'Critical'];
 
 export default function NewTicket() {
@@ -49,17 +60,17 @@ export default function NewTicket() {
       <form onSubmit={handleSubmit} className="border-2 border-[#1a1a1a] bg-[#f5f3ef] p-8 space-y-6">
         <div>
           <label className="block text-[10px] font-mono font-semibold tracking-[0.2em] uppercase text-[#8fa3b0] mb-2">Type</label>
-          <select value={type} onChange={(e) => setType(e.target.value)} required className={selectClass}>
+          <select value={type} onChange={(e) => { setType(e.target.value); setCategory(''); }} required className={selectClass}>
             <option value="">Select type</option>
-            {TYPES.map((t) => (<option key={t} value={t}>{t}</option>))}
+            {Object.keys(TYPE_CATEGORIES).map((t) => (<option key={t} value={t}>{t}</option>))}
           </select>
         </div>
 
         <div>
           <label className="block text-[10px] font-mono font-semibold tracking-[0.2em] uppercase text-[#8fa3b0] mb-2">Category</label>
-          <select value={category} onChange={(e) => setCategory(e.target.value)} required className={selectClass}>
+          <select value={category} onChange={(e) => setCategory(e.target.value)} required disabled={!type} className={`${selectClass} ${!type ? 'opacity-40 cursor-not-allowed' : ''}`}>
             <option value="">Select category</option>
-            {CATEGORIES.map((c) => (<option key={c} value={c}>{c}</option>))}
+            {type && TYPE_CATEGORIES[type]?.map((c) => (<option key={c} value={c}>{c}</option>))}
           </select>
         </div>
 

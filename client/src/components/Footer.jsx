@@ -14,9 +14,15 @@ export default function Footer() {
       title: 'Request Types',
       links: [
         { label: 'Maintenance', to: '/new' },
-        { label: 'Noise Complaints', to: '/new' },
-        { label: 'Safety Concerns', to: '/new' },
-        { label: 'Lease Disputes', to: '/new' },
+        { label: 'Noise Complaint', to: '/new' },
+        { label: 'Safety Concern', to: '/new' },
+        { label: 'Lease Dispute', to: '/new' },
+        { label: 'Billing Concern', to: '/new' },
+        { label: 'Cleanliness', to: '/new' },
+        { label: 'Parking Concern', to: '/new' },
+        { label: 'Amenity Issue', to: '/new' },
+        { label: 'Neighbor Complaint', to: '/new' },
+        { label: 'Behavior', to: '/new' },
       ],
     },
     {

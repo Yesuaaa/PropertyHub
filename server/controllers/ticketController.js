@@ -7,30 +7,8 @@ export const createTicket = asyncHandler(async (req, res) => {
     let { type, category, priority, description } = req.body;
     const userId = req.user.userId;
 
-    // Log received values (helps debugging)
-    console.log('Received category:', JSON.stringify(category));
-
-    // Normalize priority to lowercase
     if (priority) priority = priority.toLowerCase();
-
-    // Normalize category: trim spaces
     if (category) category = category.trim();
-
-    // Optional: Convert to proper case if needed (e.g., 'electrical' → 'Electrical')
-    // But better to fix the frontend dropdown values.
-
-    // List of allowed categories (exact strings)
-    const allowedCategories = [
-        'Plumbing', 'Electrical', 'Structural', 'Pest Control',
-        'Common Areas', 'Parking', 'Lease & Billing', 'Security & Safety', 'HVAC'
-    ];
-
-    if (!allowedCategories.includes(category)) {
-        return res.status(400).json({
-            success: false,
-            message: `Invalid category value: "${category}". Allowed: ${allowedCategories.join(', ')}`
-        });
-    }
 
     try {
         const [result] = await pool.query(
