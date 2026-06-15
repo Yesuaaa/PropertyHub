@@ -2,11 +2,13 @@ import bcrypt from 'bcrypt';
 import jwt from 'jsonwebtoken';
 import pool from '../config/db.js';
 import asyncHandler from '../util/asynchandler.js';
+import { sendPasswordResetEmail } from '../services/emailservice.js';
  
 // CONSTANTS
 const JWT_SECRET = process.env.JWT_SECRET;
 const BCRYPT_ROUNDS = 12;
 const TOKEN_EXPIRY_MS = 15 * 60 * 1000; // 15 minutes
+const hashToken = (token) => crypto.createHash('sha256').update(token).digest('hex'); //Helper to hash a token for storage
  
 if (!JWT_SECRET) {
     console.error('FATAL: JWT_SECRET is not defined in .env');
@@ -206,3 +208,74 @@ export const getMe = asyncHandler(async (req, res) => {
     });
 });
  
+// FORGOT PASSWORD
+// @route   POST /api/auth/forgot-password
+export const forgotPassword = asyncHandler(async (req, res) => {
+    const { email } = req.body;
+    if (!email) {
+        return res.status(400).json({ success: false, message: 'Email is required' });
+    }
+
+    // Find user
+    const [users] = await pool.query('SELECT user_id, first_name, last_name FROM users WHERE email = ?', [email]);
+    if (users.length === 0) {
+        // For security, don't reveal that email doesn't exist
+        return res.status(200).json({ success: true, message: 'If that email exists, we have sent a reset link.' });
+    }
+
+    const user = users[0];
+    const userName = `${user.first_name} ${user.last_name}`;
+
+    // Generate a secure random token
+    const resetToken = crypto.randomBytes(32).toString('hex');
+    const hashedToken = hashToken(resetToken);
+    const expiresAt = new Date(Date.now() + 60 * 60 * 1000); // 1 hour
+
+    // Delete any existing unused tokens for this user
+    await pool.query('DELETE FROM password_resets WHERE user_id = ?', [user.user_id]);
+
+    // Store the hashed token
+    await pool.query(
+        'INSERT INTO password_resets (user_id, token, expires_at) VALUES (?, ?, ?)',
+        [user.user_id, hashedToken, expiresAt]
+    );
+
+    // Send email (non-blocking)
+    sendPasswordResetEmail(email, resetToken, userName).catch(err => console.error('Reset email failed:', err));
+
+    res.status(200).json({ success: true, message: 'If that email exists, we have sent a reset link.' });
+});
+
+// RESET PASSWORD
+// @route   POST /api/auth/reset-password
+export const resetPassword = asyncHandler(async (req, res) => {
+    const { token, newPassword } = req.body;
+    if (!token || !newPassword) {
+        return res.status(400).json({ success: false, message: 'Token and new password are required' });
+    }
+
+    // Hash the received token to compare with stored hash
+    const hashedToken = hashToken(token);
+
+    // Find valid token
+    const [rows] = await pool.query(
+        'SELECT user_id, expires_at FROM password_resets WHERE token = ? AND expires_at > NOW()',
+        [hashedToken]
+    );
+    if (rows.length === 0) {
+        return res.status(400).json({ success: false, message: 'Invalid or expired token' });
+    }
+
+    const { user_id } = rows[0];
+
+    // Hash the new password
+    const hashedPassword = await bcrypt.hash(newPassword, 10);
+
+    // Update user's password
+    await pool.query('UPDATE users SET password_hash = ? WHERE user_id = ?', [hashedPassword, user_id]);
+
+    // Delete all used reset tokens for this user
+    await pool.query('DELETE FROM password_resets WHERE user_id = ?', [user_id]);
+
+    res.status(200).json({ success: true, message: 'Password has been reset successfully' });
+});
