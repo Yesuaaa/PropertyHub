@@ -12,6 +12,7 @@ import PrivacyPolicy from './pages/PrivacyPolicy';
 import AdminLogin from './pages/admin/AdminLogin';
 import AdminDashboard from './pages/admin/AdminDashboard';
 import AdminTicketDetail from './pages/admin/AdminTicketDetail';
+import SuperAdmin from './pages/admin/SuperAdmin';
 import PrivateRoute from './components/PrivateRoute';
 
 export default function AppRouter() {
@@ -69,6 +70,16 @@ export default function AppRouter() {
           <AdminLayout>
             <PrivateRoute adminOnly>
               <AdminTicketDetail />
+            </PrivateRoute>
+          </AdminLayout>
+        }
+      />
+      <Route
+        path="/admin/users"
+        element={
+          <AdminLayout>
+            <PrivateRoute superAdminOnly>
+              <SuperAdmin />
             </PrivateRoute>
           </AdminLayout>
         }

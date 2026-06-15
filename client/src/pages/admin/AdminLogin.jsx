@@ -18,7 +18,7 @@ export default function AdminLogin() {
     try {
       const user = await login(email, password);
 
-      if (user.role !== 'admin' && user.role !== 'staff') {
+      if (user.role !== 'admin' && user.role !== 'staff' && user.role !== 'superadmin') {
         setError('Access denied. Admin or staff credentials required.');
         setLoading(false);
         return;

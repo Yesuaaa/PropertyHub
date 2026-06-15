@@ -35,7 +35,7 @@ export default function AdminNavbar() {
     <nav className={`fixed top-0 left-0 right-0 z-50 transition-colors duration-300 ${scrolled || menuOpen ? 'bg-[#1a1a1a]/95 backdrop-blur-sm border-b border-white/10' : 'bg-[#1a1a1a]'}`}>
       <div className="max-w-[1400px] mx-auto flex items-center justify-between px-6 sm:px-10 py-0 h-16">
         <div className="flex items-center gap-10">
-          <Link to="/admin" className="flex items-center gap-3 no-underline">
+          <Link to={token ? '/admin' : '/admin/login'} className="flex items-center gap-3 no-underline">
             <div className="w-7 h-7 border-2 border-[#e05a30] flex items-center justify-center">
               <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 16 16" fill="currentColor" className="w-3.5 h-3.5 text-[#e05a30]">
                 <path fillRule="evenodd" d="M8 1.75a.75.75 0 01.75.75v5.25h4.25a.75.75 0 010 1.5H8.75V13a.75.75 0 01-1.5 0V9H3.25a.75.75 0 010-1.5H7.25V2.5A.75.75 0 018 1.75z" clipRule="evenodd" />
@@ -46,7 +46,8 @@ export default function AdminNavbar() {
             </span>
           </Link>
           <div className="hidden lg:flex items-center gap-8">
-            <AdminNavLink to="/admin">Dashboard</AdminNavLink>
+            {token && <AdminNavLink to="/admin">Dashboard</AdminNavLink>}
+            {token && user?.role === 'superadmin' && <AdminNavLink to="/admin/users">Manage Users</AdminNavLink>}
           </div>
         </div>
         <div className="flex items-center gap-4">
@@ -86,6 +87,7 @@ export default function AdminNavbar() {
       <div className={`lg:hidden fixed inset-0 top-16 bg-[#1a1a1a] transition-all duration-300 ${menuOpen ? 'opacity-100 pointer-events-auto' : 'opacity-0 pointer-events-none'}`}>
         <div className="flex flex-col items-center justify-start gap-2 pt-12">
           <AdminMobileNavLink to="/admin" onClick={closeMenu}>Dashboard</AdminMobileNavLink>
+          {token && user?.role === 'superadmin' && <AdminMobileNavLink to="/admin/users" onClick={closeMenu}>Manage Users</AdminMobileNavLink>}
           <div className="w-12 h-px bg-white/20 my-6" />
           {user && <span className="text-xs font-mono text-white/50 tracking-wider uppercase mb-3">{user.name}</span>}
           {user?.role && (

@@ -6,7 +6,7 @@ const router = express.Router();
 
 // All admin routes require authentication + admin role
 router.use(authenticate);
-router.use(authorize('admin'));
+router.use(authorize('admin', 'superadmin'));
 
 router.get('/stats', getStats);
 router.get('/users', getAllUsers);

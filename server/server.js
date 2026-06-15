@@ -11,6 +11,7 @@ import pool from './config/db.js';
 import authRoutes from './routes/authRoutes.js';
 import ticketRoutes from './routes/ticketRoutes.js';
 import adminRoutes from './routes/adminRoutes.js';
+import superAdminRoutes from './routes/superAdminRoutes.js';
 
 const app = express();
 
@@ -30,6 +31,7 @@ app.use(cookieParser());                      // ✅ enables req.cookies
 app.use('/api/auth', authRoutes);
 app.use('/api/tickets', ticketRoutes);
 app.use('/api/admin', adminRoutes);
+app.use('/api/superadmin', superAdminRoutes);
 
 // Health check — safe to leave in production
 app.get('/api/health', (req, res) => {

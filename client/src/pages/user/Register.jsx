@@ -60,9 +60,6 @@ export default function Register() {
             <span className="text-[10px] font-mono font-semibold tracking-[0.25em] uppercase text-[#8fa3b0]">Create Account</span>
           </div>
           <h2 className="text-2xl font-bold text-[#1a1a1a] mb-1 tracking-tight">Get started</h2>
-          <p className="text-sm text-[#5a6d78] mb-8">Already have an account?{' '}
-            <Link to="/login" className="font-semibold text-[#1a1a1a] hover:text-[#5a6d78] transition-colors tracking-wider uppercase text-xs">Sign in</Link>
-          </p>
 
           {error && (
             <div className="border-2 border-[#e05a30]/30 bg-[#e05a30]/5 px-4 py-3 mb-6">
@@ -153,6 +150,9 @@ export default function Register() {
             >
               {loading ? 'Creating account...' : 'Create Account'}
             </button>
+            <p className="text-sm text-[#5a6d78] mb-8">Already have an account?{' '}
+              <Link to="/login" className="font-semibold text-[#1a1a1a] hover:text-[#5a6d78] transition-colors tracking-wider uppercase text-xs">Sign in</Link>
+            </p>
           </form>
         </div>
       </div>

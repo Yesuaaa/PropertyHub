@@ -7,7 +7,10 @@ export const createTicket = asyncHandler(async (req, res) => {
     let { type, category, priority, description } = req.body;
     const userId = req.user.userId;
 
-    if (priority) priority = priority.toLowerCase();
+    if (priority) {
+        const priorityMap = { 'low': 'low', 'medium': 'medium', 'high': 'high', 'critical': 'urgent' };
+        priority = priorityMap[priority.toLowerCase()] || priority.toLowerCase();
+    }
     if (category) category = category.trim();
 
     try {
@@ -52,7 +55,7 @@ export const getTicketById = asyncHandler(async (req, res) => {
     `;
     let params = [id];
 
-    if (role !== 'admin') {
+    if (role !== 'admin' && role !== 'superadmin') {
         query += ` AND t.user_id = ?`;
         params.push(userId);
     }
@@ -76,7 +79,7 @@ export const updateTicketStatus = asyncHandler(async (req, res) => {
     let query = `UPDATE tickets SET status = ? WHERE id = ?`;
     let params = [status, id];
 
-    if (role !== 'admin') {
+    if (role !== 'admin' && role !== 'superadmin') {
         query += ` AND user_id = ?`;
         params.push(userId);
     }
@@ -118,7 +121,7 @@ export const getTicketReplies = asyncHandler(async (req, res) => {
         return res.status(404).json({ success: false, message: 'Ticket not found' });
     }
 
-    if (role !== 'admin') {
+    if (role !== 'admin' && role !== 'superadmin') {
         const [owner] = await pool.query('SELECT user_id FROM tickets WHERE id = ?', [id]);
         if (owner[0].user_id !== userId) {
             return res.status(403).json({ success: false, message: 'Not authorized' });
@@ -155,7 +158,7 @@ export const createTicketReply = asyncHandler(async (req, res) => {
         return res.status(404).json({ success: false, message: 'Ticket not found' });
     }
 
-    if (role !== 'admin' && ticket[0].user_id !== userId) {
+    if (role !== 'admin' && role !== 'superadmin' && ticket[0].user_id !== userId) {
         return res.status(403).json({ success: false, message: 'Not authorized' });
     }
 

@@ -2,6 +2,7 @@ import { useState, useEffect } from 'react';
 import { useParams, Link } from 'react-router-dom';
 import axios from 'axios';
 import TicketConversation from '../../components/ticket/TicketConversation';
+import { useAuth } from '../../hooks/useAuth';
 
 const STATUSES = ['Open', 'In Progress', 'Resolved', 'Closed'];
 
@@ -9,6 +10,7 @@ export default function AdminTicketDetail() {
   const { id } = useParams();
   const [ticket, setTicket] = useState(null);
   const [loading, setLoading] = useState(true);
+  const { user } = useAuth();
 
   useEffect(() => {
     const fetchTicket = async () => {
@@ -124,7 +126,7 @@ export default function AdminTicketDetail() {
           <p className="text-sm text-[#5a6d78] leading-relaxed whitespace-pre-wrap">{ticket.description}</p>
         </div>
 
-        <TicketConversation ticketId={id} currentUserRole="admin" />
+        <TicketConversation ticketId={id} currentUserRole={user?.role || 'admin'} />
       </div>
     </div>
   );

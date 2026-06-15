@@ -1,7 +1,7 @@
 import { Navigate } from 'react-router-dom';
 import { useAuth } from '../hooks/useAuth';
 
-export default function PrivateRoute({ children, adminOnly }) {
+export default function PrivateRoute({ children, adminOnly, superAdminOnly }) {
   const { user, loading } = useAuth();
 
   if (loading) {
@@ -9,13 +9,17 @@ export default function PrivateRoute({ children, adminOnly }) {
   }
 
   if (!user) {
-    if (adminOnly) {
+    if (superAdminOnly || adminOnly) {
       return <Navigate to="/admin/login" />;
     }
     return <Navigate to="/login" />;
   }
 
-  if (adminOnly && user.role !== 'admin' && user.role !== 'staff') {
+  if (superAdminOnly && user.role !== 'superadmin') {
+    return <Navigate to="/admin" />;
+  }
+
+  if (adminOnly && user.role !== 'admin' && user.role !== 'staff' && user.role !== 'superadmin') {
     return <Navigate to="/" />;
   }
 
