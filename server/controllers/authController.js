@@ -2,7 +2,7 @@ import bcrypt from 'bcrypt';
 import crypto from 'crypto';
 import jwt from 'jsonwebtoken';
 import pool from '../config/db.js';
-import asyncHandler from '../util/asynchandler.js';
+import asyncHandler from '../util/asyncHandler.js';
 import { sendVerificationEmail, sendPasswordResetEmail } from '../services/email.service.js';
 
 const JWT_SECRET = process.env.JWT_SECRET;
