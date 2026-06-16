@@ -1,6 +1,7 @@
 import { useState } from 'react';
-import { Link, useNavigate } from 'react-router-dom';
+import { Link } from 'react-router-dom';
 import { useAuth } from '../../hooks/useAuth';
+import VerificationPending from '../VerificationPending';
 
 export default function Register() {
   const [firstName, setFirstName] = useState('');
@@ -11,8 +12,8 @@ export default function Register() {
   const [agreeTerms, setAgreeTerms] = useState(false);
   const [error, setError] = useState('');
   const [loading, setLoading] = useState(false);
+  const [registeredEmail, setRegisteredEmail] = useState('');
   const { register } = useAuth();
-  const navigate = useNavigate();
 
   const handleSubmit = async (e) => {
     e.preventDefault();
@@ -41,7 +42,7 @@ export default function Register() {
         email,
         password,
       });
-      navigate('/login');
+      setRegisteredEmail(email);
     } catch (err) {
       setError(err.response?.data?.message || 'Registration failed');
     } finally {
@@ -50,6 +51,10 @@ export default function Register() {
   };
 
   const inputClass = "w-full border-2 border-[#8fa3b0]/25 bg-transparent text-[#1a1a1a] px-4 py-3 text-sm focus:outline-none focus:border-[#1a1a1a] transition-colors duration-200 placeholder:text-[#8fa3b0]/50";
+
+  if (registeredEmail) {
+    return <VerificationPending email={registeredEmail} />;
+  }
 
   return (
     <div className="min-h-screen flex items-center justify-center py-12 px-4">
@@ -158,4 +163,4 @@ export default function Register() {
       </div>
     </div>
   );
-};
+}

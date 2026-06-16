@@ -3,70 +3,80 @@ import dotenv from 'dotenv';
 
 dotenv.config();
 
-const transporter = nodemailer.createTransport({
-    host: process.env.SMTP_HOST,
-    port: process.env.SMTP_PORT,
-    secure: process.env.SMTP_SECURE === 'true',
-    auth: {
-        user: process.env.SMTP_USER,
-        pass: process.env.SMTP_PASS,
-    },
-});
+const transporter = process.env.SMTP_HOST
+    ? nodemailer.createTransport({
+        host: process.env.SMTP_HOST,
+        port: parseInt(process.env.SMTP_PORT) || 587,
+        secure: process.env.SMTP_SECURE === 'true',
+        auth: {
+            user: process.env.SMTP_USER,
+            pass: process.env.SMTP_PASS,
+        },
+    })
+    : null;
 
-// Verify connection on startup
-transporter.verify((error, success) => {
-    if (error) {
-        console.error('SMTP connection error:', error);
-    } else {
-        console.log('SMTP server ready');
+const FROM_EMAIL = process.env.EMAIL_FROM || 'noreply@yourdomain.com';
+const FROM_NAME = process.env.EMAIL_FROM_NAME || 'PropertyHub';
+
+if (transporter) {
+    transporter.verify((error) => {
+        if (error) console.error('SMTP connection error:', error.message);
+        else console.log('SMTP server ready');
+    });
+} else {
+    console.warn('SMTP not configured. Emails will not be sent.');
+}
+
+const sendEmail = async (to, subject, html) => {
+    if (!transporter) {
+        console.warn('SMTP not configured. Email not sent.');
+        return { success: false, error: 'SMTP not configured' };
     }
-});
 
-/**
- * Send a generic email
- */
-export const sendEmail = async (to, subject, text, html = null) => {
     try {
-        const mailOptions = {
-            from: process.env.EMAIL_FROM,
+        const info = await transporter.sendMail({
+            from: `${FROM_NAME} <${FROM_EMAIL}>`,
             to,
             subject,
-            text,
-            ...(html && { html }),
-        };
-        const info = await transporter.sendMail(mailOptions);
+            html,
+        });
         console.log(`Email sent to ${to}: ${info.messageId}`);
-        return { success: true, messageId: info.messageId };
+        return { success: true, id: info.messageId };
     } catch (error) {
-        console.error('Email send error:', error);
+        console.error('Email send error:', error.message);
         return { success: false, error: error.message };
     }
 };
 
-/**
- * Send password reset email
- * @param {string} to - user email
- * @param {string} resetToken - plain token (not hashed) to include in link
- * @param {string} userName - user's name
- */
+export const sendVerificationEmail = async (email, otp) => {
+    const html = `
+        <div style="font-family: Arial, sans-serif; max-width: 600px;">
+            <h2>Verify Your Email</h2>
+            <p>Thank you for creating a PropertyHub account. Use the code below to verify your email:</p>
+            <div style="font-size: 32px; font-weight: bold; letter-spacing: 8px; padding: 16px 0; background: #f5f3ef; border-radius: 8px; text-align: center;">
+                ${otp}
+            </div>
+            <p style="color: #8fa3b0;">This code expires in 10 minutes.</p>
+            <hr>
+            <p style="color: #8fa3b0; font-size: 14px;">PropertyHub Team</p>
+        </div>
+    `;
+    return sendEmail(email, 'PropertyHub - Email Verification', html);
+};
 
-// SUBJECT FOR CHANGE PA TO KAYO NA BAHALA
-export const sendPasswordResetEmail = async (to, resetToken, userName) => {
-    const resetLink = `${process.env.FRONTEND_URL}/reset-password?token=${resetToken}`;
-    const subject = 'Password Reset Request';
-    const text = `Hello ${userName},\n\nYou requested a password reset. Click the link below to reset your password:\n${resetLink}\n\nIf you didn't request this, please ignore this email.\n\nPropertyHub Team`;
+export const sendPasswordResetEmail = async (email, otp) => {
     const html = `
         <div style="font-family: Arial, sans-serif; max-width: 600px;">
             <h2>Password Reset</h2>
-            <p>Hello ${userName},</p>
-            <p>You requested a password reset. Click the button below to reset your password:</p>
-            <a href="${resetLink}" style="display: inline-block; padding: 10px 20px; background-color: #e05a30; color: white; text-decoration: none; border-radius: 4px;">Reset Password</a>
-            <p>If the button doesn't work, copy and paste this link into your browser:</p>
-            <p>${resetLink}</p>
-            <p>If you didn't request this, please ignore this email.</p>
+            <p>Use the code below to reset your PropertyHub password:</p>
+            <div style="font-size: 32px; font-weight: bold; letter-spacing: 8px; padding: 16px 0; background: #f5f3ef; border-radius: 8px; text-align: center;">
+                ${otp}
+            </div>
+            <p style="color: #8fa3b0;">This code expires in 10 minutes.</p>
+            <p style="color: #8fa3b0;">If you didn't request this, please ignore this email.</p>
             <hr>
-            <p>PropertyHub Team</p>
+            <p style="color: #8fa3b0; font-size: 14px;">PropertyHub Team</p>
         </div>
     `;
-    return sendEmail(to, subject, text, html);
+    return sendEmail(email, 'PropertyHub - Password Reset', html);
 };
