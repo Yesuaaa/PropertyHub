@@ -114,7 +114,7 @@ export default function AdminDashboard() {
         <span className="w-2 h-2 bg-[#e05a30]" />
         <span className="text-[10px] font-mono font-semibold tracking-[0.25em] uppercase text-[#8fa3b0]">Administration</span>
       </div>
-      <h2 className="text-3xl font-bold text-[#1a1a1a] mb-6 tracking-tight">Internet Cafe Dashboard</h2>
+      <h2 className="text-2xl sm:text-3xl font-bold text-[#1a1a1a] mb-6 tracking-tight">Internet Cafe Dashboard</h2>
 
       <div className="flex flex-wrap items-end gap-4 mb-8">
         <div>
@@ -139,7 +139,7 @@ export default function AdminDashboard() {
         </div>
       ) : (
         <div className="border-2 border-[#1a1a1a] overflow-x-auto">
-          <table className="w-full text-left">
+          <table className="w-full text-left min-w-[800px]">
             <thead>
               <tr className="border-b-2 border-[#1a1a1a]">
                 <th className="px-5 py-3 text-[10px] font-mono font-semibold tracking-[0.2em] uppercase text-[#8fa3b0]">ID</th>

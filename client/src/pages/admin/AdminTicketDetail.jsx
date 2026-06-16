@@ -76,8 +76,8 @@ export default function AdminTicketDetail() {
         Back to dashboard
       </Link>
 
-      <div className="border-2 border-[#1a1a1a] bg-[#f5f3ef] p-8">
-        <div className="flex items-start justify-between mb-8 pb-6 border-b-2 border-[#8fa3b0]/20">
+      <div className="border-2 border-[#1a1a1a] bg-[#f5f3ef] p-5 sm:p-8">
+        <div className="flex flex-col sm:flex-row sm:items-start justify-between gap-4 mb-8 pb-6 border-b-2 border-[#8fa3b0]/20">
           <div>
             <div className="flex items-center gap-3 mb-2">
               <span className="w-2 h-2 bg-[#e05a30]" />
@@ -89,7 +89,7 @@ export default function AdminTicketDetail() {
           <select
             value={statusMap[ticket.status] || ticket.status}
             onChange={(e) => handleStatusChange(e.target.value)}
-            className="border-2 border-[#8fa3b0]/25 bg-transparent text-sm text-[#1a1a1a] px-3 py-2 focus:outline-none focus:border-[#1a1a1a] cursor-pointer appearance-none font-mono text-xs tracking-wider uppercase"
+            className="border-2 border-[#8fa3b0]/25 bg-transparent text-sm text-[#1a1a1a] px-3 py-2 focus:outline-none focus:border-[#1a1a1a] cursor-pointer appearance-none font-mono text-xs tracking-wider uppercase self-start sm:self-auto"
           >
             {STATUSES.map((s) => (
               <option key={s} value={s}>{s}</option>
@@ -97,7 +97,7 @@ export default function AdminTicketDetail() {
           </select>
         </div>
 
-        <div className="grid grid-cols-2 gap-x-8 gap-y-5 mb-8 pb-8 border-b-2 border-[#8fa3b0]/20">
+        <div className="grid grid-cols-1 sm:grid-cols-2 gap-x-8 gap-y-5 mb-8 pb-8 border-b-2 border-[#8fa3b0]/20">
           <div>
             <span className="block text-[10px] font-mono font-semibold tracking-[0.2em] uppercase text-[#8fa3b0] mb-1">Category</span>
             <span className="text-sm text-[#1a1a1a]">{ticket.category}</span>

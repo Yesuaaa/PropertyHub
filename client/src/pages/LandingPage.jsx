@@ -23,13 +23,13 @@ function Hero() {
     <section className="relative min-h-[90vh] flex items-center border-b border-[#8fa3b0]/20 overflow-hidden">
       <div className="absolute inset-0 z-0">
         <img
-          src="https://images.pexels.com/photos/6125337/pexels-photo-6125337.jpeg"
+          src="/hero-professional.jpg"
           alt=""
           className="absolute top-0 right-0 h-full w-[60%] object-cover hidden lg:block"
         />
         <div className="absolute top-0 right-0 h-full w-[60%] bg-gradient-to-l from-[#f5f3ef]/80 to-[#f5f3ef] hidden lg:block" />
       </div>
-      <div className="relative z-10 max-w-[1400px] mx-auto px-6 sm:px-10 md:px-16 w-full py-20 lg:py-0 grid grid-cols-1 lg:grid-cols-12 gap-12 items-center">
+      <div className="relative max-w-[1400px] mx-auto px-4 sm:px-6 sm:px-10 md:px-16 w-full py-16 lg:py-0 grid grid-cols-1 lg:grid-cols-12 gap-12 items-center">
         <div className="lg:col-span-7 space-y-8">
           <SectionLabel>Internet Cafe Portal</SectionLabel>
 
@@ -178,7 +178,7 @@ function Features() {
           #aeaeae 15px
         )`
       }} />
-      <div className="relative max-w-[1400px] mx-auto px-6 sm:px-10 md:px-16 py-24">
+      <div className="relative max-w-[1400px] mx-auto px-4 sm:px-6 sm:px-10 md:px-16 py-16 sm:py-24">
         <div className="flex items-center gap-3 mb-6">
           <span className="w-2 h-2 bg-[#e05a30]" />
           <span className="text-[10px] font-mono font-semibold tracking-[0.25em] uppercase text-[#f5f3ef]">How It Works</span>

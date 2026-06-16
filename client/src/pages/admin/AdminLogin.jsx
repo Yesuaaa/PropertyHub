@@ -37,7 +37,7 @@ export default function AdminLogin() {
   return (
     <div className="min-h-screen flex items-center justify-center py-12 px-4">
       <div className="max-w-md w-full">
-        <div className="border-2 border-[#1a1a1a] bg-[#f5f3ef] p-10 relative">
+        <div className="border-2 border-[#1a1a1a] bg-[#f5f3ef] p-6 sm:p-10 relative">
           <div className="flex items-center gap-3 mb-2">
             <span className="w-2 h-2 bg-[#e05a30]" />
             <span className="text-[10px] font-mono font-semibold tracking-[0.25em] uppercase text-[#8fa3b0]">Admin / Staff Portal</span>

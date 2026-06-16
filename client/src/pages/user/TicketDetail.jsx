@@ -54,8 +54,8 @@ export default function TicketDetail() {
         Back to requests
       </Link>
 
-      <div className="border-2 border-[#1a1a1a] bg-[#f5f3ef] p-8">
-        <div className="flex items-start justify-between mb-8 pb-6 border-b-2 border-[#8fa3b0]/20">
+      <div className="border-2 border-[#1a1a1a] bg-[#f5f3ef] p-5 sm:p-8">
+        <div className="flex flex-col sm:flex-row sm:items-start justify-between gap-4 mb-8 pb-6 border-b-2 border-[#8fa3b0]/20">
           <div>
             <div className="flex items-center gap-3 mb-2">
               <span className="w-2 h-2 bg-[#e05a30]" />
@@ -63,12 +63,12 @@ export default function TicketDetail() {
             </div>
             <h2 className="text-2xl font-bold text-[#1a1a1a] tracking-tight">{ticket.type}</h2>
           </div>
-          <span className={`text-[10px] font-mono font-semibold tracking-[0.2em] uppercase border px-3 py-1.5 ${statusColor}`}>
+          <span className={`text-[10px] font-mono font-semibold tracking-[0.2em] uppercase border px-3 py-1.5 self-start sm:self-auto ${statusColor}`}>
             {ticket.status?.replace('_', ' ')}
           </span>
         </div>
 
-        <div className="grid grid-cols-2 gap-x-8 gap-y-5 mb-8 pb-8 border-b-2 border-[#8fa3b0]/20">
+        <div className="grid grid-cols-1 sm:grid-cols-2 gap-x-8 gap-y-5 mb-8 pb-8 border-b-2 border-[#8fa3b0]/20">
           <div>
             <span className="block text-[10px] font-mono font-semibold tracking-[0.2em] uppercase text-[#8fa3b0] mb-1">Type</span>
             <span className="text-sm text-[#1a1a1a]">{ticket.type}</span>
