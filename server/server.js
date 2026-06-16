@@ -27,6 +27,15 @@ app.use(cors({
 app.use(express.json({ limit: '10kb' }));     // ✅ request size limit
 app.use(cookieParser());                      // ✅ enables req.cookies
 
+// Root route — shows when visiting the plain Render URL
+app.get('/', (req, res) => {
+    res.json({
+        success: true,
+        message: 'PropertyHub API is running',
+        health: '/api/health'
+    });
+});
+
 // use routes
 app.use('/api/auth', authRoutes);
 app.use('/api/tickets', ticketRoutes);
