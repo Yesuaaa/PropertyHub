@@ -5,7 +5,7 @@ const SoftwareIssue = () => {
     <div className="min-h-screen bg-[#f7f6f4] py-16">
       <div className="max-w-5xl mx-auto px-6 sm:px-10">
         <div className="mb-8">
-          <h1 className="text-4xl sm:text-5xl font-bold text-[#1a1a1a]">Hardware Issue</h1>
+          <h1 className="text-4xl sm:text-5xl font-bold text-[#1a1a1a]">Gaming Area</h1>
           <p className="mt-2 text-sm text-[#5a6d78]">Zogo</p>
           <p className="mt-2 text-sm text-[#5a6d78]">Internet Cafe Complaint and Feedback System</p>
           <p className="mt-4 text-sm text-[#5a6d78]">Effective Date: June 13, 2026</p>
