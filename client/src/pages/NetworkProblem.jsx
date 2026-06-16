@@ -26,38 +26,18 @@ const NetworkProblem = () => {
           </section>
 
           <section className="mt-10 space-y-4">
-            <h2 className="text-2xl font-semibold">2. Common Network Problems</h2>
-            <h4 className="text-2xl font-semibold">a. Wi-Fi Outage</h4>
+            <h2 className="text-2xl font-semibold">2. Common Network Issues</h2>
             <div className="space-y-3 text-sm text-[#5a6d78] leading-7">
-              <p>Staff devices and customer guest Wi-Fi are disconnected or showing "No Internet".</p>
-              </div>
-            <h4 className="text-2xl font-semibold">b. Slow Internet Speed</h4>
-            <div className="space-y-3 text-sm text-[#5a6d78] leading-7">
-              <p>Connectivity exists but loading times are extremely delayed for POS and cloud systems.</p>
-              </div>
-            <h4 className="text-2xl font-semibold">c. Device Communication Failure</h4>
-            <div className="space-y-3 text-sm text-[#5a6d78] leading-7">
-              <p>Kitchen printers not receiving orders from front counter; tablets not syncing.</p>
-            </div>
-            <h4 className="text-2xl font-semibold">d. VPN Failure</h4>
-            <div className="space-y-3 text-sm text-[#5a6d78] leading-7">
-              <p>Unable to connect to head-office database for inventory updates or reports.</p>
-              </div>
-            <h4 className="text-2xl font-semibold">e. IP Address Conflicts</h4>
-            <div className="space-y-3 text-sm text-[#5a6d78] leading-7">
-              <p>Specific device cannot be found on the network due to duplicate IP assignment.</p>
-              </div>
-            <h4 className="text-2xl font-semibold">f. DNS Issues</h4>
-            <div className="space-y-3 text-sm text-[#5a6d78] leading-7">
-              <p>Websites and apps fail to load due to domain resolution errors.</p>
-            </div>
-            <h4 className="text-2xl font-semibold">g. Packet Loss/Latency</h4>
-            <div className="space-y-3 text-sm text-[#5a6d78] leading-7">
-              <p>Orders transmitted with delay; voice/video calls breaking up.</p>
-            </div>
-            <h4 className="text-2xl font-semibold">h. Switch/Router Malfunction</h4>
-            <div className="space-y-3 text-sm text-[#5a6d78] leading-7">
-              <p>Hardware failure in network equipment causing partial or total blackout.</p>
+              <ul className="list-disc pl-5 space-y-2">
+                <li><b>Wi-Fi Outage: </b>Staff devices and customer guest Wi-Fi are disconnected or showing "No Internet".</li>
+                <li><b>Sloww Interenet Speed: </b>Connectivity exists but loading times are extremely delayed for POS and cloud systems.</li>
+                <li><b>Device Communication Failure: </b>Kitchen printers not receiving orders from front counter; tablets not syncing.</li>
+                <li><b>VPN Failure: </b>Unable to connect to head-office database for inventory updates or reports.</li>
+                <li><b>IP Address Conflicts: </b>Specific device cannot be found on the network due to duplicate IP assignment.</li>
+                <li><b>DNS Issues: </b>Websites and apps fail to load due to domain resolution errors.</li>
+                <li><b>Packet Loss/Latency: </b>Orders transmitted with delay; voice/video calls breaking up.</li>
+                <li><b>Switch/Router Malfunction: </b>Hardware failure in network equipment causing partial or total blackout.</li>
+              </ul>
             </div>
           </section>
 

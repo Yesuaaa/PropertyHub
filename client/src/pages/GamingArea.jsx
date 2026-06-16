@@ -27,37 +27,17 @@ const SoftwareIssue = () => {
 
           <section className="mt-10 space-y-4">
             <h2 className="text-2xl font-semibold">2. Common Gaming Area Issues</h2>
-            <h4 className="text-2xl font-semibold">a. Hardware Problems</h4>
             <div className="space-y-3 text-sm text-[#5a6d78] leading-7">
-              <p>Computer not powering on, monitor flickering, keyboard keys missing, mouse not responding, headset audio issues.</p>
-              </div>
-            <h4 className="text-2xl font-semibold">b. Network Problems</h4>
-            <div className="space-y-3 text-sm text-[#5a6d78] leading-7">
-              <p>High ping, lag spikes, disconnections, slow download speeds, game server connection errors.</p>
-              </div>
-            <h4 className="text-2xl font-semibold">c. Software Problems</h4>
-            <div className="space-y-3 text-sm text-[#5a6d78] leading-7">
-              <p>Game crashes, game not launching, outdated game versions, client errors, missing game files.</p>
-            </div>
-            <h4 className="text-2xl font-semibold">d. Peripheral Issues</h4>
-            <div className="space-y-3 text-sm text-[#5a6d78] leading-7">
-              <p>Keyboard sticky, mouse not tracking, headset broken, controller unresponsive, mousepad worn.</p>
-              </div>
-            <h4 className="text-2xl font-semibold">e. Seating & Furniture</h4>
-            <div className="space-y-3 text-sm text-[#5a6d78] leading-7">
-              <p>Chair wobbly, armrest broken, table height issues, torn upholstery.</p>
-              </div>
-            <h4 className="text-2xl font-semibold">f. Cleanliness Issues</h4>
-            <div className="space-y-3 text-sm text-[#5a6d78] leading-7">
-              <p>Keyboards/mice dirty, sticky surfaces, trash left at station, dusty monitors, food spills.</p>
-            </div>
-            <h4 className="text-2xl font-semibold">g. Audio/Visual Issues</h4>
-            <div className="space-y-3 text-sm text-[#5a6d78] leading-7">
-              <p>Speakers not working, screen resolution wrong, color distortion, audio delay.</p>
-            </div>
-            <h4 className="text-2xl font-semibold">h. Account Issues</h4>
-            <div className="space-y-3 text-sm text-[#5a6d78] leading-7">
-              <p>Game account not logged in, subscription expired, parental controls blocking games.</p>
+              <ul className="list-disc pl-5 space-y-2">
+                <li><b>Hardware Problems: </b>Computer not powering on, monitor flickering, keyboard keys missing, mouse not responding, headset audio issues.</li>
+                <li><b>Network Problems: </b>High ping, lag spikes, disconnections, slow download speeds, game server connection errors.</li>
+                <li><b>Software Problems: </b>Game crashes, game not launching, outdated game versions, client errors, missing game files.</li>
+                <li><b>Peripheral Issue: </b>Keyboard sticky, mouse not tracking, headset broken, controller unresponsive, mousepad worn.</li>
+                <li><b>Seating & Furniture: </b>Chair wobbly, armrest broken, table height issues, torn upholstery.</li>
+                <li><b>Cleanliness Issue: </b>Keyboards/mice dirty, sticky surfaces, trash left at station, dusty monitors, food spills</li>
+                <li><b>Audio/Visual Issues: </b>Speakers not working, screen resolution wrong, color distortion, audio delay.</li>
+                <li><b>Account Issues: </b>Game account not logged in, subscription expired, parental controls blocking games.</li>
+              </ul>
             </div>
           </section>
 

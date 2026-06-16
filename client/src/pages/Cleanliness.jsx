@@ -25,39 +25,19 @@ const SoftwareIssue = () => {
             </p>
           </section>
 
-          <section className="mt-10 space-y-4">
-            <h2 className="text-2xl font-semibold">2. Common Cleanliness Concerns</h2>
-            <h4 className="text-2xl font-semibold">a. Dining Area</h4>
+            <section className="mt-10 space-y-4">
+            <h2 className="text-2xl font-semibold">2. Common Cleanliness Issues</h2>
             <div className="space-y-3 text-sm text-[#5a6d78] leading-7">
-              <p>Tables not wiped, floor sticky, spilled drinks, trash bins overflowing, crumbs on seats.</p>
-              </div>
-            <h4 className="text-2xl font-semibold">b. Restrooms</h4>
-            <div className="space-y-3 text-sm text-[#5a6d78] leading-7">
-              <p>No soap or tissue, dirty floors, foul odor, toilet not flushing, sinks clogged.</p>
-              </div>
-            <h4 className="text-2xl font-semibold">c. Food & Beverage Station</h4>
-            <div className="space-y-3 text-sm text-[#5a6d78] leading-7">
-              <p>Counter sticky, condiment spills, coffee stains, utensils not clean.</p>
-            </div>
-            <h4 className="text-2xl font-semibold">d. Gaming Area</h4>
-            <div className="space-y-3 text-sm text-[#5a6d78] leading-7">
-              <p>Keyboards/mice sticky, chairs stained, trash left on tables, dusty monitors.</p>
-              </div>
-            <h4 className="text-2xl font-semibold">e. Entrance/Walkways</h4>
-            <div className="space-y-3 text-sm text-[#5a6d78] leading-7">
-              <p>Wet floors, dirt tracked in, mats not clean, slippery surfaces.</p>
-              </div>
-            <h4 className="text-2xl font-semibold">f. Kitchen/Prep Area</h4>
-            <div className="space-y-3 text-sm text-[#5a6d78] leading-7">
-              <p>Floor greasy, counters not sanitized, equipment not cleaned.</p>
-            </div>
-            <h4 className="text-2xl font-semibold">g. Display Shelves</h4>
-            <div className="space-y-3 text-sm text-[#5a6d78] leading-7">
-              <p>Dust buildup, product packaging dirty, expired items on display.</p>
-            </div>
-            <h4 className="text-2xl font-semibold">h. Air Quality</h4>
-            <div className="space-y-3 text-sm text-[#5a6d78] leading-7">
-              <p>Lingering odors, poor ventilation, smoke smell, dusty air conditioning.</p>
+              <ul className="list-disc pl-5 space-y-2">
+                <li><b>Dining Area: </b>Tables not wiped, floor sticky, spilled drinks, trash bins overflowing, crumbs on seats.</li>
+                <li><b>Restrooms: </b>No soap or tissue, dirty floors, foul odor, toilet not flushing, sinks clogged.</li>
+                <li><b>Food & Beverage Station: </b>Counter sticky, condiment spills, coffee stains, utensils not clean.</li>
+                <li><b>Gaming Area: </b>Keyboards/mice sticky, chairs stained, trash left on tables, dusty monitors.</li>
+                <li><b>Entrance/Walkways: </b>Wet floors, dirt tracked in, mats not clean, slippery surfaces.</li>
+                <li><b>Kitchen/Prep Area: </b>Floor greasy, counters not sanitized, equipment not cleaned.</li>
+                <li><b>Display Shelves: </b>Dust buildup, product packaging dirty, expired items on display.</li>
+                <li><b>Air Quality: </b>Lingering odors, poor ventilation, smoke smell, dusty air conditioning.</li>
+              </ul>
             </div>
           </section>
 

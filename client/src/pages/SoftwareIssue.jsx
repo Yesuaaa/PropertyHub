@@ -25,47 +25,21 @@ const SoftwareIssue = () => {
             </p>
           </section>
 
-          <section className="mt-10 space-y-4">
-            <h2 className="text-2xl font-semibold">2. Common Software Problems</h2>
-            <h4 className="text-2xl font-semibold">a. Application Crashes</h4>
+            <section className="mt-10 space-y-4">
+            <h2 className="text-2xl font-semibold">2. Common Software Issues</h2>
             <div className="space-y-3 text-sm text-[#5a6d78] leading-7">
-              <p>POS app closes unepectedly during checkout; kioks app freezes.</p>
-              </div>
-            <h4 className="text-2xl font-semibold">b. Menu Errors</h4>
-            <div className="space-y-3 text-sm text-[#5a6d78] leading-7">
-              <p>Items missing from menu, incorrect prices displayed, wrong product images.</p>
-              </div>
-            <h4 className="text-2xl font-semibold">c. Transaction Errors</h4>
-            <div className="space-y-3 text-sm text-[#5a6d78] leading-7">
-              <p>Payment processing fails, incorrect change calculayed, duplicate orders.</p>
-            </div>
-            <h4 className="text-2xl font-semibold">d. Sync/Integration Errors</h4>
-            <div className="space-y-3 text-sm text-[#5a6d78] leading-7">
-              <p>Online orders not appearing in kitchen; inventory not updating after sale.</p>
-              </div>
-            <h4 className="text-2xl font-semibold">e. Login/Authentication Failures</h4>
-            <div className="space-y-3 text-sm text-[#5a6d78] leading-7">
-              <p>Staff unable to log in; password reset not working; account locked.</p>
-              </div>
-            <h4 className="text-2xl font-semibold">f. Reporting Bugs</h4>
-            <div className="space-y-3 text-sm text-[#5a6d78] leading-7">
-              <p>Sales reports incorrect totals, missing tax calculations, date range errors.</p>
-            </div>
-            <h4 className="text-2xl font-semibold">g. User Interface Glitches</h4>
-            <div className="space-y-3 text-sm text-[#5a6d78] leading-7">
-              <p>Buttons overlapping, text cut off, screen scaling issues, unresponsive elements.</p>
-            </div>
-            <h4 className="text-2xl font-semibold">h. Data Corruption</h4>
-            <div className="space-y-3 text-sm text-[#5a6d78] leading-7">
-              <p>Order history missing, customer data lost, settings reset unexpectedly.</p>
-            </div>
-            <h4 className="text-2xl font-semibold">i. Performance Issues</h4>
-            <div className="space-y-3 text-sm text-[#5a6d78] leading-7">
-              <p>App slow to load, lag during transactions, delayed response to commands.</p>
-            </div>
-            <h4 className="text-2xl font-semibold">j. Third-Party Integration</h4>
-            <div className="space-y-3 text-sm text-[#5a6d78] leading-7">
-              <p>Delivery platform orders not syncing; loyalty points not accruing.</p>
+              <ul className="list-disc pl-5 space-y-2">
+                <li><b>Application Crashes: </b>POS app closes unepectedly during checkout; kioks app freezes.</li>
+                <li><b>Menu Errors: </b>Items missing from menu, incorrect prices displayed, wrong product images.</li>
+                <li><b>Transaction Errors: </b>Payment processing fails, incorrect change calculayed, duplicate orders.</li>
+                <li><b>Sync/Integration Errors: </b>Online orders not appearing in kitchen; inventory not updating after sale.</li>
+                <li><b>Login/Authentication Failures: </b>Staff unable to log in; password reset not working; account locked.</li>
+                <li><b>Reporting Bugs: </b>Sales reports incorrect totals, missing tax calculations, date range errors.</li>
+                <li><b>User Interface Glitches: </b>Buttons overlapping, text cut off, screen scaling issues, unresponsive elements.</li>
+                <li><b>Data Corruption: </b>Order history missing, customer data lost, settings reset unexpectedly.</li>
+                <li><b>Performance Issues: </b>App slow to load, lag during transactions, delayed response to commands.</li>
+                <li><b>Third-Party Integration: </b>Delivery platform orders not syncing; loyalty points not accruing.</li>
+              </ul>
             </div>
           </section>
 

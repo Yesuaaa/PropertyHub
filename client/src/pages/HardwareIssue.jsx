@@ -25,34 +25,17 @@ const HardwareIssue = () => {
           </section>
 
           <section className="mt-10 space-y-4">
-            <h2 className="text-2xl font-semibold">2. Common Hardware Problems</h2>
-            <h4 className="text-2xl font-semibold">a. POS Terminal</h4>
+            <h2 className="text-2xl font-semibold">2. Common Hardware Issues</h2>
             <div className="space-y-3 text-sm text-[#5a6d78] leading-7">
-              <p>Screen frozen, unresponsive to touch, black screen, slow performance, physcial damage (cracked screen).</p>
-              </div>
-            <h4 className="text-2xl font-semibold">b. Receipt Printer</h4>
-            <div className="space-y-3 text-sm text-[#5a6d78] leading-7">
-              <p>Paper jam, out of paper, printing blank receipts, faded text, connectivity errors, mechanical failure.</p>
-              </div>
-            <h4 className="text-2xl font-semibold">c. Card Reader/Pinpad</h4>
-            <div className="space-y-3 text-sm text-[#5a6d78] leading-7">
-              <p>Not powering on, card not reading (swipe/chip/tap), transaction declined repeatedly, display glitches.</p>
-            </div>
-            <h4 className="text-2xl font-semibold">d. Self-Order Kiosk</h4>
-            <div className="space-y-3 text-sm text-[#5a6d78] leading-7">
-              <p>Touchscreen unresponsive, display flickering, physical damage, system boot failure.</p>
-              </div>
-            <h4 className="text-2xl font-semibold">e. Kitchen Display System</h4>
-            <div className="space-y-3 text-sm text-[#5a6d78] leading-7">
-              <p>Screen goes black, order not showing, audio alerts not working, lag in order updates.</p>
-              </div>
-            <h4 className="text-2xl font-semibold">f. Tablets/Mobile Devices</h4>
-            <div className="space-y-3 text-sm text-[#5a6d78] leading-7">
-              <p>Battery not charging, cracked screen, app crashing, overheating, connectivity issues.</p>
-            </div>
-            <h4 className="text-2xl font-semibold">g. Coffee Equipment</h4>
-            <div className="space-y-3 text-sm text-[#5a6d78] leading-7">
-              <p>Digital scale not syncing, grinder display errors, connected machine offline.</p>
+              <ul className="list-disc pl-5 space-y-2">
+                <li><b>POS Terminal: </b>Screen frozen, unresponsive to touch, black screen, slow performance, physical damage (cracked screen).</li>
+                <li><b>Receipt Printer: </b>Paper jam, out of paper, printing blank receipts, faded text, connectivity errors, mechanical failure.</li>
+                <li><b>Card Reader/Pinpad: </b>Not powering on, card not reading (swipe/chip/tap), transaction declined repeatedly, display glitches.</li>
+                <li><b>Self-Order Kiosk: </b>Touchscreen unresponsive, display flickering, physical damage, system boot failure.</li>
+                <li><b>Kitchen Display System: </b>Screen goes black, order not showing, audio alerts not working, lag in order updates.</li>
+                <li><b>Tablets/Mobile Devices: </b>Battery not charging, cracked screen, app crashing, overheating, connectivity issues.</li>
+                <li><b>Coffee Equipment: </b>Digital scale not syncing, grinder display errors, connected machine offline.</li>
+              </ul>
             </div>
           </section>
 
