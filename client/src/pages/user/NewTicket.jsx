@@ -45,7 +45,7 @@ export default function NewTicket() {
   return (
     <div className="pb-16">
       <PageBanner
-        image="https://images.pexels.com/photos/6125337/pexels-photo-6125337.jpeg"
+        image="/hero-professional.jpg"
         breadcrumbs={[
           { label: 'Home', to: '/' },
           { label: 'Dashboard', to: '/dashboard' },
