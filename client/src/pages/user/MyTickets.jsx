@@ -23,6 +23,13 @@ export default function MyTickets() {
   const [filterType, setFilterType] = useState('');
   const [filterCategory, setFilterCategory] = useState('');
 
+  const effectiveFilterCategory = useMemo(() => {
+    if (filterType && filterCategory && !TYPE_CATEGORIES[filterType]?.includes(filterCategory)) {
+      return '';
+    }
+    return filterCategory;
+  }, [filterType, filterCategory]);
+
   const allCategories = useMemo(() => {
     const seen = new Set();
     Object.values(TYPE_CATEGORIES).flat().forEach((c) => seen.add(c));
@@ -33,24 +40,6 @@ export default function MyTickets() {
     if (!filterType) return allCategories;
     return TYPE_CATEGORIES[filterType] || [];
   }, [filterType, allCategories]);
-
-  useEffect(() => {
-    if (filterType && filterCategory && !TYPE_CATEGORIES[filterType]?.includes(filterCategory)) {
-      setFilterCategory('');
-    }
-  }, [filterType, filterCategory]);
-
-  const filteredTickets = useMemo(() => {
-    return tickets.filter((t) => {
-      if (filterType && t.type !== filterType) return false;
-      if (filterCategory && t.category !== filterCategory) return false;
-      return true;
-    });
-  }, [tickets, filterType, filterCategory]);
-
-  useEffect(() => {
-    fetchTickets();
-  }, []);
 
   const fetchTickets = async () => {
     try {
@@ -63,6 +52,29 @@ export default function MyTickets() {
       setLoading(false);
     }
   };
+
+  const filteredTickets = useMemo(() => {
+    return tickets.filter((t) => {
+      if (filterType && t.type !== filterType) return false;
+      if (effectiveFilterCategory && t.category !== effectiveFilterCategory) return false;
+      return true;
+    });
+  }, [tickets, filterType, effectiveFilterCategory]);
+
+  useEffect(() => {
+    let cancelled = false;
+    (async () => {
+      try {
+        const { data } = await api.get('/tickets');
+        if (!cancelled) setTickets(Array.isArray(data) ? data : []);
+      } catch (err) {
+        if (!cancelled) setError(err.response?.data?.message || 'Failed to load tickets');
+      } finally {
+        if (!cancelled) setLoading(false);
+      }
+    })();
+    return () => { cancelled = true; };
+  }, []);
 
   if (loading) {
     return <p className="text-center pt-24 text-[10px] font-mono tracking-[0.2em] uppercase text-[#8fa3b0]">Loading...</p>;
@@ -98,7 +110,7 @@ export default function MyTickets() {
             </div>
             <div>
               <label className="block text-[10px] font-mono font-semibold tracking-[0.2em] uppercase text-[#8fa3b0] mb-1.5">Filter by Category</label>
-              <select value={filterCategory} onChange={(e) => setFilterCategory(e.target.value)} className="border-2 border-[#8fa3b0]/25 bg-transparent text-sm text-[#1a1a1a] px-3 py-1.5 focus:outline-none focus:border-[#1a1a1a] cursor-pointer appearance-none font-mono text-xs tracking-wider uppercase">
+              <select value={effectiveFilterCategory} onChange={(e) => setFilterCategory(e.target.value)} className="border-2 border-[#8fa3b0]/25 bg-transparent text-sm text-[#1a1a1a] px-3 py-1.5 focus:outline-none focus:border-[#1a1a1a] cursor-pointer appearance-none font-mono text-xs tracking-wider uppercase">
                 <option value="">All Categories</option>
                 {filteredCategories.map((c) => (<option key={c} value={c}>{c}</option>))}
               </select>

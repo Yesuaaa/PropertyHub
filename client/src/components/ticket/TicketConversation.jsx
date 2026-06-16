@@ -11,16 +11,6 @@ export default function TicketConversation({ ticketId, currentUserRole }) {
 
   const isClosed = ticketStatus === 'resolved' || ticketStatus === 'closed';
 
-  useEffect(() => {
-    fetchReplies();
-  }, [ticketId]);
-
-  useEffect(() => {
-    if (bottomRef.current) {
-      bottomRef.current.scrollIntoView({ behavior: 'smooth' });
-    }
-  }, [replies]);
-
   const fetchReplies = async () => {
     try {
       const { data } = await api.get(`/tickets/${ticketId}/replies`);
@@ -30,6 +20,28 @@ export default function TicketConversation({ ticketId, currentUserRole }) {
       console.error(err);
     }
   };
+
+  useEffect(() => {
+    let cancelled = false;
+    (async () => {
+      try {
+        const { data } = await api.get(`/tickets/${ticketId}/replies`);
+        if (!cancelled) {
+          setReplies(data.replies);
+          setTicketStatus(data.status);
+        }
+      } catch (err) {
+        console.error(err);
+      }
+    })();
+    return () => { cancelled = true; };
+  }, [ticketId]);
+
+  useEffect(() => {
+    if (bottomRef.current) {
+      bottomRef.current.scrollIntoView({ behavior: 'smooth' });
+    }
+  }, [replies]);
 
   const handleSend = async (e) => {
     e.preventDefault();

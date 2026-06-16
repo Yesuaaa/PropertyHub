@@ -55,7 +55,7 @@ const PrivacyPolicy = () => {
               Users should avoid submitting sensitive personal information unless it is necessary for the complaint or feedback.
             </p>
             <p className="text-sm text-[#5a6d78] leading-7">
-              Sensitive personal information may include details about a person's age, marital status, health, religion, ethnicity, government-issued IDs, or similar protected information. The National Privacy Commission's guide explains that sensitive personal information includes details such as race, ethnic origin, marital status, age, color, and religious, philosophical, or political affiliations.
+              Sensitive personal information may include details about a person&apos;s age, marital status, health, religion, ethnicity, government-issued IDs, or similar protected information. The National Privacy Commission&apos;s guide explains that sensitive personal information includes details such as race, ethnic origin, marital status, age, color, and religious, philosophical, or political affiliations.
             </p>
             <p className="text-sm text-[#5a6d78] leading-7">
               Please do not upload or submit sensitive information about yourself or another person unless it is directly relevant to the complaint.
@@ -156,7 +156,7 @@ const PrivacyPolicy = () => {
               Users may upload images, screenshots, documents, or other supporting files.
             </p>
             <p className="text-sm text-[#5a6d78] leading-7">
-              Uploaded files must be related to the complaint or feedback. Users should avoid uploading images or documents that unnecessarily reveal another person's private information.
+              Uploaded files must be related to the complaint or feedback. Users should avoid uploading images or documents that unnecessarily reveal another person&apos;s private information.
             </p>
             <p className="text-sm text-[#5a6d78] leading-7">
               The National Privacy Commission has reminded the public to be responsible when sharing photos and videos containing personal data.
@@ -214,10 +214,10 @@ const PrivacyPolicy = () => {
             <ul className="list-disc pl-5 space-y-2 text-sm text-[#5a6d78] leading-7">
               <li>Submit false complaints</li>
               <li>Upload fake or misleading evidence</li>
-              <li>Share another person's private information without valid reason</li>
+              <li>Share another person&apos;s private information without valid reason</li>
               <li>Use the system to harass or threaten others</li>
               <li>Share their account password</li>
-              <li>Attempt to access another user's account</li>
+              <li>Attempt to access another user&apos;s account</li>
               <li>Misuse complaint records or system data</li>
             </ul>
             <p className="text-sm text-[#5a6d78] leading-7">

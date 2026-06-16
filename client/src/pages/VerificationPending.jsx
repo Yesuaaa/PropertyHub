@@ -18,11 +18,11 @@ export default function VerificationPending({ email }) {
 
           <h2 className="text-2xl font-bold text-[#1a1a1a] mb-2 tracking-tight">Check your email</h2>
           <p className="text-sm text-[#5a6d78] mb-2">
-            We've sent a verification code to:
+            We&apos;ve sent a verification code to:
           </p>
           <p className="text-sm font-semibold text-[#1a1a1a] mb-8 break-all">{email}</p>
           <p className="text-xs text-[#8fa3b0] mb-8">
-            The code expires in 10 minutes. Didn't receive it? Check your spam folder.
+            The code expires in 10 minutes. Didn&apos;t receive it? Check your spam folder.
           </p>
 
           <Link

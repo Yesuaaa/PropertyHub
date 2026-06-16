@@ -1,4 +1,4 @@
-import { useState, useEffect } from 'react';
+import { useState, useEffect, useMemo } from 'react';
 import { Link, useSearchParams } from 'react-router-dom';
 import { verifyEmail } from '../../services/authService';
 
@@ -9,12 +9,18 @@ export default function VerifyEmail() {
   const [status, setStatus] = useState('loading');
   const [error, setError] = useState('');
 
+  const resolvedStatus = useMemo(() => {
+    if (!token) return 'error';
+    return status;
+  }, [token, status]);
+
+  const resolvedError = useMemo(() => {
+    if (!token) return 'Invalid or missing verification token.';
+    return error;
+  }, [token, error]);
+
   useEffect(() => {
-    if (!token) {
-      setStatus('error');
-      setError('Invalid or missing verification token.');
-      return;
-    }
+    if (!token) return;
 
     (async () => {
       try {
@@ -36,14 +42,14 @@ export default function VerifyEmail() {
             <span className="text-[10px] font-mono font-semibold tracking-[0.25em] uppercase text-[#8fa3b0]">Email Verification</span>
           </div>
 
-          {status === 'loading' && (
+          {resolvedStatus === 'loading' && (
             <>
               <div className="w-8 h-8 border-2 border-[#1a1a1a] border-t-transparent rounded-full animate-spin mx-auto mb-6"></div>
               <p className="text-sm text-[#5a6d78]">Verifying your email...</p>
             </>
           )}
 
-          {status === 'success' && (
+          {resolvedStatus === 'success' && (
             <>
               <div className="w-16 h-16 bg-[#1a1a1a] rounded-full flex items-center justify-center mx-auto mb-6">
                 <svg className="w-8 h-8 text-[#f5f3ef]" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -61,7 +67,7 @@ export default function VerifyEmail() {
             </>
           )}
 
-          {status === 'error' && (
+          {resolvedStatus === 'error' && (
             <>
               <div className="w-16 h-16 bg-[#e05a30]/10 rounded-full flex items-center justify-center mx-auto mb-6">
                 <svg className="w-8 h-8 text-[#e05a30]" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -69,7 +75,7 @@ export default function VerifyEmail() {
                 </svg>
               </div>
               <h2 className="text-2xl font-bold text-[#1a1a1a] mb-2 tracking-tight">Verification failed</h2>
-              <p className="text-sm text-[#5a6d78] mb-8">{error}</p>
+              <p className="text-sm text-[#5a6d78] mb-8">{resolvedError}</p>
               <Link
                 to="/login"
                 className="inline-block text-xs font-semibold tracking-wider uppercase text-[#1a1a1a] hover:text-[#5a6d78] transition-colors"
