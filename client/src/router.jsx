@@ -17,6 +17,11 @@ import AdminDashboard from './pages/admin/AdminDashboard';
 import AdminTicketDetail from './pages/admin/AdminTicketDetail';
 import SuperAdmin from './pages/admin/SuperAdmin';
 import PrivateRoute from './components/PrivateRoute';
+import HardwareIssue from './pages/HardwareIssue';
+import SoftwareIssue from './pages/SoftwareIssue';
+import NetworkProblem from './pages/NetworkProblem';
+import Cleanliness from './pages/Cleanliness';
+import GamingArea from './pages/GamingArea';
 
 export default function AppRouter() {
   return (
@@ -29,6 +34,11 @@ export default function AppRouter() {
       <Route path="/verify-otp" element={<UserLayout><VerifyOtp /></UserLayout>} />
       <Route path="/terms" element={<UserLayout><TermsOfService /></UserLayout>} />
       <Route path="/privacy" element={<UserLayout><PrivacyPolicy /></UserLayout>} />
+      <Route path="/hardware" element={<UserLayout><HardwareIssue /></UserLayout>} />
+      <Route path="/software" element={<UserLayout><SoftwareIssue /></UserLayout>} />
+      <Route path="/network" element={<UserLayout><NetworkProblem /></UserLayout>} />
+      <Route path="/cleanliness" element={<UserLayout><Cleanliness /></UserLayout>} />
+      <Route path="/gaming" element={<UserLayout><GamingArea /></UserLayout>} />
       <Route path="/admin/login" element={<AdminLayout><AdminLogin /></AdminLayout>} />
       <Route
         path="/dashboard"
