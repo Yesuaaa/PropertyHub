@@ -49,7 +49,7 @@ export default function Navbar() {
           <div className="hidden lg:flex items-center gap-8">
             <NavLink to="/">Home</NavLink>
             <NavLink to={resolveLink('/new')}>Submit Request</NavLink>
-            <NavLink to={resolveLink('/dashboard')}>My Requests</NavLink>
+            <NavLink to={resolveLink('/dashboard')}>Dashboard</NavLink>
           </div>
         </div>
         <div className="flex items-center gap-4">
