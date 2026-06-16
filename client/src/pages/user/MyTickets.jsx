@@ -87,10 +87,9 @@ export default function MyTickets() {
   return (
     <div className="pb-16">
       <PageBanner
-        image="https://images.pexels.com/photos/6125337/pexels-photo-6125337.jpeg"
+        image="/hero-professional.jpg"
         breadcrumbs={[
-          { label: 'Home', to: '/' },
-          { label: 'Dashboard' }
+          { label: 'Home', to: '/' }
         ]}
         title="My Requests"
         subtitle="View and track all your submitted complaints and feedback."
@@ -130,8 +129,8 @@ export default function MyTickets() {
           <p className="text-sm text-[#5a6d78]">{tickets.length === 0 ? 'No requests found.' : 'No requests match the current filters.'}</p>
         </div>
       ) : (
-        <div className="border-2 border-[#1a1a1a] overflow-hidden">
-          <table className="w-full text-left">
+        <div className="border-2 border-[#1a1a1a] overflow-x-auto">
+          <table className="w-full text-left min-w-[700px]">
             <thead>
               <tr className="border-b-2 border-[#1a1a1a]">
                 <th className="px-5 py-3 text-[10px] font-mono font-semibold tracking-[0.2em] uppercase text-[#8fa3b0]">ID</th>

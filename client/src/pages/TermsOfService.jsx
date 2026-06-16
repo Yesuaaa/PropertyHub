@@ -2,15 +2,15 @@ import React from 'react';
 
 const TermsOfService = () => {
   return (
-    <div className="min-h-screen bg-[#f7f6f4] py-16">
-      <div className="max-w-5xl mx-auto px-6 sm:px-10">
+    <div className="min-h-screen bg-[#f7f6f4] py-10 sm:py-16">
+      <div className="max-w-5xl mx-auto px-4 sm:px-6 sm:px-10">
         <div className="mb-8">
           <h1 className="text-4xl sm:text-5xl font-bold text-[#1a1a1a]">Terms of Service</h1>
           <p className="mt-2 text-sm text-[#5a6d78]">Zogo</p>
           <p className="mt-4 text-sm text-[#5a6d78]">Effective Date: June 13, 2026 · Last Updated: June 13, 2026</p>
         </div>
 
-        <article className="bg-white border border-[#e6e2da] shadow-[0_0_0_1px_rgba(0,0,0,0.06)] px-8 py-10 text-[#1a1a1a]">
+        <article className="bg-white border border-[#e6e2da] shadow-[0_0_0_1px_rgba(0,0,0,0.06)] px-5 sm:px-8 py-6 sm:py-10 text-[#1a1a1a]">
           <h2 className="text-2xl font-semibold">1. Acceptance of Terms</h2>
           <p className="mt-3 text-sm text-[#5a6d78] leading-7">
             Welcome to Zogo, an internet cafe complaint and feedback system operated by Zogo Services. By accessing or using this system, you agree to follow these Terms of Service. If you do not agree with these terms, you should not use the system. These Terms apply to all users, including customers, gamers, cafe owners, managers, administrators, staff, and other authorized users.

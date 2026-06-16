@@ -196,7 +196,7 @@ export default function SuperAdmin() {
         <span className="w-2 h-2 bg-[#e05a30]" />
         <span className="text-[10px] font-mono font-semibold tracking-[0.25em] uppercase text-[#8fa3b0]">Super Admin</span>
       </div>
-      <h2 className="text-3xl font-bold text-[#1a1a1a] mb-8 tracking-tight">System Management</h2>
+      <h2 className="text-2xl sm:text-3xl font-bold text-[#1a1a1a] mb-8 tracking-tight">System Management</h2>
 
       {error && (
         <div className="border-2 border-[#e05a30]/30 bg-[#e05a30]/5 px-4 py-3 mb-6">
@@ -237,7 +237,7 @@ export default function SuperAdmin() {
           </div>
 
           {showAdd && (
-            <div className="border-2 border-[#1a1a1a] bg-[#f5f3ef] p-8 mb-8">
+            <div className="border-2 border-[#1a1a1a] bg-[#f5f3ef] p-5 sm:p-8 mb-8">
               <div className="flex items-center gap-3 mb-6">
                 <span className="w-2 h-2 bg-[#e05a30]" />
                 <span className="text-[10px] font-mono font-semibold tracking-[0.25em] uppercase text-[#8fa3b0]">New User</span>
@@ -284,7 +284,7 @@ export default function SuperAdmin() {
             <div className="border-2 border-[#8fa3b0]/20 p-12 text-center"><p className="text-sm text-[#5a6d78]">No users found.</p></div>
           ) : (
             <div className="border-2 border-[#1a1a1a] overflow-x-auto">
-              <table className="w-full text-left">
+              <table className="w-full text-left min-w-[800px]">
                 <thead>
                   <tr className="border-b-2 border-[#1a1a1a]">
                     <th className="px-5 py-3 text-[10px] font-mono font-semibold tracking-[0.2em] uppercase text-[#8fa3b0]">ID</th>
@@ -338,11 +338,11 @@ export default function SuperAdmin() {
             </div>
           )}
           {userTotalPages > 1 && (
-            <div className="flex items-center justify-between mt-4">
+            <div className="flex flex-col sm:flex-row items-start sm:items-center justify-between mt-4 gap-3">
               <span className="text-[10px] font-mono text-[#8fa3b0] tracking-wider uppercase">
                 {userTotal} users &middot; Page {userPage} of {userTotalPages}
               </span>
-              <div className="flex items-center gap-2">
+              <div className="flex items-center gap-2 flex-wrap">
                 <button
                   onClick={() => setUserPage((p) => p - 1)}
                   disabled={userPage <= 1}
@@ -399,7 +399,7 @@ export default function SuperAdmin() {
             <div className="border-2 border-[#8fa3b0]/20 p-12 text-center"><p className="text-sm text-[#5a6d78]">{tickets.length === 0 ? 'No tickets found.' : 'No tickets match the current filters.'}</p></div>
           ) : (
             <div className="border-2 border-[#1a1a1a] overflow-x-auto">
-              <table className="w-full text-left">
+              <table className="w-full text-left min-w-[800px]">
                 <thead>
                   <tr className="border-b-2 border-[#1a1a1a]">
                     <th className="px-5 py-3 text-[10px] font-mono font-semibold tracking-[0.2em] uppercase text-[#8fa3b0]">ID</th>

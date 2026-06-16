@@ -82,7 +82,7 @@ export default function ResetPassword() {
     return (
       <div className="min-h-screen flex items-center justify-center py-12 px-4">
         <div className="max-w-md w-full">
-          <div className="border-2 border-[#1a1a1a] bg-[#f5f3ef] p-10 text-center">
+          <div className="border-2 border-[#1a1a1a] bg-[#f5f3ef] p-6 sm:p-10 text-center">
             <p className="text-sm text-[#5a6d78] mb-8">Please go to forgot password first.</p>
             <Link to="/forgot-password" className="font-semibold text-[#1a1a1a] hover:text-[#5a6d78] transition-colors tracking-wider uppercase text-xs">
               Forgot Password
@@ -96,7 +96,7 @@ export default function ResetPassword() {
   return (
     <div className="min-h-screen flex items-center justify-center py-12 px-4">
       <div className="max-w-md w-full">
-        <div className="border-2 border-[#1a1a1a] bg-[#f5f3ef] p-10">
+        <div className="border-2 border-[#1a1a1a] bg-[#f5f3ef] p-6 sm:p-10">
           <div className="flex items-center gap-3 mb-2">
             <span className="w-2 h-2 bg-[#e05a30]" />
             <span className="text-[10px] font-mono font-semibold tracking-[0.25em] uppercase text-[#8fa3b0]">Reset Password</span>

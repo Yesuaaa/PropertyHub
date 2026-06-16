@@ -45,7 +45,7 @@ export default function NewTicket() {
   return (
     <div className="pb-16">
       <PageBanner
-        image="https://images.pexels.com/photos/6125337/pexels-photo-6125337.jpeg"
+        image="/hero-professional.jpg"
         breadcrumbs={[
           { label: 'Home', to: '/' },
           { label: 'Dashboard', to: '/dashboard' },
@@ -64,7 +64,7 @@ export default function NewTicket() {
         </div>
       )}
 
-      <form onSubmit={handleSubmit} className="border-2 border-[#1a1a1a] bg-[#f5f3ef] p-8 space-y-6">
+      <form onSubmit={handleSubmit} className="border-2 border-[#1a1a1a] bg-[#f5f3ef] p-5 sm:p-8 space-y-6">
         <div>
           <label className="block text-[10px] font-mono font-semibold tracking-[0.2em] uppercase text-[#8fa3b0] mb-2">Type</label>
           <select value={type} onChange={(e) => { setType(e.target.value); setCategory(''); }} required className={selectClass}>

@@ -9,9 +9,11 @@ CREATE TABLE users (
     first_name VARCHAR(100) NOT NULL,
     last_name VARCHAR(100) NOT NULL,
     email VARCHAR(100) NOT NULL UNIQUE,
-    role ENUM('guest', 'staff', 'admin') DEFAULT 'guest',
+    role ENUM('guest', 'staff', 'admin', 'superadmin') DEFAULT 'guest',
     password_hash VARCHAR(255) NOT NULL,
     is_active BOOLEAN DEFAULT TRUE,
+    is_verified BOOLEAN DEFAULT FALSE,
+    verified_at DATETIME NULL,
     created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
 );
 
@@ -28,7 +30,7 @@ CREATE TABLE token_blocklist (
 CREATE TABLE tickets (
     id INT AUTO_INCREMENT PRIMARY KEY,
     user_id INT NOT NULL,
-    type ENUM('Hardware Issue', 'Software Issue', 'Network Problem', 'Billing Concern', 'General Feedback', 'Safety Concern') NOT NULL,
+    type ENUM('Hardware Issue', 'Software Issue', 'Network Problem', 'Billing Concern', 'General Feedback', 'Safety Concern', 'Cleanliness / Comfort', 'Noise / Disruption', 'Gaming Area Concern', 'Workstation Concern', 'Staff / Service') NOT NULL,
     category ENUM(
         'PC / Computer', 'Peripherals', 'Gaming Console', 'Printer',
         'Workstation Area', 'Gaming Area', 'VIP / Premium Room', 'Restrooms',

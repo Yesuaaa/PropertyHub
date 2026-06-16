@@ -59,7 +59,7 @@ export default function Register() {
   return (
     <div className="min-h-screen flex items-center justify-center py-12 px-4">
       <div className="max-w-xl w-full">
-        <div className="border-2 border-[#1a1a1a] bg-[#f5f3ef] p-10">
+        <div className="border-2 border-[#1a1a1a] bg-[#f5f3ef] p-6 sm:p-10">
           <div className="flex items-center gap-3 mb-2">
             <span className="w-2 h-2 bg-[#e05a30]" />
             <span className="text-[10px] font-mono font-semibold tracking-[0.25em] uppercase text-[#8fa3b0]">Create Account</span>
@@ -74,7 +74,7 @@ export default function Register() {
           )}
 
           <form onSubmit={handleSubmit} className="space-y-5">
-            <div className="grid grid-cols-2 gap-4">
+            <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
               <div>
                 <label className="block text-[10px] font-mono font-semibold tracking-[0.2em] uppercase text-[#8fa3b0] mb-2">First Name</label>
                 <input
@@ -109,7 +109,7 @@ export default function Register() {
               />
             </div>
 
-            <div className="grid grid-cols-2 gap-4">
+            <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
               <div>
                 <label className="block text-[10px] font-mono font-semibold tracking-[0.2em] uppercase text-[#8fa3b0] mb-2">Password</label>
                 <input
