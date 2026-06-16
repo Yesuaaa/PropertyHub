@@ -3,7 +3,8 @@ import { useState, useEffect } from 'react';
 
 export default function Navbar() {
   const navigate = useNavigate();
-  const user = JSON.parse(localStorage.getItem('user') || 'null');
+  let user = null;
+  try { user = JSON.parse(localStorage.getItem('user') || 'null'); } catch {}
   const [scrolled, setScrolled] = useState(false);
   const [menuOpen, setMenuOpen] = useState(false);
 

@@ -1,7 +1,7 @@
 import axios from 'axios';
 
 const api = axios.create({
-    baseURL: import.meta.env.VITE_API_URL,  // ✅ use env variable for API URL
+    baseURL: import.meta.env.VITE_API_URL || '/api',
     withCredentials: true,                 // ✅ include cookies in requests
     headers: { 'Content-Type': 'application/json' }
 });
