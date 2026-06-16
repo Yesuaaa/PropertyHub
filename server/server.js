@@ -1,11 +1,16 @@
 import dotenv from 'dotenv';
-dotenv.config(); // ✅ must be first — loads .env before anything else reads it
+dotenv.config();
 
 import express from 'express';
 import cors from 'cors';
 import helmet from 'helmet';
-import cookieParser from 'cookie-parser';     
-import pool from './config/db.js';          
+import cookieParser from 'cookie-parser';
+import { fileURLToPath } from 'url';
+import { dirname, join } from 'path';
+import pool from './config/db.js';
+
+const __filename = fileURLToPath(import.meta.url);
+const __dirname = dirname(__filename);          
 
 // route imports
 import authRoutes from './routes/authRoutes.js';
@@ -27,14 +32,28 @@ app.use(cors({
 app.use(express.json({ limit: '10kb' }));     // ✅ request size limit
 app.use(cookieParser());                      // ✅ enables req.cookies
 
-// Root route — shows when visiting the plain Render URL
-app.get('/', (req, res) => {
-    res.json({
-        success: true,
-        message: 'PropertyHub API is running',
-        health: '/api/health'
+// Root route — serves the frontend in production, API info in development
+if (process.env.NODE_ENV === 'production') {
+    const clientPath = join(__dirname, '..', 'client', 'dist');
+    app.use(express.static(clientPath));
+
+    app.get('/', (req, res) => {
+        res.sendFile(join(clientPath, 'index.html'));
     });
-});
+
+    // SPA fallback — serve index.html for any non-API route
+    app.get(/^(?!\/api).*/, (req, res) => {
+        res.sendFile(join(clientPath, 'index.html'));
+    });
+} else {
+    app.get('/', (req, res) => {
+        res.json({
+            success: true,
+            message: 'PropertyHub API is running',
+            health: '/api/health'
+        });
+    });
+}
 
 // use routes
 app.use('/api/auth', authRoutes);
