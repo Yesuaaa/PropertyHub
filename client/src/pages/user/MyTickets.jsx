@@ -3,17 +3,17 @@ import { Link } from 'react-router-dom';
 import api from '../../services/axiosInstance';
 
 const TYPE_CATEGORIES = {
-  'Maintenance Request': ['Plumbing', 'Electrical', 'HVAC', 'Structural', 'Pest Control', 'Common Areas', 'Parking'],
-  'Noise Complaint': ['Common Areas', 'Parking', 'Security & Safety'],
-  'Lease Dispute': ['Lease & Billing'],
-  'Billing / Payment Concern': ['Lease & Billing'],
-  'Safety Concern': ['Electrical', 'Structural', 'Common Areas', 'Parking', 'Security & Safety'],
-  'Cleanliness / Sanitation': ['Pest Control', 'Common Areas', 'Parking'],
-  'Parking Concern': ['Parking', 'Security & Safety'],
-  'Amenity / Facility Concern': ['Electrical', 'HVAC', 'Structural', 'Common Areas', 'Security & Safety'],
-  'Neighbor Complaint': ['Common Areas', 'Parking', 'Security & Safety'],
-  'General Feedback': ['Common Areas', 'Parking', 'Lease & Billing', 'Security & Safety'],
-  'Behavior': ['Common Areas', 'Parking', 'Security & Safety']
+  'Hardware Issue': ['PC / Computer', 'Peripherals', 'Gaming Console', 'Printer'],
+  'Software Issue': ['PC / Computer', 'Account Login'],
+  'Network Problem': ['Wi-Fi', 'LAN Connection', 'Slow Speed', 'Account Login'],
+  'Billing Concern': ['Hourly Rate', 'Membership', 'Load / Top-up', 'Printing Charge'],
+  'Safety Concern': ['Power Outage', 'Ventilation', 'Workstation Area'],
+  'Cleanliness / Comfort': ['Restrooms', 'Workstation Area', 'Gaming Area', 'VIP / Premium Room'],
+  'Noise / Disruption': ['Workstation Area', 'Gaming Area', 'VIP / Premium Room'],
+  'Gaming Area Concern': ['Gaming Console', 'Gaming Area', 'Peripherals'],
+  'Workstation Concern': ['PC / Computer', 'Peripherals', 'Workstation Area', 'Printer'],
+  'General Feedback': ['Workstation Area', 'Gaming Area', 'VIP / Premium Room', 'Hourly Rate', 'Membership'],
+  'Staff / Service': ['Workstation Area', 'Gaming Area', 'VIP / Premium Room', 'Hourly Rate']
 };
 
 export default function MyTickets() {
@@ -73,37 +73,44 @@ export default function MyTickets() {
   }
 
   return (
-    <div className="max-w-5xl mx-auto pt-24 pb-16 px-4">
-      <div className="flex items-center gap-3 mb-2">
-        <span className="w-2 h-2 bg-[#e05a30]" />
-        <span className="text-[10px] font-mono font-semibold tracking-[0.25em] uppercase text-[#8fa3b0]">Dashboard</span>
-      </div>
+    <div className="pb-16">
+      <PageBanner
+        image="https://images.pexels.com/photos/6125337/pexels-photo-6125337.jpeg"
+        breadcrumbs={[
+          { label: 'Home', to: '/' },
+          { label: 'Dashboard' }
+        ]}
+        title="My Requests"
+        subtitle="View and track all your submitted complaints and feedback."
+      />
 
-      <div className="flex justify-between items-end mb-6">
-        <h2 className="text-3xl font-bold text-[#1a1a1a] tracking-tight">My Requests</h2>
+      <div className="max-w-5xl mx-auto px-4 pt-8">
+
+      <div className="flex flex-wrap items-end gap-4 mb-8">
+        <div className="flex-1">
+          <div className="flex flex-wrap gap-4">
+            <div>
+              <label className="block text-[10px] font-mono font-semibold tracking-[0.2em] uppercase text-[#8fa3b0] mb-1.5">Filter by Type</label>
+              <select value={filterType} onChange={(e) => setFilterType(e.target.value)} className="border-2 border-[#8fa3b0]/25 bg-transparent text-sm text-[#1a1a1a] px-3 py-1.5 focus:outline-none focus:border-[#1a1a1a] cursor-pointer appearance-none font-mono text-xs tracking-wider uppercase">
+                <option value="">All Types</option>
+                {Object.keys(TYPE_CATEGORIES).map((t) => (<option key={t} value={t}>{t}</option>))}
+              </select>
+            </div>
+            <div>
+              <label className="block text-[10px] font-mono font-semibold tracking-[0.2em] uppercase text-[#8fa3b0] mb-1.5">Filter by Category</label>
+              <select value={filterCategory} onChange={(e) => setFilterCategory(e.target.value)} className="border-2 border-[#8fa3b0]/25 bg-transparent text-sm text-[#1a1a1a] px-3 py-1.5 focus:outline-none focus:border-[#1a1a1a] cursor-pointer appearance-none font-mono text-xs tracking-wider uppercase">
+                <option value="">All Categories</option>
+                {filteredCategories.map((c) => (<option key={c} value={c}>{c}</option>))}
+              </select>
+            </div>
+          </div>
+        </div>
         <Link
           to="/new"
           className="text-xs font-semibold tracking-[0.1em] uppercase text-[#1a1a1a] border-2 border-[#1a1a1a] px-6 py-2.5 hover:bg-[#1a1a1a] hover:text-[#f5f3ef] transition-all duration-200"
         >
           New Request
         </Link>
-      </div>
-
-      <div className="flex flex-wrap items-end gap-4 mb-8">
-        <div>
-          <label className="block text-[10px] font-mono font-semibold tracking-[0.2em] uppercase text-[#8fa3b0] mb-1.5">Filter by Type</label>
-          <select value={filterType} onChange={(e) => setFilterType(e.target.value)} className="border-2 border-[#8fa3b0]/25 bg-transparent text-sm text-[#1a1a1a] px-3 py-1.5 focus:outline-none focus:border-[#1a1a1a] cursor-pointer appearance-none font-mono text-xs tracking-wider uppercase">
-            <option value="">All Types</option>
-            {Object.keys(TYPE_CATEGORIES).map((t) => (<option key={t} value={t}>{t}</option>))}
-          </select>
-        </div>
-        <div>
-          <label className="block text-[10px] font-mono font-semibold tracking-[0.2em] uppercase text-[#8fa3b0] mb-1.5">Filter by Category</label>
-          <select value={filterCategory} onChange={(e) => setFilterCategory(e.target.value)} className="border-2 border-[#8fa3b0]/25 bg-transparent text-sm text-[#1a1a1a] px-3 py-1.5 focus:outline-none focus:border-[#1a1a1a] cursor-pointer appearance-none font-mono text-xs tracking-wider uppercase">
-            <option value="">All Categories</option>
-            {filteredCategories.map((c) => (<option key={c} value={c}>{c}</option>))}
-          </select>
-        </div>
       </div>
 
       {filteredTickets.length === 0 ? (
@@ -151,6 +158,48 @@ export default function MyTickets() {
            </table>
         </div>
       )}
+      </div>
+    </div>
+  );
+}
+
+function PageBanner({ image, breadcrumbs, title, subtitle }) {
+  return (
+    <div>
+      <div className="relative h-56 md:h-64 overflow-hidden">
+        <img
+          src={image}
+          alt=""
+          className="absolute inset-0 w-full h-full object-cover"
+        />
+        <div className="absolute inset-0 bg-[#1a1a1a]/60" />
+        <div className="relative z-10 h-full max-w-[1400px] mx-auto px-6 sm:px-10 md:px-16 flex flex-col justify-center">
+          <h1 className="text-3xl md:text-4xl font-bold text-[#f5f3ef] tracking-tight">{title}</h1>
+          <p className="text-sm text-[#8fa3b0] mt-2 max-w-lg">{subtitle}</p>
+        </div>
+      </div>
+      <div className="bg-[#f5f3ef] border-b border-[#8fa3b0]/20">
+        <div className="max-w-[1400px] mx-auto px-6 sm:px-10 md:px-16 py-3">
+          <nav className="flex items-center gap-2">
+            {breadcrumbs.map((crumb, i) => (
+              <span key={i} className="flex items-center gap-2">
+                {i > 0 && (
+                  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 16 16" fill="currentColor" className="w-3 h-3 text-[#8fa3b0]">
+                    <path fillRule="evenodd" d="M6.22 4.22a.75.75 0 011.06 0l3.25 3.25a.75.75 0 010 1.06l-3.25 3.25a.75.75 0 01-1.06-1.06L8.94 8 6.22 5.28a.75.75 0 010-1.06z" clipRule="evenodd" />
+                  </svg>
+                )}
+                {crumb.to ? (
+                  <Link to={crumb.to} className="text-[10px] font-mono tracking-[0.15em] uppercase text-[#8fa3b0] hover:text-[#1a1a1a] transition-colors">
+                    {crumb.label}
+                  </Link>
+                ) : (
+                  <span className="text-[10px] font-mono tracking-[0.15em] uppercase text-[#1a1a1a] font-semibold">{crumb.label}</span>
+                )}
+              </span>
+            ))}
+          </nav>
+        </div>
+      </div>
     </div>
   );
 }

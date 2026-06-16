@@ -6,17 +6,17 @@ const ROLES = ['guest', 'staff', 'admin'];
 const STATUSES = ['Open', 'In Progress', 'Resolved', 'Closed'];
 
 const TYPE_CATEGORIES = {
-  'Maintenance Request': ['Plumbing', 'Electrical', 'HVAC', 'Structural', 'Pest Control', 'Common Areas', 'Parking'],
-  'Noise Complaint': ['Common Areas', 'Parking', 'Security & Safety'],
-  'Lease Dispute': ['Lease & Billing'],
-  'Billing / Payment Concern': ['Lease & Billing'],
-  'Safety Concern': ['Electrical', 'Structural', 'Common Areas', 'Parking', 'Security & Safety'],
-  'Cleanliness / Sanitation': ['Pest Control', 'Common Areas', 'Parking'],
-  'Parking Concern': ['Parking', 'Security & Safety'],
-  'Amenity / Facility Concern': ['Electrical', 'HVAC', 'Structural', 'Common Areas', 'Security & Safety'],
-  'Neighbor Complaint': ['Common Areas', 'Parking', 'Security & Safety'],
-  'General Feedback': ['Common Areas', 'Parking', 'Lease & Billing', 'Security & Safety'],
-  'Behavior': ['Common Areas', 'Parking', 'Security & Safety']
+  'Hardware Issue': ['PC / Computer', 'Peripherals', 'Gaming Console', 'Printer'],
+  'Software Issue': ['PC / Computer', 'Account Login'],
+  'Network Problem': ['Wi-Fi', 'LAN Connection', 'Slow Speed', 'Account Login'],
+  'Billing Concern': ['Hourly Rate', 'Membership', 'Load / Top-up', 'Printing Charge'],
+  'Safety Concern': ['Power Outage', 'Ventilation', 'Workstation Area'],
+  'Cleanliness / Comfort': ['Restrooms', 'Workstation Area', 'Gaming Area', 'VIP / Premium Room'],
+  'Noise / Disruption': ['Workstation Area', 'Gaming Area', 'VIP / Premium Room'],
+  'Gaming Area Concern': ['Gaming Console', 'Gaming Area', 'Peripherals'],
+  'Workstation Concern': ['PC / Computer', 'Peripherals', 'Workstation Area', 'Printer'],
+  'General Feedback': ['Workstation Area', 'Gaming Area', 'VIP / Premium Room', 'Hourly Rate', 'Membership'],
+  'Staff / Service': ['Workstation Area', 'Gaming Area', 'VIP / Premium Room', 'Hourly Rate']
 };
 
 export default function SuperAdmin() {

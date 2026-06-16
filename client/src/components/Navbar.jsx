@@ -42,7 +42,7 @@ export default function Navbar() {
               </svg>
             </div>
             <span className="text-[#1a1a1a] font-bold text-sm tracking-[0.08em] uppercase">
-              PropertyHub
+              Property Hub
             </span>
           </Link>
           <div className="hidden lg:flex items-center gap-8">

@@ -1,7 +1,7 @@
 // DO NOT RUN THIS FILE THIS IS FOR SAMPLE PURPOSES ONLY
 -- 1. Create the database (if not exists)
-CREATE DATABASE IF NOT EXISTS propertyhub;
-USE propertyhub;
+CREATE DATABASE IF NOT EXISTS netcafehub;
+USE netcafehub;
 
 -- 2. Users table
 CREATE TABLE users (
@@ -24,14 +24,17 @@ CREATE TABLE token_blocklist (
     INDEX idx_expires_at (expires_at)
 );
 
--- 4. Tickets table (including HVAC in category ENUM)
+-- 4. Tickets table (including internet cafe categories)
 CREATE TABLE tickets (
     id INT AUTO_INCREMENT PRIMARY KEY,
     user_id INT NOT NULL,
-    type ENUM('Maintenance Request', 'Noise Complaint', 'Lease Dispute', 'General Feedback', 'Safety Concern') NOT NULL,
+    type ENUM('Hardware Issue', 'Software Issue', 'Network Problem', 'Billing Concern', 'General Feedback', 'Safety Concern') NOT NULL,
     category ENUM(
-        'Plumbing', 'Electrical', 'Structural', 'Pest Control',
-        'Common Areas', 'Parking', 'Lease & Billing', 'Security & Safety', 'HVAC'
+        'PC / Computer', 'Peripherals', 'Gaming Console', 'Printer',
+        'Workstation Area', 'Gaming Area', 'VIP / Premium Room', 'Restrooms',
+        'Wi-Fi', 'LAN Connection', 'Slow Speed', 'Account Login',
+        'Hourly Rate', 'Membership', 'Load / Top-up', 'Printing Charge',
+        'Power Outage', 'Cleanliness', 'Noise', 'Ventilation'
     ) NOT NULL,
     priority ENUM('low', 'medium', 'high', 'urgent') DEFAULT 'medium',
     status ENUM('open', 'in_progress', 'resolved', 'closed') DEFAULT 'open',

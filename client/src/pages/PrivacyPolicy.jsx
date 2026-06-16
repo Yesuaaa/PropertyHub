@@ -7,7 +7,7 @@ const PrivacyPolicy = () => {
         <div className="mb-8">
           <h1 className="text-4xl sm:text-5xl font-bold text-[#1a1a1a]">Privacy Notice</h1>
           <p className="mt-2 text-sm text-[#5a6d78]">Zogo</p>
-          <p className="mt-2 text-sm text-[#5a6d78]">Property Management Complaint and Feedback System</p>
+          <p className="mt-2 text-sm text-[#5a6d78]">Internet Cafe Complaint and Feedback System</p>
           <p className="mt-4 text-sm text-[#5a6d78]">Effective Date: June 13, 2026</p>
           <p className="text-sm text-[#5a6d78]">Last Updated: June 13, 2026</p>
         </div>
@@ -16,13 +16,13 @@ const PrivacyPolicy = () => {
           <section className="space-y-4">
             <h2 className="text-2xl font-semibold">1. Introduction</h2>
             <p className="text-sm text-[#5a6d78] leading-7">
-              This Privacy Notice explains how Zogo Services collects, uses, stores, protects, and manages personal information through Zogo, our online Property Management Complaint and Feedback System.
+              This Privacy Notice explains how Zogo Services collects, uses, stores, protects, and manages personal information through Zogo, our online Internet Cafe Complaint and Feedback System.
             </p>
             <p className="text-sm text-[#5a6d78] leading-7">
               We value your privacy and are committed to protecting your personal information in accordance with applicable data privacy laws, including the Data Privacy Act of 2012 of the Philippines. The Data Privacy Act protects the privacy of individuals while allowing the responsible flow of information for legitimate purposes.
             </p>
             <p className="text-sm text-[#5a6d78] leading-7">
-              By using this system, you understand and agree that your personal information may be collected and processed for complaint handling, feedback management, communication, documentation, and property management purposes.
+              By using this system, you understand and agree that your personal information may be collected and processed for complaint handling, feedback management, communication, documentation, and internet cafe management purposes.
             </p>
           </section>
 
@@ -34,7 +34,7 @@ const PrivacyPolicy = () => {
                 <li>Full name</li>
                 <li>Email address</li>
                 <li>Contact number</li>
-                <li>Unit number, room number, house number, or property location</li>
+                <li>PC station number, room number, or workstation location</li>
                 <li>Username and password</li>
                 <li>Complaint or feedback details</li>
                 <li>Category of concern</li>
@@ -70,12 +70,12 @@ const PrivacyPolicy = () => {
                 <li>To receive and record complaints, concerns, reports, and feedback</li>
                 <li>To verify and review submitted complaints</li>
                 <li>To contact users for clarification or updates</li>
-                <li>To assign complaints to authorized property management staff</li>
+                <li>To assign complaints to authorized internet cafe staff</li>
                 <li>To monitor the progress and status of complaints</li>
-                <li>To resolve maintenance, safety, facility, or service concerns</li>
+                <li>To resolve hardware, network, facility, or service concerns</li>
                 <li>To prevent false, abusive, spam, or harmful submissions</li>
                 <li>To maintain records for documentation and accountability</li>
-                <li>To improve property services and system performance</li>
+                <li>To improve internet cafe services and system performance</li>
                 <li>To comply with legal, regulatory, or administrative requirements</li>
               </ul>
               <p>We only collect information that is necessary for the proper operation of the complaint and feedback system.</p>
@@ -85,7 +85,7 @@ const PrivacyPolicy = () => {
           <section className="mt-10 space-y-4">
             <h2 className="text-2xl font-semibold">5. How We Use Your Information</h2>
             <div className="space-y-3 text-sm text-[#5a6d78] leading-7">
-              <p>Your personal information may be used by authorized administrators or property management staff to:</p>
+              <p>              Your personal information may be used by authorized administrators or internet cafe staff to:</p>
               <ul className="list-disc pl-5 space-y-2">
                 <li>Review your complaint or feedback</li>
                 <li>Respond to your concern</li>
@@ -106,9 +106,9 @@ const PrivacyPolicy = () => {
               <p>Access to personal information is limited to authorized users only, such as:</p>
               <ul className="list-disc pl-5 space-y-2">
                 <li>System administrators</li>
-                <li>Property managers</li>
-                <li>Assigned maintenance personnel</li>
-                <li>Security or building staff, when relevant</li>
+                <li>Internet cafe managers</li>
+                <li>Assigned technical support personnel</li>
+                <li>Internet cafe staff, when relevant</li>
                 <li>Authorized members of the development or technical support team</li>
                 <li>Other authorized personnel necessary for resolving the complaint</li>
               </ul>
@@ -124,9 +124,9 @@ const PrivacyPolicy = () => {
             </p>
             <ul className="list-disc pl-5 space-y-2 text-sm text-[#5a6d78] leading-7">
               <li>When needed to resolve a complaint</li>
-              <li>When required by property management procedures</li>
+              <li>When required by internet cafe management procedures</li>
               <li>When required by law, regulation, court order, or lawful government request</li>
-              <li>When needed to protect the rights, safety, or security of users, residents, staff, or the property</li>
+              <li>When needed to protect the rights, safety, or security of users, customers, staff, or the internet cafe</li>
               <li>When technical service providers help operate or maintain the system</li>
             </ul>
             <p className="text-sm text-[#5a6d78] leading-7">
@@ -169,7 +169,7 @@ const PrivacyPolicy = () => {
           <section className="mt-10 space-y-4">
             <h2 className="text-2xl font-semibold">10. Data Storage and Retention</h2>
             <p className="text-sm text-[#5a6d78] leading-7">
-              Personal information and complaint records will be stored only for as long as necessary for complaint processing, documentation, administrative purposes, legal compliance, or property management records.
+              Personal information and complaint records will be stored only for as long as necessary for complaint processing, documentation, administrative purposes, legal compliance, or internet cafe management records.
             </p>
             <p className="text-sm text-[#5a6d78] leading-7">
               Records may be deleted, archived, or anonymized when they are no longer needed.
@@ -178,7 +178,7 @@ const PrivacyPolicy = () => {
               Suggested retention period for your school project:
             </p>
             <p className="text-sm text-[#5a6d78] leading-7">
-              Complaint and feedback records may be retained for 6 months after resolution, unless a longer period is required for legal, administrative, or property management purposes.
+              Complaint and feedback records may be retained for 6 months after resolution, unless a longer period is required for legal, administrative, or internet cafe management purposes.
             </p>
           </section>
 
@@ -252,10 +252,10 @@ const PrivacyPolicy = () => {
               If you want to access, correct, update, or request deletion of your personal information, you may contact us through:
             </p>
             <ul className="list-disc pl-5 space-y-2 text-sm text-[#5a6d78] leading-7">
-              <li>Property Management: Zogo Services</li>
-              <li>Email: <a className="underline text-[#1a1a1a]" href="mailto:zogooff@gmail.com">zogooff@gmail.com</a></li>
-              <li>Phone: 0969 4204 676</li>
-              <li>Office Address: Bangkok Metro East Ave Philippines</li>
+                <li>Internet Cafe Management: Zogo Services</li>
+                <li>Email: <a className="underline text-[#1a1a1a]" href="mailto:zogooff@gmail.com">zogooff@gmail.com</a></li>
+                <li>Phone: 0969 4204 676</li>
+                <li>Office Address: Bangkok Metro East Ave Philippines</li>
             </ul>
             <p className="text-sm text-[#5a6d78] leading-7">
               We may ask you to verify your identity before processing your request to protect your privacy and prevent unauthorized access.
@@ -309,17 +309,17 @@ const PrivacyPolicy = () => {
           <section className="mt-10 space-y-4">
             <h2 className="text-2xl font-semibold">17. Children and Minors</h2>
             <p className="text-sm text-[#5a6d78] leading-7">
-              This system is intended for authorized users connected to the property.
+              This system is intended for authorized users connected to the internet cafe.
             </p>
             <p className="text-sm text-[#5a6d78] leading-7">
-              If a minor uses the system, the property management may require guidance, supervision, or consent from a parent, guardian, or authorized adult, depending on the situation and applicable rules.
+              If a minor uses the system, the internet cafe management may require guidance, supervision, or consent from a parent, guardian, or authorized adult, depending on the situation and applicable rules.
             </p>
           </section>
 
           <section className="mt-10 space-y-4">
             <h2 className="text-2xl font-semibold">18. Changes to This Privacy Notice</h2>
             <p className="text-sm text-[#5a6d78] leading-7">
-              We may update this Privacy Notice when necessary to reflect changes in the system, property management policies, legal requirements, or data processing activities.
+              We may update this Privacy Notice when necessary to reflect changes in the system, internet cafe management policies, legal requirements, or data processing activities.
             </p>
             <p className="text-sm text-[#5a6d78] leading-7">
               When major changes are made, users may be notified through the system, email, or official announcement.
@@ -335,7 +335,7 @@ const PrivacyPolicy = () => {
               For privacy-related questions, requests, or complaints, please contact:
             </p>
             <ul className="list-disc pl-5 space-y-2 text-sm text-[#5a6d78] leading-7">
-              <li>Property Management: Zogo Services</li>
+                <li>Internet Cafe Management: Zogo Services</li>
               <li>Data Privacy Contact Person: Joe Muthra</li>
               <li>Email: <a className="underline text-[#1a1a1a]" href="mailto:Joe.mama@gmail.com">Joe.mama@gmail.com</a></li>
               <li>Phone: 0967 2456 729</li>

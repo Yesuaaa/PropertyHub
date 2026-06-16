@@ -13,17 +13,17 @@ const TermsOfService = () => {
         <article className="bg-white border border-[#e6e2da] shadow-[0_0_0_1px_rgba(0,0,0,0.06)] px-8 py-10 text-[#1a1a1a]">
           <h2 className="text-2xl font-semibold">1. Acceptance of Terms</h2>
           <p className="mt-3 text-sm text-[#5a6d78] leading-7">
-            Welcome to Zogo, a property management complaint and feedback system operated by Zogo Services. By accessing or using this system, you agree to follow these Terms of Service. If you do not agree with these terms, you should not use the system. These Terms apply to all users, including tenants, residents, property owners, property managers, administrators, staff, and other authorized users.
+            Welcome to Zogo, an internet cafe complaint and feedback system operated by Zogo Services. By accessing or using this system, you agree to follow these Terms of Service. If you do not agree with these terms, you should not use the system. These Terms apply to all users, including customers, gamers, cafe owners, managers, administrators, staff, and other authorized users.
           </p>
 
           <h2 className="mt-6 text-2xl font-semibold">2. Purpose of the System</h2>
           <p className="mt-3 text-sm text-[#5a6d78] leading-7">
-            Zogo provides an organized online platform where users can submit complaints, concerns, reports, suggestions, and feedback related to property management. Common use cases include maintenance issues, facility problems, noise complaints, safety concerns, security-related feedback, cleanliness issues, neighbor or tenant concerns, service feedback, and general suggestions.
+            Zogo provides an organized online platform where users can submit complaints, concerns, reports, suggestions, and feedback related to internet cafe services. Common use cases include hardware issues, software problems, network connectivity, safety concerns, billing issues, cleanliness issues, noise complaints, service feedback, and general suggestions.
           </p>
 
           <h2 className="mt-6 text-2xl font-semibold">3. User Eligibility</h2>
           <p className="mt-3 text-sm text-[#5a6d78] leading-7">
-            Use is limited to authorized users connected to the property (tenants, residents, owners, staff, or administrators). Users must provide accurate information when submitting reports and keep login credentials secure. Do not share your account with others.
+            Use is limited to authorized users connected to the internet cafe (customers, gamers, staff, or administrators). Users must provide accurate information when submitting reports and keep login credentials secure. Do not share your account with others.
           </p>
 
           <h2 className="mt-6 text-2xl font-semibold">4. User Accounts</h2>
@@ -63,7 +63,7 @@ const TermsOfService = () => {
 
           <h2 className="mt-6 text-2xl font-semibold">11. Privacy and Personal Information</h2>
           <p className="mt-3 text-sm text-[#5a6d78] leading-7">
-            The system may collect names, contact details, unit numbers, complaint details, uploaded files, timestamps, and activity. Personal information is used only to operate the complaint system, contact users, resolve concerns, and improve services. In the Philippines, the Data Privacy Act of 2012 applies.
+            The system may collect names, contact details, workstation numbers, complaint details, uploaded files, timestamps, and activity. Personal information is used only to operate the complaint system, contact users, resolve concerns, and improve services. In the Philippines, the Data Privacy Act of 2012 applies.
           </p>
 
           <h2 className="mt-6 text-2xl font-semibold">12. Uploaded Files and Evidence</h2>
@@ -123,7 +123,7 @@ const TermsOfService = () => {
 
           <h2 className="mt-6 text-2xl font-semibold">23. Contact Information</h2>
           <p className="mt-3 text-sm text-[#5a6d78] leading-7">
-            For questions, contact: Property Management: Zogo Services · Email: <a className="text-[#1a1a1a] underline" href="mailto:zogooff@gmail.com">zogooff@gmail.com</a> · Phone: 0969 4204 676 · Office Address: Bangkok Metro East Ave Philippines
+            For questions, contact: Internet Cafe Management: Zogo Services · Email: <a className="text-[#1a1a1a] underline" href="mailto:zogooff@gmail.com">zogooff@gmail.com</a> · Phone: 0969 4204 676 · Office Address: Bangkok Metro East Ave Philippines
           </p>
         </article>
       </div>

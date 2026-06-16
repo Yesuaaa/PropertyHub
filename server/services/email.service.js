@@ -16,7 +16,7 @@ const transporter = process.env.SMTP_HOST
     : null;
 
 const FROM_EMAIL = process.env.EMAIL_FROM || 'noreply@yourdomain.com';
-const FROM_NAME = process.env.EMAIL_FROM_NAME || 'PropertyHub';
+const FROM_NAME = process.env.EMAIL_FROM_NAME || 'NetCafe Hub';
 
 if (transporter) {
     transporter.verify((error) => {
@@ -52,31 +52,31 @@ export const sendVerificationEmail = async (email, otp) => {
     const html = `
         <div style="font-family: Arial, sans-serif; max-width: 600px;">
             <h2>Verify Your Email</h2>
-            <p>Thank you for creating a PropertyHub account. Use the code below to verify your email:</p>
+            <p>Thank you for creating a NetCafe Hub account. Use the code below to verify your email:</p>
             <div style="font-size: 32px; font-weight: bold; letter-spacing: 8px; padding: 16px 0; background: #f5f3ef; border-radius: 8px; text-align: center;">
                 ${otp}
             </div>
             <p style="color: #8fa3b0;">This code expires in 10 minutes.</p>
             <hr>
-            <p style="color: #8fa3b0; font-size: 14px;">PropertyHub Team</p>
+            <p style="color: #8fa3b0; font-size: 14px;">NetCafe Hub Team</p>
         </div>
     `;
-    return sendEmail(email, 'PropertyHub - Email Verification', html);
+    return sendEmail(email, 'NetCafe Hub - Email Verification', html);
 };
 
 export const sendPasswordResetEmail = async (email, otp) => {
     const html = `
         <div style="font-family: Arial, sans-serif; max-width: 600px;">
             <h2>Password Reset</h2>
-            <p>Use the code below to reset your PropertyHub password:</p>
+            <p>Use the code below to reset your NetCafe Hub password:</p>
             <div style="font-size: 32px; font-weight: bold; letter-spacing: 8px; padding: 16px 0; background: #f5f3ef; border-radius: 8px; text-align: center;">
                 ${otp}
             </div>
             <p style="color: #8fa3b0;">This code expires in 10 minutes.</p>
             <p style="color: #8fa3b0;">If you didn't request this, please ignore this email.</p>
             <hr>
-            <p style="color: #8fa3b0; font-size: 14px;">PropertyHub Team</p>
+            <p style="color: #8fa3b0; font-size: 14px;">NetCafe Hub Team</p>
         </div>
     `;
-    return sendEmail(email, 'PropertyHub - Password Reset', html);
+    return sendEmail(email, 'NetCafe Hub - Password Reset', html);
 };
