@@ -76,7 +76,6 @@ app.get('/api/health', (req, res) => {
 // TEMP: Email diagnostic endpoint — remove after debugging
 import { sendVerificationEmail } from './services/email.service.js';
 import nodemailer from 'nodemailer';
-import dns from 'dns';
 app.get('/api/debug/email', async (req, res) => {
     const diag = {
         smtp_host: process.env.SMTP_HOST || '(not set)',
