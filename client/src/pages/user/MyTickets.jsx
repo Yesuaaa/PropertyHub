@@ -89,7 +89,8 @@ export default function MyTickets() {
       <PageBanner
         image="/hero-professional.jpg"
         breadcrumbs={[
-          { label: 'Home', to: '/' }
+          { label: 'Home', to: '/' },
+          { label: 'Dashboard', to: '/dashboard' }
         ]}
         title="My Requests"
         subtitle="View and track all your submitted complaints and feedback."
