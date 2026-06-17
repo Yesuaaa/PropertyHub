@@ -1,5 +1,6 @@
 import nodemailer from 'nodemailer';
 import dotenv from 'dotenv';
+import dns from 'dns';
 import { fileURLToPath } from 'url';
 import { dirname, join } from 'path';
 
@@ -11,9 +12,24 @@ dotenv.config({ path: join(__dirname, '..', '.env') });
 const FROM_EMAIL = process.env.EMAIL_FROM || 'noreply@yourdomain.com';
 const FROM_NAME = process.env.EMAIL_FROM_NAME || 'PropertyHub';
 
-const transporter = process.env.SMTP_HOST
-    ? nodemailer.createTransport({
-        host: process.env.SMTP_HOST,
+let transporter = null;
+
+async function initTransporter() {
+    if (transporter) return transporter;
+    if (!process.env.SMTP_HOST) return null;
+
+    let smtpHost = process.env.SMTP_HOST;
+
+    try {
+        const resolved = await dns.promises.lookup(process.env.SMTP_HOST, { family: 4 });
+        smtpHost = resolved.address;
+        console.log(`SMTP resolved ${process.env.SMTP_HOST} -> ${smtpHost} (IPv4)`);
+    } catch (err) {
+        console.warn(`Could not resolve IPv4, using hostname: ${err.message}`);
+    }
+
+    transporter = nodemailer.createTransport({
+        host: smtpHost,
         port: parseInt(process.env.SMTP_PORT) || 587,
         secure: process.env.SMTP_SECURE === 'true',
         auth: {
@@ -23,26 +39,22 @@ const transporter = process.env.SMTP_HOST
         connectionTimeout: 10000,
         greetingTimeout: 10000,
         socketTimeout: 15000,
-    })
-    : null;
-
-if (transporter) {
-    transporter.verify((error) => {
-        if (error) console.error('SMTP connection error:', error.message);
-        else console.log('SMTP server ready');
+        tls: {
+            servername: process.env.SMTP_HOST,
+        },
     });
-} else {
-    console.warn('SMTP not configured. Emails will not be sent.');
+    return transporter;
 }
 
 const sendEmail = async (to, subject, html) => {
-    if (!transporter) {
+    const t = await initTransporter();
+    if (!t) {
         console.warn('SMTP not configured. Email not sent.');
         return { success: false, error: 'SMTP not configured' };
     }
 
     try {
-        const info = await transporter.sendMail({
+        const info = await t.sendMail({
             from: `${FROM_NAME} <${FROM_EMAIL}>`,
             to,
             subject,
