@@ -42,7 +42,7 @@ export default function AdminNavbar() {
               </svg>
             </div>
             <span className="text-white font-bold text-sm tracking-[0.08em] uppercase">
-              NetCafe Hub Admin
+              Property Hub Admin
             </span>
           </Link>
           <div className="hidden lg:flex items-center gap-8">
