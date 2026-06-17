@@ -71,6 +71,24 @@ app.get('/api/health', (req, res) => {
     });
 });
 
+// TEMP: Email diagnostic
+import { sendVerificationEmail } from './services/email.service.js';
+app.get('/api/debug/email', async (req, res) => {
+    const diag = {
+        smtp_host: process.env.SMTP_HOST || '(not set)',
+        smtp_user: process.env.SMTP_USER || '(not set)',
+        smtp_pass_set: !!process.env.SMTP_PASS,
+        email_from: process.env.EMAIL_FROM || '(not set)',
+    };
+    try {
+        const result = await sendVerificationEmail(process.env.SMTP_USER || 'test@example.com', '123456');
+        diag.sendResult = result;
+    } catch (err) {
+        diag.sendResult = { success: false, error: err.message };
+    }
+    res.json(diag);
+});
+
 // DB test — development only                 // ✅ gated behind env check
 if (process.env.NODE_ENV !== 'production') {
     app.get('/api/db-test', async (req, res) => {
