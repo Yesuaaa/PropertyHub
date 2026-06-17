@@ -8,17 +8,11 @@ const __dirname = dirname(__filename);
 
 dotenv.config({ path: join(__dirname, '..', '.env') });
 
-const FROM_EMAIL = process.env.EMAIL_FROM || 'propertyhubofficial001@gmail.com';
+const FROM_EMAIL = process.env.EMAIL_FROM || 'noreply@yourdomain.com';
 const FROM_NAME = process.env.EMAIL_FROM_NAME || 'PropertyHub';
-const BREVO_API_KEY = process.env.BREVO_API_KEY;
 
-let smtpTransporter = null;
-
-function getSmtpTransporter() {
-    if (smtpTransporter) return smtpTransporter;
-    if (!process.env.SMTP_HOST) return null;
-
-    smtpTransporter = nodemailer.createTransport({
+const transporter = process.env.SMTP_HOST
+    ? nodemailer.createTransport({
         host: process.env.SMTP_HOST,
         port: parseInt(process.env.SMTP_PORT) || 587,
         secure: process.env.SMTP_SECURE === 'true',
@@ -26,56 +20,36 @@ function getSmtpTransporter() {
             user: process.env.SMTP_USER,
             pass: process.env.SMTP_PASS,
         },
+        connectionTimeout: 10000,
+        greetingTimeout: 10000,
+        socketTimeout: 15000,
+    })
+    : null;
+
+if (transporter) {
+    transporter.verify((error) => {
+        if (error) console.error('SMTP connection error:', error.message);
+        else console.log('SMTP server ready');
     });
-    return smtpTransporter;
+} else {
+    console.warn('SMTP not configured. Emails will not be sent.');
 }
 
-const sendEmailViaBrevo = async (to, subject, html) => {
-    const response = await fetch('https://api.brevo.com/v3/smtp/email', {
-        method: 'POST',
-        headers: {
-            'api-key': BREVO_API_KEY,
-            'Content-Type': 'application/json',
-            'accept': 'application/json',
-        },
-        body: JSON.stringify({
-            sender: { name: FROM_NAME, email: FROM_EMAIL },
-            to: [{ email: to }],
-            subject,
-            htmlContent: html,
-        }),
-    });
-
-    if (!response.ok) {
-        const errorText = await response.text();
-        throw new Error(`Brevo API error (${response.status}): ${errorText}`);
-    }
-
-    const data = await response.json();
-    return { success: true, id: data.messageId };
-};
-
-const sendEmailViaSmtp = async (to, subject, html) => {
-    const transporter = getSmtpTransporter();
+const sendEmail = async (to, subject, html) => {
     if (!transporter) {
+        console.warn('SMTP not configured. Email not sent.');
         return { success: false, error: 'SMTP not configured' };
     }
 
-    const info = await transporter.sendMail({
-        from: `${FROM_NAME} <${FROM_EMAIL}>`,
-        to,
-        subject,
-        html,
-    });
-    return { success: true, id: info.messageId };
-};
-
-const sendEmail = async (to, subject, html) => {
     try {
-        if (BREVO_API_KEY) {
-            return await sendEmailViaBrevo(to, subject, html);
-        }
-        return await sendEmailViaSmtp(to, subject, html);
+        const info = await transporter.sendMail({
+            from: `${FROM_NAME} <${FROM_EMAIL}>`,
+            to,
+            subject,
+            html,
+        });
+        console.log(`Email sent to ${to}: ${info.messageId}`);
+        return { success: true, id: info.messageId };
     } catch (error) {
         console.error('Email send error:', error.message);
         return { success: false, error: error.message };
@@ -95,9 +69,7 @@ export const sendVerificationEmail = async (email, otp) => {
             <p style="color: #8fa3b0; font-size: 14px;">Property Hub Team</p>
         </div>
     `;
-    const result = await sendEmail(email, 'PropertyHub - Email Verification', html);
-    if (result.success) console.log(`Verification email sent to ${email}`);
-    return result;
+    return sendEmail(email, 'PropertyHub - Email Verification', html);
 };
 
 export const sendPasswordResetEmail = async (email, otp) => {
@@ -114,7 +86,5 @@ export const sendPasswordResetEmail = async (email, otp) => {
             <p style="color: #8fa3b0; font-size: 14px;">Property Hub Team</p>
         </div>
     `;
-    const result = await sendEmail(email, 'PropertyHub - Password Reset', html);
-    if (result.success) console.log(`Reset email sent to ${email}`);
-    return result;
+    return sendEmail(email, 'PropertyHub - Password Reset', html);
 };
