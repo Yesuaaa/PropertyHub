@@ -4,9 +4,6 @@ import AdminLayout from './layouts/AdminLayout';
 import LandingPage from './pages/LandingPage';
 import Login from './pages/user/Login';
 import Register from './pages/user/Register';
-import ForgotPassword from './pages/user/ForgotPassword';
-import ResetPassword from './pages/user/ResetPassword';
-import VerifyOtp from './pages/user/VerifyOtp';
 import MyTickets from './pages/user/MyTickets';
 import NewTicket from './pages/user/NewTicket';
 import TicketDetail from './pages/user/TicketDetail';
@@ -24,9 +21,6 @@ export default function AppRouter() {
       <Route path="/" element={<UserLayout><LandingPage /></UserLayout>} />
       <Route path="/login" element={<UserLayout><Login /></UserLayout>} />
       <Route path="/register" element={<UserLayout><Register /></UserLayout>} />
-      <Route path="/forgot-password" element={<UserLayout><ForgotPassword /></UserLayout>} />
-      <Route path="/reset-password" element={<UserLayout><ResetPassword /></UserLayout>} />
-      <Route path="/verify-otp" element={<UserLayout><VerifyOtp /></UserLayout>} />
       <Route path="/terms" element={<UserLayout><TermsOfService /></UserLayout>} />
       <Route path="/privacy" element={<UserLayout><PrivacyPolicy /></UserLayout>} />
       <Route path="/admin/login" element={<AdminLayout><AdminLogin /></AdminLayout>} />
