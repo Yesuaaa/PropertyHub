@@ -1,6 +1,4 @@
-import nodemailer from 'nodemailer';
 import dotenv from 'dotenv';
-import dns from 'dns';
 import { fileURLToPath } from 'url';
 import { dirname, join } from 'path';
 
@@ -9,59 +7,41 @@ const __dirname = dirname(__filename);
 
 dotenv.config({ path: join(__dirname, '..', '.env') });
 
-const FROM_EMAIL = process.env.EMAIL_FROM || 'noreply@yourdomain.com';
+const FROM_EMAIL = process.env.EMAIL_FROM || 'propertyhubofficial001@gmail.com';
 const FROM_NAME = process.env.EMAIL_FROM_NAME || 'PropertyHub';
-
-let transporter = null;
-
-async function initTransporter() {
-    if (transporter) return transporter;
-    if (!process.env.SMTP_HOST) return null;
-
-    let smtpHost = process.env.SMTP_HOST;
-
-    try {
-        const resolved = await dns.promises.lookup(process.env.SMTP_HOST, { family: 4 });
-        smtpHost = resolved.address;
-        console.log(`SMTP resolved ${process.env.SMTP_HOST} -> ${smtpHost} (IPv4)`);
-    } catch (err) {
-        console.warn(`Could not resolve IPv4, using hostname: ${err.message}`);
-    }
-
-    transporter = nodemailer.createTransport({
-        host: smtpHost,
-        port: parseInt(process.env.SMTP_PORT) || 587,
-        secure: process.env.SMTP_SECURE === 'true',
-        auth: {
-            user: process.env.SMTP_USER,
-            pass: process.env.SMTP_PASS,
-        },
-        connectionTimeout: 10000,
-        greetingTimeout: 10000,
-        socketTimeout: 15000,
-        tls: {
-            servername: process.env.SMTP_HOST,
-        },
-    });
-    return transporter;
-}
+const BREVO_API_KEY = process.env.BREVO_API_KEY;
 
 const sendEmail = async (to, subject, html) => {
-    const t = await initTransporter();
-    if (!t) {
-        console.warn('SMTP not configured. Email not sent.');
-        return { success: false, error: 'SMTP not configured' };
+    if (!BREVO_API_KEY) {
+        console.error('BREVO_API_KEY not configured. Email not sent.');
+        return { success: false, error: 'Email service not configured' };
     }
 
     try {
-        const info = await t.sendMail({
-            from: `${FROM_NAME} <${FROM_EMAIL}>`,
-            to,
-            subject,
-            html,
+        const response = await fetch('https://api.brevo.com/v3/smtp/email', {
+            method: 'POST',
+            headers: {
+                'api-key': BREVO_API_KEY,
+                'Content-Type': 'application/json',
+                'accept': 'application/json',
+            },
+            body: JSON.stringify({
+                sender: { name: FROM_NAME, email: FROM_EMAIL },
+                to: [{ email: to }],
+                subject,
+                htmlContent: html,
+            }),
         });
-        console.log(`Email sent to ${to}: ${info.messageId}`);
-        return { success: true, id: info.messageId };
+
+        if (!response.ok) {
+            const errorText = await response.text();
+            console.error('Brevo API error:', response.status, errorText);
+            return { success: false, error: `Brevo API error (${response.status}): ${errorText}` };
+        }
+
+        const data = await response.json();
+        console.log(`Email sent to ${to}`);
+        return { success: true, id: data.messageId };
     } catch (error) {
         console.error('Email send error:', error.message);
         return { success: false, error: error.message };
