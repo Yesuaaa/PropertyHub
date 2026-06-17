@@ -75,8 +75,10 @@ app.get('/api/health', (req, res) => {
 import { sendVerificationEmail } from './services/email.service.js';
 app.get('/api/debug/email', async (req, res) => {
     const diag = {
+        brevo_configured: !!process.env.BREVO_API_KEY,
         resend_configured: !!process.env.RESEND_API_KEY,
         smtp_configured: !!process.env.SMTP_HOST,
+        email_from: process.env.EMAIL_FROM || '(not set)',
     };
     try {
         const result = await sendVerificationEmail(process.env.SMTP_USER || 'test@example.com', '123456');
