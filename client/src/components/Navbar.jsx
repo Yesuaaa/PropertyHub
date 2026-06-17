@@ -33,7 +33,7 @@ export default function Navbar() {
   const resolveLink = (to) => (user ? to : '/login');
 
   return (
-    <nav className={`fixed top-0 left-0 right-0 z-50 transition-colors duration-300 ${scrolled || menuOpen ? 'bg-[#f5f3ef]/95 backdrop-blur-sm border-b border-[#8fa3b0]/20' : 'bg-[#f5f3ef]'}`}>
+    <nav className={`fixed top-0 left-0 right-0 z-50 transition-colors duration-300 ${scrolled ? 'bg-[#f5f3ef]/95 backdrop-blur-sm border-b border-[#8fa3b0]/20' : 'bg-[#f5f3ef]'}`}>
       <div className="max-w-[1400px] mx-auto flex items-center justify-between px-6 sm:px-10 py-0 h-16">
         <div className="flex items-center gap-10">
           <Link to="/" className="flex items-center gap-3 no-underline">

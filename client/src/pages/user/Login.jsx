@@ -43,7 +43,7 @@ export default function Login() {
             <span className="text-[10px] font-mono font-semibold tracking-[0.25em] uppercase text-[#8fa3b0]">Sign In</span>
           </div>
           <h2 className="text-2xl font-bold text-[#1a1a1a] mb-1 tracking-tight">Welcome back</h2>
-          <p className="text-sm text-[#5a6d78] mb-8">Enter your credentials to access NetCafe Hub.</p>
+          <p className="text-sm text-[#5a6d78] mb-8">Enter your credentials to access Property Hub.</p>
 
           {error && (
             <div className="border-2 border-[#e05a30]/30 bg-[#e05a30]/5 px-4 py-3 mb-6">
@@ -60,7 +60,7 @@ export default function Login() {
                 value={email}
                 onChange={(e) => setEmail(e.target.value)}
                 required
-                placeholder="you@netcafehub.com"
+                placeholder="you@propertyhub.com"
                 className={inputClass}
               />
             </div>

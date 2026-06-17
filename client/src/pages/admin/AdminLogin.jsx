@@ -60,7 +60,7 @@ export default function AdminLogin() {
                 value={email}
                 onChange={(e) => setEmail(e.target.value)}
                 required
-                placeholder="admin@netcafehub.com"
+                placeholder="admin@propertyhub.com"
                 className={inputClass}
               />
             </div>

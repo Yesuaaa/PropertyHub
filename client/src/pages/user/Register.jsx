@@ -99,7 +99,7 @@ export default function Register() {
                 value={email}
                 onChange={(e) => setEmail(e.target.value)}
                 required
-                placeholder="user@netcafehub.com"
+                placeholder="user@propertyhub.com"
                 className={inputClass}
               />
             </div>

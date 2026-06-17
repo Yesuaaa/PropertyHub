@@ -47,7 +47,7 @@ export default function Footer() {
                   <path fillRule="evenodd" d="M8 1.75a.75.75 0 01.75.75v5.25h4.25a.75.75 0 010 1.5H8.75V13a.75.75 0 01-1.5 0V9H3.25a.75.75 0 010-1.5H7.25V2.5A.75.75 0 018 1.75z" clipRule="evenodd" />
                 </svg>
               </div>
-              <span className="text-white font-bold text-sm tracking-[0.08em] uppercase">NetCafe Hub</span>
+              <span className="text-white font-bold text-sm tracking-[0.08em] uppercase">Property Hub</span>
             </Link>
             <p className="text-sm leading-relaxed text-[#c8d5dd] max-w-sm">
               Report it. Track it. Resolve it. Hardware issues, network problems, billing concerns &mdash; submitted and tracked in one place.
@@ -75,7 +75,7 @@ export default function Footer() {
 
         <div className="py-6 border-t border-[#8fa3b0]/20 flex flex-col md:flex-row items-center justify-between gap-4">
           <span className="text-[10px] font-mono tracking-[0.15em] text-[#d0dbe3]">
-            &copy; {new Date().getFullYear()} NETCAFE HUB &mdash; ALL RIGHTS RESERVED
+            &copy; {new Date().getFullYear()} PROPERTY HUB &mdash; ALL RIGHTS RESERVED
           </span>
           <div className="flex gap-6">
             <Link to="/" className="text-[10px] font-mono tracking-[0.15em] text-[#d0dbe3] hover:text-white transition-colors">Privacy Policy</Link>
