@@ -1,5 +1,6 @@
 import { Link } from 'react-router-dom';
 import { motion } from 'framer-motion';
+import { useAuth } from '../hooks/useAuth';
 
 const stagger = {
   hidden: {},
@@ -30,6 +31,8 @@ function SectionLabel({ children }) {
 }
 
 function Hero() {
+  const { user } = useAuth();
+
   return (
     <section className="relative bg-[#f5f3ef] overflow-hidden">
       <div className="absolute inset-0 opacity-[0.35] pointer-events-none" style={{
@@ -60,20 +63,29 @@ function Hero() {
 
             <motion.div variants={fadeUp} className="flex flex-wrap gap-5 items-center pt-2">
               <Link
-                to="/register"
+                to={user ? '/new' : '/register'}
                 className="inline-flex items-center gap-2 text-sm font-bold tracking-wide uppercase text-[#1a1a1a] bg-[#ffd23f] border-[3px] border-[#1a1a1a] px-7 py-3.5 shadow-[6px_6px_0_0_#1a1a1a] hover:shadow-[2px_2px_0_0_#1a1a1a] hover:translate-x-[4px] hover:translate-y-[4px] transition-all duration-150"
               >
-                Submit a Request
+                {user ? 'Submit a Request' : 'Get Started'}
                 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 16 16" fill="currentColor" className="w-3.5 h-3.5">
                   <path fillRule="evenodd" d="M1 8a.75.75 0 01.75-.75h10.638L9.23 5.29a.75.75 0 111.04-1.08l5.5 5.25a.75.75 0 010 1.08l-5.5 5.25a.75.75 0 11-1.04-1.08l3.158-2.96H1.75A.75.75 0 011 8z" clipRule="evenodd" />
                 </svg>
               </Link>
-              <Link
-                to="/login"
-                className="text-sm font-bold text-[#1a1a1a] hover:text-[#e05a30] transition-colors tracking-wide uppercase border-b-[3px] border-[#1a1a1a] hover:border-[#e05a30] pb-1"
-              >
-                Already have an account?
-              </Link>
+              {user ? (
+                <Link
+                  to="/dashboard"
+                  className="text-sm font-bold text-[#1a1a1a] hover:text-[#e05a30] transition-colors tracking-wide uppercase border-b-[3px] border-[#1a1a1a] hover:border-[#e05a30] pb-1"
+                >
+                  Go to Dashboard
+                </Link>
+              ) : (
+                <Link
+                  to="/login"
+                  className="text-sm font-bold text-[#1a1a1a] hover:text-[#e05a30] transition-colors tracking-wide uppercase border-b-[3px] border-[#1a1a1a] hover:border-[#e05a30] pb-1"
+                >
+                  Already have an account?
+                </Link>
+              )}
             </motion.div>
           </motion.div>
 
