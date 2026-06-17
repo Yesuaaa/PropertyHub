@@ -97,7 +97,7 @@ export default function VerifyOtp() {
                   </svg>
                 </div>
                 <h2 className="text-2xl font-bold text-[#1a1a1a] mb-2 tracking-tight">Verified!</h2>
-                <p className="text-sm text-[#5a6d78] mb-8">Your phone number has been verified. You can now sign in.</p>
+                <p className="text-sm text-[#5a6d78] mb-8">Your email has been verified. You can now sign in.</p>
                 <Link
                   to="/login"
                   className="inline-block text-[#f5f3ef] px-8 py-3 text-xs font-semibold tracking-[0.15em] uppercase bg-[#1a1a1a] border-2 border-[#1a1a1a] hover:bg-transparent hover:text-[#1a1a1a] transition-all duration-200"
@@ -109,7 +109,7 @@ export default function VerifyOtp() {
           ) : (
             <>
               <h2 className="text-2xl font-bold text-[#1a1a1a] mb-1 tracking-tight">Enter verification code</h2>
-              <p className="text-sm text-[#5a6d78] mb-8">We sent a 6-digit code to your phone number.</p>
+              <p className="text-sm text-[#5a6d78] mb-8">We sent a 6-digit code to your email.</p>
 
               {error && (
                 <div className="border-2 border-[#e05a30]/30 bg-[#e05a30]/5 px-4 py-3 mb-6">

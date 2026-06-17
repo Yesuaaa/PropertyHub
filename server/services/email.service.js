@@ -1,7 +1,12 @@
 import nodemailer from 'nodemailer';
 import dotenv from 'dotenv';
+import { fileURLToPath } from 'url';
+import { dirname, join } from 'path';
 
-dotenv.config();
+const __filename = fileURLToPath(import.meta.url);
+const __dirname = dirname(__filename);
+
+dotenv.config({ path: join(__dirname, '..', '.env') });
 
 const transporter = process.env.SMTP_HOST
     ? nodemailer.createTransport({
@@ -58,25 +63,25 @@ export const sendVerificationEmail = async (email, otp) => {
             </div>
             <p style="color: #8fa3b0;">This code expires in 10 minutes.</p>
             <hr>
-            <p style="color: #8fa3b0; font-size: 14px;">NetCafe Hub Team</p>
+            <p style="color: #8fa3b0; font-size: 14px;">Property Hub Team</p>
         </div>
     `;
-    return sendEmail(email, 'NetCafe Hub - Email Verification', html);
+    return sendEmail(email, 'Property Hub - Email Verification', html);
 };
 
 export const sendPasswordResetEmail = async (email, otp) => {
     const html = `
         <div style="font-family: Arial, sans-serif; max-width: 600px;">
             <h2>Password Reset</h2>
-            <p>Use the code below to reset your NetCafe Hub password:</p>
+            <p>Use the code below to reset your Property Hub password:</p>
             <div style="font-size: 32px; font-weight: bold; letter-spacing: 8px; padding: 16px 0; background: #f5f3ef; border-radius: 8px; text-align: center;">
                 ${otp}
             </div>
             <p style="color: #8fa3b0;">This code expires in 10 minutes.</p>
             <p style="color: #8fa3b0;">If you didn't request this, please ignore this email.</p>
             <hr>
-            <p style="color: #8fa3b0; font-size: 14px;">NetCafe Hub Team</p>
+            <p style="color: #8fa3b0; font-size: 14px;">Property Hub Team</p>
         </div>
     `;
-    return sendEmail(email, 'NetCafe Hub - Password Reset', html);
+    return sendEmail(email, 'Property Hub - Password Reset', html);
 };
