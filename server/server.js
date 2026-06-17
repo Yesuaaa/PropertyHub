@@ -1,8 +1,6 @@
 import dotenv from 'dotenv';
-import dns from 'dns';
 
 dotenv.config();
-dns.setDefaultResultOrder('ipv4first');
 
 import express from 'express';
 import cors from 'cors';
@@ -75,43 +73,17 @@ app.get('/api/health', (req, res) => {
 
 // TEMP: Email diagnostic endpoint — remove after debugging
 import { sendVerificationEmail } from './services/email.service.js';
-import nodemailer from 'nodemailer';
 app.get('/api/debug/email', async (req, res) => {
     const diag = {
-        smtp_host: process.env.SMTP_HOST || '(not set)',
-        smtp_user: process.env.SMTP_USER || '(not set)',
-        env_vars_set: !!process.env.SMTP_HOST,
+        resend_configured: !!process.env.RESEND_API_KEY,
+        smtp_configured: !!process.env.SMTP_HOST,
     };
-
-    const smtpHost = process.env.SMTP_HOST;
-    let ip4 = '(unresolved)';
-    try { ip4 = (await dns.promises.lookup(smtpHost, { family: 4 })).address; } catch {}
-
-    for (const [label, opts] of [
-        ['port587_STARTTLS', { port: 587, secure: false }],
-        ['port465_SSL', { port: 465, secure: true }],
-    ]) {
-        try {
-            const t = nodemailer.createTransport({
-                host: ip4 !== '(unresolved)' ? ip4 : smtpHost,
-                port: opts.port,
-                secure: opts.secure,
-                auth: { user: process.env.SMTP_USER, pass: process.env.SMTP_PASS },
-                connectionTimeout: 8000,
-                greetingTimeout: 8000,
-                socketTimeout: 10000,
-                tls: { servername: smtpHost },
-            });
-            const result = await Promise.race([
-                t.sendMail({ from: process.env.SMTP_USER, to: process.env.SMTP_USER, subject: 'TEST', text: 'test' }),
-                new Promise((_, reject) => setTimeout(() => reject(new Error('Timeout 12s')), 12000))
-            ]);
-            diag[label] = { success: true };
-        } catch (err) {
-            diag[label] = { success: false, error: err.message };
-        }
+    try {
+        const result = await sendVerificationEmail(process.env.SMTP_USER || 'test@example.com', '123456');
+        diag.sendResult = result;
+    } catch (err) {
+        diag.sendResult = { success: false, error: err.message };
     }
-    diag.resolved_ipv4 = ip4;
     res.json(diag);
 });
 
