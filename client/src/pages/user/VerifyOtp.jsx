@@ -69,7 +69,7 @@ export default function VerifyOtp() {
     setResendMessage('');
     try {
       await resendOTP(email);
-      setResendMessage('A new code has been sent to your phone.');
+          setResendMessage('A new code has been sent to your email.');
     } catch (err) {
       setResendMessage(err.response?.data?.message || 'Failed to resend code');
     } finally {
@@ -85,7 +85,7 @@ export default function VerifyOtp() {
         <div className="border-2 border-[#1a1a1a] bg-[#f5f3ef] p-6 sm:p-10">
           <div className="flex items-center gap-3 mb-2">
             <span className="w-2 h-2 bg-[#e05a30]" />
-            <span className="text-[10px] font-mono font-semibold tracking-[0.25em] uppercase text-[#8fa3b0]">Verify Phone</span>
+            <span className="text-[10px] font-mono font-semibold tracking-[0.25em] uppercase text-[#8fa3b0]">Verify Email</span>
           </div>
 
           {success ? (
