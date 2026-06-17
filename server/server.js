@@ -77,11 +77,15 @@ app.get('/api/debug/email', async (req, res) => {
         smtp_host_set: !!process.env.SMTP_HOST,
         smtp_user_set: !!process.env.SMTP_USER,
         smtp_pass_set: !!process.env.SMTP_PASS,
+        smtp_host: process.env.SMTP_HOST || '(not set)',
         smtp_user: process.env.SMTP_USER || '(not set)',
         email_from: process.env.EMAIL_FROM || '(not set)',
     };
     try {
-        const result = await sendVerificationEmail(process.env.SMTP_USER || 'test@example.com', '123456');
+        const result = await Promise.race([
+            sendVerificationEmail(process.env.SMTP_USER || 'test@example.com', '123456'),
+            new Promise((_, reject) => setTimeout(() => reject(new Error('Email send timed out after 20s')), 20000))
+        ]);
         diag.sendResult = result;
     } catch (err) {
         diag.sendResult = { success: false, error: err.message };
