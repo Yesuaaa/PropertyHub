@@ -8,9 +8,9 @@ const __dirname = dirname(__filename);
 
 dotenv.config({ path: join(__dirname, '..', '.env') });
 
-const FROM_EMAIL = process.env.EMAIL_FROM || 'onboarding@resend.dev';
+const FROM_EMAIL = process.env.EMAIL_FROM || 'propertyhubofficial001@gmail.com';
 const FROM_NAME = process.env.EMAIL_FROM_NAME || 'PropertyHub';
-const RESEND_API_KEY = process.env.RESEND_API_KEY;
+const BREVO_API_KEY = process.env.BREVO_API_KEY;
 
 let smtpTransporter = null;
 
@@ -26,35 +26,33 @@ function getSmtpTransporter() {
             user: process.env.SMTP_USER,
             pass: process.env.SMTP_PASS,
         },
-        connectionTimeout: 10000,
-        greetingTimeout: 10000,
-        socketTimeout: 15000,
     });
     return smtpTransporter;
 }
 
-const sendEmailViaResend = async (to, subject, html) => {
-    const response = await fetch('https://api.resend.com/emails', {
+const sendEmailViaBrevo = async (to, subject, html) => {
+    const response = await fetch('https://api.brevo.com/v3/smtp/email', {
         method: 'POST',
         headers: {
-            'Authorization': `Bearer ${RESEND_API_KEY}`,
+            'api-key': BREVO_API_KEY,
             'Content-Type': 'application/json',
+            'accept': 'application/json',
         },
         body: JSON.stringify({
-            from: `${FROM_NAME} <${FROM_EMAIL}>`,
-            to: [to],
+            sender: { name: FROM_NAME, email: FROM_EMAIL },
+            to: [{ email: to }],
             subject,
-            html,
+            htmlContent: html,
         }),
     });
 
     if (!response.ok) {
         const errorText = await response.text();
-        throw new Error(`Resend API error (${response.status}): ${errorText}`);
+        throw new Error(`Brevo API error (${response.status}): ${errorText}`);
     }
 
     const data = await response.json();
-    return { success: true, id: data.id };
+    return { success: true, id: data.messageId };
 };
 
 const sendEmailViaSmtp = async (to, subject, html) => {
@@ -74,8 +72,8 @@ const sendEmailViaSmtp = async (to, subject, html) => {
 
 const sendEmail = async (to, subject, html) => {
     try {
-        if (RESEND_API_KEY) {
-            return await sendEmailViaResend(to, subject, html);
+        if (BREVO_API_KEY) {
+            return await sendEmailViaBrevo(to, subject, html);
         }
         return await sendEmailViaSmtp(to, subject, html);
     } catch (error) {
