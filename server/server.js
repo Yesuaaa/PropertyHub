@@ -73,18 +73,39 @@ app.get('/api/health', (req, res) => {
 
 // TEMP: Email diagnostic
 import { sendVerificationEmail } from './services/email.service.js';
+import nodemailer from 'nodemailer';
+import dnsMod from 'dns';
 app.get('/api/debug/email', async (req, res) => {
     const diag = {
         smtp_host: process.env.SMTP_HOST || '(not set)',
         smtp_user: process.env.SMTP_USER || '(not set)',
         smtp_pass_set: !!process.env.SMTP_PASS,
-        email_from: process.env.EMAIL_FROM || '(not set)',
     };
-    try {
-        const result = await sendVerificationEmail(process.env.SMTP_USER || 'test@example.com', '123456');
-        diag.sendResult = result;
-    } catch (err) {
-        diag.sendResult = { success: false, error: err.message };
+
+    let ip4 = '(unresolved)';
+    try { ip4 = (await dnsMod.promises.lookup('smtp.gmail.com', { family: 4 })).address; } catch {}
+    diag.resolved_ipv4 = ip4;
+
+    for (const [label, opts] of [
+        ['port587', { port: 587, secure: false }],
+        ['port465', { port: 465, secure: true }],
+    ]) {
+        try {
+            const t = nodemailer.createTransport({
+                host: ip4 !== '(unresolved)' ? ip4 : 'smtp.gmail.com',
+                port: opts.port,
+                secure: opts.secure,
+                auth: { user: process.env.SMTP_USER, pass: process.env.SMTP_PASS },
+                connectionTimeout: 8000,
+                greetingTimeout: 8000,
+                socketTimeout: 10000,
+                tls: { servername: 'smtp.gmail.com' },
+            });
+            await t.sendMail({ from: process.env.SMTP_USER, to: process.env.SMTP_USER, subject: 'TEST', text: 'test' });
+            diag[label] = { success: true };
+        } catch (err) {
+            diag[label] = { success: false, error: err.message };
+        }
     }
     res.json(diag);
 });
