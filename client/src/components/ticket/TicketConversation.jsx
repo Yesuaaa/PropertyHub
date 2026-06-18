@@ -85,34 +85,53 @@ export default function TicketConversation({ ticketId, currentUserRole }) {
           <p className="text-sm text-[#8fa3b0]">No replies yet. Start the conversation.</p>
         </div>
       ) : (
-        <div className="space-y-4 mb-6 max-h-[500px] overflow-y-auto pr-1">
-          {replies.map((reply) => {
+        <div className="space-y-3 mb-6 max-h-[500px] overflow-y-auto pr-1 py-2">
+          {replies.map((reply, idx) => {
             const isOwnReply = reply.author_role === currentUserRole;
+            const isAdmin = reply.author_role === 'admin';
+            const prevReply = replies[idx - 1];
+            const isGrouped = prevReply && prevReply.author_role === reply.author_role;
             return (
               <div
                 key={reply.id}
-                className={`flex flex-col ${isOwnReply ? 'items-end' : 'items-start'}`}
+                className={`flex ${isOwnReply ? 'justify-end' : 'justify-start'} ${isGrouped ? '-mt-1' : ''}`}
               >
                 <div
-                  className={`inline-flex items-center gap-2 px-3 py-1.5 mb-1 ${
+                  className={`relative max-w-[80%] px-4 py-2.5 shadow-sm ${
                     isOwnReply
-                      ? 'bg-[#1a1a1a] text-[#8fa3b0]'
-                      : 'bg-[#8fa3b0]/10 text-[#5a6d78]'
+                      ? 'bg-[#1a1a1a] text-[#f5f3ef] rounded-2xl rounded-br-sm'
+                      : 'bg-white border border-[#8fa3b0]/25 text-[#1a1a1a] rounded-2xl rounded-bl-sm'
                   }`}
                 >
-                  <span className="text-[10px] font-mono font-semibold tracking-[0.15em] uppercase">
-                    {reply.author_role === 'admin' ? 'Staff' : reply.author_name}
-                  </span>
-                  {reply.author_role === 'admin' && (
-                    <span className="text-[8px] font-mono tracking-[0.2em] uppercase text-[#e05a30] border border-[#e05a30]/30 px-1.5 py-0.5">
-                      ADMIN
-                    </span>
+                  {!isGrouped && (
+                    <div className={`flex items-center gap-2 mb-1 ${isOwnReply ? 'justify-end' : 'justify-start'}`}>
+                      <span
+                        className={`text-[10px] font-mono font-semibold tracking-[0.15em] uppercase ${
+                          isOwnReply ? 'text-[#8fa3b0]' : 'text-[#5a6d78]'
+                        }`}
+                      >
+                        {isAdmin ? 'Staff' : reply.author_name}
+                      </span>
+                      {isAdmin && (
+                        <span className="text-[8px] font-mono tracking-[0.2em] uppercase text-[#e05a30] border border-[#e05a30]/40 px-1.5 py-0.5">
+                          ADMIN
+                        </span>
+                      )}
+                    </div>
                   )}
-                  <span className={`text-[10px] font-mono ${isOwnReply ? 'text-[#8fa3b0]/60' : 'text-[#8fa3b0]'}`}>
-                    {formatTime(reply.created_at)}
-                  </span>
+                  <p className="text-sm leading-relaxed whitespace-pre-wrap break-words">
+                    {reply.message}
+                  </p>
+                  <div className={`mt-1 flex items-center gap-1.5 ${isOwnReply ? 'justify-end' : 'justify-start'}`}>
+                    <span
+                      className={`text-[9px] font-mono tracking-wide ${
+                        isOwnReply ? 'text-[#8fa3b0]/60' : 'text-[#8fa3b0]'
+                      }`}
+                    >
+                      {formatTime(reply.created_at)}
+                    </span>
+                  </div>
                 </div>
-                <p className={`max-w-[80%] text-sm leading-relaxed whitespace-pre-wrap text-[#1a1a1a] px-1 ${isOwnReply ? 'text-right' : 'text-left'}`}>{reply.message}</p>
               </div>
             );
           })}
