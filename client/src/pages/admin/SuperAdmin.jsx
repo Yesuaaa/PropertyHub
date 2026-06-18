@@ -3,6 +3,7 @@ import { Link } from 'react-router-dom';
 import api from '../../services/axiosInstance';
 
 const ROLES = ['guest', 'staff', 'admin'];
+const FILTER_ROLES = ['guest', 'staff', 'admin', 'superadmin'];
 const STATUSES = ['Open', 'In Progress', 'Resolved', 'Closed'];
 
 const TYPE_CATEGORIES = {
@@ -38,6 +39,7 @@ export default function SuperAdmin() {
 
   const [filterType, setFilterType] = useState('');
   const [filterCategory, setFilterCategory] = useState('');
+  const [filterRole, setFilterRole] = useState('');
 
   const effectiveFilterCategory = useMemo(() => {
     if (filterType && filterCategory && !TYPE_CATEGORIES[filterType]?.includes(filterCategory)) {
@@ -78,7 +80,7 @@ export default function SuperAdmin() {
       setLoading(true);
       try {
         const [usersRes, ticketsRes] = await Promise.all([
-          api.get(`/superadmin/users?page=${userPage}`),
+          api.get(`/superadmin/users?page=${userPage}${filterRole ? `&role=${filterRole}` : ''}`),
           api.get('/superadmin/tickets')
         ]);
         if (!cancelled) {
@@ -94,13 +96,13 @@ export default function SuperAdmin() {
       }
     })();
     return () => { cancelled = true; };
-  }, [userPage]);
+  }, [userPage, filterRole]);
 
   const refreshData = useCallback(async () => {
     setLoading(true);
     try {
       const [usersRes, ticketsRes] = await Promise.all([
-        api.get(`/superadmin/users?page=${userPage}`),
+        api.get(`/superadmin/users?page=${userPage}${filterRole ? `&role=${filterRole}` : ''}`),
         api.get('/superadmin/tickets')
       ]);
       setUsers(usersRes.data.users);
@@ -112,7 +114,7 @@ export default function SuperAdmin() {
     } finally {
       setLoading(false);
     }
-  }, [userPage]);
+  }, [userPage, filterRole]);
 
   const handleAdd = async (e) => {
     e.preventDefault();
@@ -227,7 +229,18 @@ export default function SuperAdmin() {
 
       {tab === 'users' && (
         <>
-          <div className="flex justify-end mb-6">
+          <div className="flex flex-wrap items-end justify-between gap-4 mb-6">
+            <div>
+              <label className="block text-[10px] font-mono font-semibold tracking-[0.2em] uppercase text-[#8fa3b0] mb-1.5">Filter by Role</label>
+              <select
+                value={filterRole}
+                onChange={(e) => { setFilterRole(e.target.value); setUserPage(1); }}
+                className={selectClass}
+              >
+                <option value="">All Roles</option>
+                {FILTER_ROLES.map((r) => (<option key={r} value={r}>{r}</option>))}
+              </select>
+            </div>
             <button
               onClick={() => { setShowAdd(!showAdd); setFormError(''); }}
               className="text-xs font-semibold tracking-[0.1em] uppercase text-[#f5f3ef] bg-[#1a1a1a] border-2 border-[#1a1a1a] px-6 py-2.5 hover:bg-transparent hover:text-[#1a1a1a] transition-all duration-200 cursor-pointer"
@@ -281,7 +294,7 @@ export default function SuperAdmin() {
           )}
 
           {users.length === 0 ? (
-            <div className="border-2 border-[#8fa3b0]/20 p-12 text-center"><p className="text-sm text-[#5a6d78]">No users found.</p></div>
+            <div className="border-2 border-[#8fa3b0]/20 p-12 text-center"><p className="text-sm text-[#5a6d78]">{filterRole ? 'No users match the selected role.' : 'No users found.'}</p></div>
           ) : (
             <div className="border-2 border-[#1a1a1a] overflow-x-auto">
               <table className="w-full text-left min-w-[800px]">

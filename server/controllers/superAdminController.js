@@ -5,6 +5,7 @@ import { createNotification } from '../services/notificationService.js';
 
 const BCRYPT_ROUNDS = 12;
 const VALID_ROLES = ['guest', 'staff', 'admin'];
+const FILTERABLE_ROLES = ['guest', 'staff', 'admin', 'superadmin'];
 const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
 const passwordRegex = /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[\W_]).{8,}$/;
 
@@ -12,11 +13,20 @@ export const getAllUsers = asyncHandler(async (req, res) => {
     const page = Math.max(1, Number(req.query.page) || 1);
     const limit = 10;
     const offset = (page - 1) * limit;
+    const requestedRole = req.query.role;
+    const roleFilter = requestedRole && FILTERABLE_ROLES.includes(requestedRole) ? requestedRole : null;
 
-    const [[{ total }]] = await pool.query('SELECT COUNT(*) AS total FROM users');
+    const params = [];
+    let whereClause = '';
+    if (roleFilter) {
+        whereClause = 'WHERE role = ?';
+        params.push(roleFilter);
+    }
+
+    const [[{ total }]] = await pool.query(`SELECT COUNT(*) AS total FROM users ${whereClause}`, params);
     const [rows] = await pool.query(
-        'SELECT user_id, first_name, last_name, email, role, is_active, created_at FROM users ORDER BY created_at DESC LIMIT ? OFFSET ?',
-        [limit, offset]
+        `SELECT user_id, first_name, last_name, email, role, is_active, created_at FROM users ${whereClause} ORDER BY created_at DESC LIMIT ? OFFSET ?`,
+        [...params, limit, offset]
     );
 
     res.json({
