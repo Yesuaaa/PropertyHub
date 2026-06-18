@@ -1,6 +1,7 @@
 import bcrypt from 'bcrypt';
 import pool from '../config/db.js';
 import asyncHandler from '../util/asyncHandler.js';
+import { createNotification } from '../services/notificationService.js';
 
 const BCRYPT_ROUNDS = 12;
 const VALID_ROLES = ['guest', 'staff', 'admin'];
@@ -91,6 +92,13 @@ export const toggleUserActive = asyncHandler(async (req, res) => {
     const newStatus = rows[0].is_active ? 0 : 1;
     await pool.query('UPDATE users SET is_active = ? WHERE user_id = ?', [newStatus, id]);
 
+    await createNotification({
+        userId: Number(id),
+        type: 'account_change',
+        title: 'Account status changed',
+        message: `Your account has been ${newStatus ? 'activated' : 'deactivated'} by an administrator.`
+    });
+
     res.json({ success: true, message: `User ${newStatus ? 'activated' : 'deactivated'}` });
 });
 
@@ -111,6 +119,13 @@ export const updateUserRole = asyncHandler(async (req, res) => {
     if (result.affectedRows === 0) {
         return res.status(404).json({ success: false, message: 'User not found' });
     }
+
+    await createNotification({
+        userId: Number(id),
+        type: 'account_change',
+        title: 'Your role has changed',
+        message: `Your account role is now "${role}".`
+    });
 
     res.json({ success: true, message: 'Role updated' });
 });

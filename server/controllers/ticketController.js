@@ -1,5 +1,6 @@
 import pool from '../config/db.js';
 import asyncHandler from '../util/asyncHandler.js';
+import { createNotification, notifyAdmins } from '../services/notificationService.js';
 
 // @desc    Create new ticket
 // @route   POST /api/tickets
@@ -18,6 +19,14 @@ export const createTicket = asyncHandler(async (req, res) => {
             'INSERT INTO tickets (user_id, type, category, priority, description) VALUES (?, ?, ?, ?, ?)',
             [userId, type, category, priority, description]
         );
+
+        await notifyAdmins({
+            type: 'ticket_created',
+            title: 'New ticket submitted',
+            message: `A new ${type} request (${category}) was just submitted.`,
+            link: `/admin/tickets/${result.insertId}`
+        });
+
         res.status(201).json({ message: 'Ticket created successfully', ticketId: result.insertId });
     } catch (error) {
         console.error('Ticket creation SQL error:', error.message);
@@ -180,6 +189,29 @@ export const createTicketReply = asyncHandler(async (req, res) => {
          WHERE r.id = ?`,
         [result.insertId]
     );
+
+    // Notify the other party about the new reply.
+    const isAdminAuthor = role === 'admin' || role === 'superadmin';
+    if (isAdminAuthor) {
+        // Staff replied → notify the ticket owner (skip self if owner is the same admin).
+        if (ticket[0].user_id !== userId) {
+            await createNotification({
+                userId: ticket[0].user_id,
+                type: 'ticket_reply',
+                title: 'New reply on your ticket',
+                message: `Support has replied to your ticket #${id}.`,
+                link: `/tickets/${id}`
+            });
+        }
+    } else {
+        // User replied → notify all admins.
+        await notifyAdmins({
+            type: 'ticket_reply',
+            title: 'New reply on a ticket',
+            message: `A user replied to ticket #${id}.`,
+            link: `/admin/tickets/${id}`
+        });
+    }
 
     res.status(201).json({ reply: newReply[0] });
 });

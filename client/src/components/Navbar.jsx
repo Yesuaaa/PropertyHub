@@ -1,5 +1,6 @@
 import { Link, useNavigate } from 'react-router-dom';
 import { useState, useEffect } from 'react';
+import NotificationBell from './NotificationBell';
 
 export default function Navbar() {
   const navigate = useNavigate();
@@ -53,6 +54,7 @@ export default function Navbar() {
           </div>
         </div>
         <div className="flex items-center gap-4">
+          {user && <NotificationBell variant="light" />}
           {user && (
             <span className="hidden sm:inline text-xs font-mono text-[#8fa3b0] tracking-wider uppercase">{user.name}</span>
           )}

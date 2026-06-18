@@ -1,5 +1,6 @@
 import { useState, useEffect, useRef } from 'react';
 import api from '../../services/axiosInstance';
+import { useNotifications } from '../../context/NotificationContext';
 
 export default function TicketConversation({ ticketId, currentUserRole }) {
   const [replies, setReplies] = useState([]);
@@ -8,6 +9,7 @@ export default function TicketConversation({ ticketId, currentUserRole }) {
   const [sending, setSending] = useState(false);
   const [error, setError] = useState('');
   const bottomRef = useRef(null);
+  const { toast } = useNotifications();
 
   const isClosed = ticketStatus === 'resolved' || ticketStatus === 'closed';
 
@@ -54,8 +56,10 @@ export default function TicketConversation({ ticketId, currentUserRole }) {
       const { data } = await api.post(`/tickets/${ticketId}/replies`, { message });
       setReplies((prev) => [...prev, data.reply]);
       setMessage('');
+      toast('Reply sent.', 'success');
     } catch (err) {
       setError(err.response?.data?.message || 'Failed to send reply');
+      toast('Failed to send reply.', 'error');
     } finally {
       setSending(false);
     }

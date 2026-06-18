@@ -1,5 +1,6 @@
 import pool from '../config/db.js';
 import asyncHandler from '../util/asyncHandler.js';
+import { createNotification } from '../services/notificationService.js';
 
 // Get dashboard statistics
 export const getStats = asyncHandler(async (req, res) => {
@@ -67,6 +68,18 @@ export const updateTicketStatus = asyncHandler(async (req, res) => {
 
     if (result.affectedRows === 0) {
         return res.status(404).json({ success: false, message: 'Ticket not found' });
+    }
+
+    // Notify the ticket's owner that the status changed.
+    const [ownerRows] = await pool.query('SELECT user_id FROM tickets WHERE id = ?', [id]);
+    if (ownerRows.length > 0) {
+        await createNotification({
+            userId: ownerRows[0].user_id,
+            type: 'ticket_status',
+            title: 'Ticket status updated',
+            message: `Your ticket #${id} is now "${status}".`,
+            link: `/tickets/${id}`
+        });
     }
 
     res.json({ success: true, message: 'Status updated' });

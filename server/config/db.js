@@ -1,30 +1,10 @@
 import mysql from 'mysql2/promise';
 import dotenv from 'dotenv';
-import fs from 'fs';
+import { buildSslConfig } from './ssl.js';
 
 dotenv.config();
 
-// Build SSL configuration
-let sslConfig = null;
-
-if (process.env.DB_SSL === 'true') {
-    sslConfig = {};
-    //For CA certificate, if provided, enable strict SSL validation
-    if (process.env.DB_SSL_CA_PATH) {
-        try {
-            sslConfig.ca = fs.readFileSync(process.env.DB_SSL_CA_PATH);
-            sslConfig.rejectUnauthorized = true;
-            console.log('✅ Using CA certificate for SSL');
-        } catch (err) {
-            console.error('❌ Error reading CA certificate:', err.message);
-        }
-    } 
-    // Otherwise, for development, accept self-signed certificates
-    else if (process.env.NODE_ENV !== 'production') {
-        sslConfig.rejectUnauthorized = false;
-        console.log('⚠️  SSL certificate validation disabled (development mode)');
-    }
-}
+const sslConfig = buildSslConfig();
 
 const pool = mysql.createPool({
     host: process.env.DB_HOST,

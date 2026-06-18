@@ -1,6 +1,7 @@
 import { useState, useEffect, useMemo } from 'react';
 import { Link } from 'react-router-dom';
 import axios from 'axios';
+import { useNotifications } from '../../context/NotificationContext';
 
 const TYPE_CATEGORIES = {
   'Hardware Issue': ['PC / Computer', 'Peripherals', 'Gaming Console', 'Printer'],
@@ -23,6 +24,7 @@ export default function AdminDashboard() {
   const [loading, setLoading] = useState(true);
   const [filterType, setFilterType] = useState('');
   const [filterCategory, setFilterCategory] = useState('');
+  const { toast } = useNotifications();
 
   const effectiveFilterCategory = useMemo(() => {
     if (filterType && filterCategory && !TYPE_CATEGORIES[filterType]?.includes(filterCategory)) {
@@ -97,8 +99,10 @@ export default function AdminDashboard() {
         { headers: { Authorization: `Bearer ${localStorage.getItem('token')}` } }
       );
       await fetchTickets();
+      toast(`Ticket #${id} marked as ${status}.`, 'success');
     } catch (err) {
       console.error(err);
+      toast('Failed to update status.', 'error');
     }
   };
 

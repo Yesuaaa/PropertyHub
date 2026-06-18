@@ -9,6 +9,7 @@ import cookieParser from 'cookie-parser';
 import { fileURLToPath } from 'url';
 import { dirname, join } from 'path';
 import pool from './config/db.js';
+import runMigrations from './db/migrate.js';
 
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = dirname(__filename);          
@@ -18,6 +19,7 @@ import authRoutes from './routes/authRoutes.js';
 import ticketRoutes from './routes/ticketRoutes.js';
 import adminRoutes from './routes/adminRoutes.js';
 import superAdminRoutes from './routes/superAdminRoutes.js';
+import notificationRoutes from './routes/notificationRoutes.js';
 
 const app = express();
 
@@ -61,6 +63,7 @@ app.use('/api/auth', authRoutes);
 app.use('/api/tickets', ticketRoutes);
 app.use('/api/admin', adminRoutes);
 app.use('/api/superadmin', superAdminRoutes);
+app.use('/api/notifications', notificationRoutes);
 
 // Health check — safe to leave in production
 app.get('/api/health', (req, res) => {
@@ -115,14 +118,25 @@ app.use((err, req, res, next) => {
 // Server Start
 const PORT = process.env.PORT || 5000;
 
-// ✅ added error handling for server startup (e.g. port in use)
-app.listen(PORT, () => {
-    console.log(`Server running on port ${PORT} in ${process.env.NODE_ENV} mode`);
-}).on('error', (err) => {                     // ✅ handle startup errors
-    if (err.code === 'EADDRINUSE') {
-        console.error(`Port ${PORT} is already in use`);
-    } else {
-        console.error('Server error:', err.message);
+// Run pending DB migrations, then start listening. Migrations run before
+// app.listen so the schema is ready by the time requests are accepted.
+(async () => {
+    try {
+        await runMigrations();
+    } catch (err) {
+        console.error('Migration error:', err.message);
+        process.exit(1);
     }
-    process.exit(1);
-});
+
+    // ✅ added error handling for server startup (e.g. port in use)
+    app.listen(PORT, () => {
+        console.log(`Server running on port ${PORT} in ${process.env.NODE_ENV} mode`);
+    }).on('error', (err) => {                     // ✅ handle startup errors
+        if (err.code === 'EADDRINUSE') {
+            console.error(`Port ${PORT} is already in use`);
+        } else {
+            console.error('Server error:', err.message);
+        }
+        process.exit(1);
+    });
+})();

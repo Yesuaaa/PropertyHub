@@ -1,5 +1,6 @@
 import { Link, useNavigate } from 'react-router-dom';
 import { useState, useEffect } from 'react';
+import NotificationBell from './NotificationBell';
 
 export default function AdminNavbar() {
   const navigate = useNavigate();
@@ -51,6 +52,7 @@ export default function AdminNavbar() {
           </div>
         </div>
         <div className="flex items-center gap-4">
+          {token && <NotificationBell variant="dark" />}
           {user && (
             <span className="hidden sm:inline text-xs font-mono text-white/50 tracking-wider uppercase">{user.name}</span>
           )}

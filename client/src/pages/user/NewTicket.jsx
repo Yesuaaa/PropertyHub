@@ -1,6 +1,7 @@
 import { useState } from 'react';
 import { useNavigate, Link } from 'react-router-dom';
 import axios from 'axios';
+import { useNotifications } from '../../context/NotificationContext';
 
 const TYPE_CATEGORIES = {
   'Hardware Issue': ['PC / Computer', 'Peripherals', 'Gaming Console', 'Printer'],
@@ -24,6 +25,7 @@ export default function NewTicket() {
   const [priority, setPriority] = useState('Medium');
   const [error, setError] = useState('');
   const navigate = useNavigate();
+  const { toast } = useNotifications();
 
   const handleSubmit = async (e) => {
     e.preventDefault();
@@ -33,9 +35,11 @@ export default function NewTicket() {
         { type, category, description, priority },
         { headers: { Authorization: `Bearer ${localStorage.getItem('token')}` } }
       );
+      toast('Your request has been submitted.', 'success');
       navigate('/dashboard');
     } catch (err) {
       setError(err.response?.data?.message || 'Failed to create request');
+      toast('Failed to submit request.', 'error');
     }
   };
 
