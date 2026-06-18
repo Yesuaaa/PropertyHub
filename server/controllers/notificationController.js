@@ -59,15 +59,3 @@ export const deleteNotification = asyncHandler(async (req, res) => {
     );
     res.json({ success: true });
 });
-
-// @desc    Drop a test notification into the current user's inbox. Useful for
-//          verifying the bell / badge / dropdown wiring end-to-end.
-// @route   POST /api/notifications/test
-export const sendTestNotification = asyncHandler(async (req, res) => {
-    await pool.query(
-        `INSERT INTO notifications (user_id, type, title, message)
-         VALUES (?, 'test', 'Test notification', 'This is a test notification to verify everything is wired up.')`,
-        [req.user.userId]
-    );
-    res.status(201).json({ success: true, message: 'Test notification sent' });
-});

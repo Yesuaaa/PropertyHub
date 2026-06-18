@@ -2,8 +2,6 @@ import { useState, useEffect, useRef } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { AnimatePresence, motion } from 'framer-motion';
 import { useNotifications } from '../context/NotificationContext';
-import { useAuth } from '../hooks/useAuth';
-import { sendTestNotification } from '../services/notificationService';
 
 function formatRelative(dateStr) {
   const then = new Date(dateStr).getTime();
@@ -26,24 +24,10 @@ const TYPE_DOT = {
 };
 
 export default function NotificationBell({ variant = 'light' }) {
-  const { notifications, unreadCount, markAsRead, markAllAsRead, refresh, toast } = useNotifications();
-  const { user } = useAuth();
+  const { notifications, unreadCount, markAsRead, markAllAsRead } = useNotifications();
   const [open, setOpen] = useState(false);
   const wrapRef = useRef(null);
   const navigate = useNavigate();
-
-  const canSendTest =
-    user?.role === 'admin' || user?.role === 'superadmin' || user?.role === 'staff';
-
-  const handleSendTest = async () => {
-    try {
-      await sendTestNotification();
-      await refresh();
-      toast('Test notification sent.', 'success');
-    } catch {
-      toast('Failed to send test notification.', 'error');
-    }
-  };
 
   // Close dropdown on outside click.
   useEffect(() => {
@@ -144,17 +128,6 @@ export default function NotificationBell({ variant = 'light' }) {
                 ))
               )}
             </div>
-
-            {canSendTest && (
-              <div className={`border-t-2 border-current/10 px-4 py-2 ${isDark ? 'border-white/10' : 'border-[#8fa3b0]/15'}`}>
-                <button
-                  onClick={handleSendTest}
-                  className={`w-full text-center text-[9px] font-mono font-semibold tracking-[0.15em] uppercase bg-transparent border-none cursor-pointer ${isDark ? 'text-[#e05a30] hover:text-[#ff7a4d]' : 'text-[#e05a30] hover:text-[#1a1a1a]'}`}
-                >
-                  Send test notification
-                </button>
-              </div>
-            )}
           </motion.div>
         )}
       </AnimatePresence>
